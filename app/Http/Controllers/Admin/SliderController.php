@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 
 class SliderController extends Controller
@@ -10,9 +11,18 @@ class SliderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.slider.index');
+        $sliders = Slider::with('image')
+            ->when($request->filled('search'), function ($query) use ($request) {
+                $query->where('alt_text', 'like', '%' . $request->search . '%')
+                ->orWhere('url', 'like', '%' . $request->search . '%');
+            })
+            ->when($request->filled('status'), function ($query) use ($request) {
+                $query->where('status', $request->status);
+            })
+            ->paginate(10);
+        return view('admin.slider.index', compact('sliders'));
     }
 
     /**

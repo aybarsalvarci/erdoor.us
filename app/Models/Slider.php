@@ -4,10 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Slider extends Model
 {
     /** @use HasFactory<\Database\Factories\SliderFactory> */
     use HasFactory, SoftDeletes;
+
+    public function image() : HasOne
+    {
+        return $this->hasOne(Media::class ,'id', 'media_id');
+    }
 }

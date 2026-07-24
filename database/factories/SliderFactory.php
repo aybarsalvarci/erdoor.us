@@ -20,6 +20,7 @@ class SliderFactory extends Factory
         return [
             'media_id' => MediaFactory::new()->create(),
             'order' => $this->faker->numberBetween(1, 10),
+            'url' => $this->faker->url(),
             'status' => $this->faker->boolean(),
         ];
     }

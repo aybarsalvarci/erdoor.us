@@ -19,7 +19,7 @@ class MediaFactory extends Factory
     {
         return [
             'alt_text' => $this->faker->sentence(),
-            'path' => $this->faker->imageUrl(),
+            'path' => 'https://picsum.photos/seed/' . fake()->uuid() . '/640/480',
             'type' => 'external'
         ];
     }

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('media_id')->constrained('media', 'id');
             $table->integer('order')->default(0);
             $table->boolean('status')->default(true);
+            $table->string('url')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
