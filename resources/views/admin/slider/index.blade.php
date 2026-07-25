@@ -11,7 +11,7 @@
             <h4 class="mb-3 mb-md-0">Slider Listesi</h4>
         </div>
         <div class="d-flex align-items-center flex-wrap text-nowrap">
-            <a href="#" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
+            <a href="{{route('admin.slider.create')}}" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
                 <i class="btn-icon-prepend" data-lucide="plus"></i>
                 Yeni Slider Ekle
             </a>

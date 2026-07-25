@@ -21,7 +21,7 @@ class SliderController extends Controller
             ->when($request->filled('status'), function ($query) use ($request) {
                 $query->where('status', $request->status);
             })
-            ->paginate(10);
+            ->paginate(12);
         return view('admin.slider.index', compact('sliders'));
     }
 
@@ -30,7 +30,7 @@ class SliderController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.slider.create');
     }
 
     /**

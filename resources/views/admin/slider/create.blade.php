@@ -1,0 +1,108 @@
+@extends('admin.layouts.master')
+
+@section('title', 'Yeni Slider Ekle')
+
+@push('css')
+@endpush
+
+@section('content')
+    <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
+        <div>
+            <h4 class="mb-3 mb-md-0">Yeni Slider Ekle</h4>
+        </div>
+        <div class="d-flex align-items-center flex-wrap text-nowrap">
+            {{-- Geri dön butonu --}}
+            <a href="{{ route('admin.slider.index') }}" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
+                <i class="btn-icon-prepend" data-lucide="arrow-left"></i>
+                Listeye Dön
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title mb-4">Slider Bilgilerini Giriniz</h6>
+
+                    <form action="{{ route('admin.slider.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+
+                        <div class="row">
+                            <!-- Başlık Alanı -->
+                            <div class="col-md-6 mb-3">
+                                <label for="title" class="form-label">Başlık</label>
+                                <input type="text"
+                                       class="form-control @error('title') is-invalid @enderror"
+                                       id="title"
+                                       name="title"
+                                       placeholder="Slider başlığını giriniz"
+                                       value="{{ old('title') }}">
+                                @error('title')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- URL Alanı -->
+                            <div class="col-md-6 mb-3">
+                                <label for="url" class="form-label">Bağlantı (URL)</label>
+                                <input type="text"
+                                       class="form-control @error('url') is-invalid @enderror"
+                                       id="url"
+                                       name="url"
+                                       placeholder="Örn: /kampanyalar/yaz-indirimi"
+                                       value="{{ old('url') }}">
+                                @error('url')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <!-- Görsel Alanı -->
+                            <div class="col-md-6 mb-3">
+                                <label for="image" class="form-label">Slider Görseli</label>
+                                <x-media-picker name="image_id" label="Slider Görseli Seç" :multiple="false"/>
+                                <div class="form-text text-secondary">Tercih edilen boyut: 1920x800px. Sadece JPG, PNG
+                                    veya WEBP.
+                                </div>
+                                @error('image')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Durum Alanı -->
+                            <div class="col-md-6 mb-4">
+                                <label for="status" class="form-label">Durum</label>
+                                <select class="form-select @error('status') is-invalid @enderror" id="status"
+                                        name="status">
+                                    <option value="1" {{ old('status') == '1' ? 'selected' : '' }}>Aktif</option>
+                                    <option value="0" {{ old('status') == '0' ? 'selected' : '' }}>Pasif</option>
+                                </select>
+                                @error('status')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Butonlar -->
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary d-flex align-items-center fw-bold shadow-sm">
+                                <i data-lucide="save" class="icon-sm me-2"></i> Kaydet
+                            </button>
+                            <button type="reset" class="btn btn-outline-secondary d-flex align-items-center">
+                                <i data-lucide="rotate-ccw" class="icon-sm me-2"></i> Formu Temizle
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div> <!-- row -->
+@endsection
+
+@push('js')
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+@endpush

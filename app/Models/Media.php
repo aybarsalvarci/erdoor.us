@@ -9,4 +9,6 @@ class Media extends Model
 {
     /** @use HasFactory<\Database\Factories\MediaFactory> */
     use HasFactory;
+
+    protected $fillable = ['path', 'alt_text', 'type'];
 }
