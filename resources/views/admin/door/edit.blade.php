@@ -129,17 +129,37 @@
                         <hr class="my-4">
                         <h6 class="card-title mb-4">Genel Ayarlar</h6>
 
+                        <!-- ÇEVRİLMEYEN ORTAK ALANLAR (Görseller, Durum) -->
                         <div class="row">
-                            <div class="col-md-6 mb-3">
+
+                            <!-- 1. Sütun: Ana Kapı Görseli -->
+                            <div class="col-md-4 mb-3">
                                 <x-media-picker name="media_id" label="Kapı Görseli Seç" :multiple="false" :value="$door->media_id ?? null"/>
+                                <div class="form-text text-secondary">Tercih edilen boyut: 800x800px.</div>
+                                @error('media_id')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
                             </div>
 
-                            <div class="col-md-6 mb-4">
+                            <!-- 2. Sütun: Özellikler Görseli (Yeni Eklenen Alan) -->
+                            <div class="col-md-4 mb-3">
+                                <x-media-picker name="spec_image_id" label="Özellikler Görseli Seç" :multiple="false" :value="$door->spec_image_id ?? null"/>
+                                <div class="form-text text-secondary">Özellikler alanında gösterilecek tekil görsel.</div>
+                                @error('spec_image_id')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- 3. Sütun: Durum -->
+                            <div class="col-md-4 mb-4">
                                 <label for="status" class="form-label">Durum</label>
                                 <select class="form-select @error('status') is-invalid @enderror" id="status" name="status">
                                     <option value="1" {{ old('status', $door->status) == '1' ? 'selected' : '' }}>Aktif</option>
                                     <option value="0" {{ old('status', $door->status) == '0' ? 'selected' : '' }}>Pasif</option>
                                 </select>
+                                @error('status')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 

@@ -23,6 +23,7 @@ class CreateDoorRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'spec_image_id' => 'required|exists:media,id',
             'en' => 'required|array',
             'en.name' => 'required|string|max:255',
             'en.description' => 'nullable|string|max:255',

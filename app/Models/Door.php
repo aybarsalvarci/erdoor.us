@@ -15,7 +15,8 @@ class Door extends Model
 
     protected $fillable = [
         'media_id',
-        'status'
+        'status',
+        'spec_image_id'
     ];
 
     protected $translatedAttributes = [

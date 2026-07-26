@@ -64,7 +64,7 @@ class DoorController extends Controller
      */
     public function edit(string $id)
     {
-        $door = Door::with('variants.miniPicture', 'variants.picture')->findOrFail($id);
+        $door = Door::with('variants.miniPicture', 'variants.picture', 'image', 'spesificationImage')->findOrFail($id);
         return view('admin.door.edit', compact('door'));
     }
 
