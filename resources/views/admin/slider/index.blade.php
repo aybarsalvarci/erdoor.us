@@ -123,11 +123,11 @@
                                         <a href="{{route('admin.slider.edit', $slider->id)}}" class="btn btn-sm btn-info btn-icon" title="Düzenle">
                                             <i data-lucide="edit-2"></i>
                                         </a>
-                                        <form action="{{route('admin.slider.destroy', $slider->id)}}" method="POST" class="d-inline-block">
+                                        <!-- Form'a 'delete-form' sınıfı eklendi ve onclick kaldırıldı -->
+                                        <form action="{{route('admin.slider.destroy', $slider->id)}}" method="POST" class="d-inline-block delete-form">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger btn-icon" title="Sil"
-                                                    onclick="return confirm('Bu slider\'ı silmek istediğinize emin misiniz?')">
+                                            <button type="submit" class="btn btn-sm btn-danger btn-icon" title="Sil">
                                                 <i data-lucide="trash"></i>
                                             </button>
                                         </form>
@@ -158,4 +158,35 @@
 @endsection
 
 @push('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteForms = document.querySelectorAll('.delete-form');
+
+            deleteForms.forEach(form => {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    Swal.fire({
+                        title: 'Emin misiniz?',
+                        text: "Bu işlem geri alınamaz ve slider silinecektir!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Evet, Sil!',
+                        cancelButtonText: 'İptal',
+                        buttonsStyling: false,
+                        iconColor: '#ef4444',
+                        customClass: {
+                            popup: 'swal-custom-modal',
+                            confirmButton: 'btn btn-danger px-4 fw-bold me-2',
+                            cancelButton: 'btn btn-secondary px-4 fw-bold'
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 @endpush
