@@ -15,7 +15,7 @@ class DoorController extends Controller
      */
     public function index()
     {
-        $doors = Door::paginate(10);
+        $doors = Door::with('image')->paginate(10);
 
         return view('admin.door.index', compact('doors'));
     }

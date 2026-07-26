@@ -115,7 +115,6 @@
                                             <span class="text-muted">Görsel Yok</span>
                                         @endif
                                     </td>
-                                    <!-- Veritabanı yapınıza göre $door->name, $door->title vs. olarak değiştirebilirsiniz -->
                                     <td>{{ $door->name }}</td>
                                     <td>
                                         @if($door->status)

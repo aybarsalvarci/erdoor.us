@@ -6,6 +6,7 @@ use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Door extends Model
 {
@@ -26,5 +27,10 @@ class Door extends Model
     public function variants() : HasMany
     {
         return $this->hasMany(DoorVariant::class, 'door_id', 'id');
+    }
+
+    public function image() : HasOne
+    {
+        return $this->hasOne(Media::class, 'id', 'media_id');
     }
 }
