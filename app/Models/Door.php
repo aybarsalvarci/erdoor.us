@@ -32,6 +32,12 @@ class Door extends Model
 
     public function image() : HasOne
     {
-        return $this->hasOne(Media::class, 'id', 'media_id');
+        return $this->hasOne(Media::class,
+            'id', 'media_id');
+    }
+
+    public function spesifications() : HasMany
+    {
+        return $this->hasMany(DoorSpesification::class, 'door_id', 'id');
     }
 }

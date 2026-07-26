@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DoorController;
+use App\Http\Controllers\Admin\DoorSpesificationController;
 use App\Http\Controllers\Admin\DoorVariantController;
 use App\Http\Controllers\Admin\SliderController;
 use Illuminate\Support\Facades\Route;
@@ -24,4 +25,5 @@ Route::prefix('admin/')->name('admin.')->group(function () {
     Route::resource('slider', SliderController::class);
     Route::resource('door', DoorController::class);
     Route::resource('door.variant', DoorVariantController::class)->only(['store', 'destroy']);
+    Route::resource('door.spesification', DoorSpesificationController::class)->only(['store', 'destroy']);
 });

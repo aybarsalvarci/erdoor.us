@@ -1,6 +1,5 @@
 @extends('admin.layouts.master')
 
-<!-- 'tr' sistemden çıkarıldığı için başlıkta fallback olarak 'en' kullanıyoruz -->
 @section('title', 'Kapı Düzenle: ' . ($door->translate('en')?->name ?? 'İsimsiz Kapı'))
 
 @push('css')
@@ -9,7 +8,6 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
         <div>
-            <!-- Başlığı da aynı mantıkla güncelledik -->
             <h4 class="mb-3 mb-md-0">Kapı Düzenle: <span class="text-primary">{{ $door->translate('en')?->name ?? '' }}</span></h4>
         </div>
         <div class="d-flex align-items-center flex-wrap text-nowrap">
@@ -28,7 +26,7 @@
         ];
     @endphp
 
-        <!-- ANA SEKMELER (Genel Bilgiler / Varyantlar) -->
+        <!-- ANA SEKMELER (Genel Bilgiler / Varyantlar / Özellikler) -->
     <ul class="nav nav-tabs nav-tabs-line mb-4" id="mainTabs" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active fw-bold" id="general-tab" data-bs-toggle="tab" data-bs-target="#general"
@@ -43,6 +41,13 @@
                 <span class="badge bg-primary ms-1">{{ $door->variants->count() ?? 0 }}</span>
             </button>
         </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link fw-bold" id="specs-tab" data-bs-toggle="tab" data-bs-target="#specs"
+                    type="button" role="tab" aria-controls="specs" aria-selected="false">
+                <i data-lucide="list" class="icon-sm me-2"></i> Kapı Özellikleri
+                <span class="badge bg-info ms-1">{{ $door->spesifications->count() ?? 0 }}</span>
+            </button>
+        </li>
     </ul>
 
     <div class="tab-content" id="mainTabsContent">
@@ -53,8 +58,7 @@
         <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('admin.door.update', $door->id) }}" method="POST"
-                          enctype="multipart/form-data">
+                    <form action="{{ route('admin.door.update', $door->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
@@ -67,9 +71,7 @@
                                                 id="lang-{{ $code }}-tab"
                                                 data-bs-toggle="tab"
                                                 data-bs-target="#lang-{{ $code }}"
-                                                type="button" role="tab"
-                                                aria-controls="lang-{{ $code }}"
-                                                aria-selected="{{ $loop->first ? 'true' : 'false' }}">
+                                                type="button" role="tab">
                                             <i class="flag-icon flag-icon-{{ $locale['icon'] }} me-2"></i>
                                             {{ $locale['name'] }}
                                         </button>
@@ -79,14 +81,12 @@
 
                             <div class="tab-content border border-top-0 p-3 mb-3">
                                 @foreach($locales as $code => $locale)
-                                    <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}"
-                                         id="lang-{{ $code }}" role="tabpanel">
+                                    <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" id="lang-{{ $code }}" role="tabpanel">
 
                                         <!-- Collection Name Alanı -->
                                         <div class="mb-3">
                                             <label for="collection_name_{{ $code }}" class="form-label">
-                                                Koleksiyon Adı ({{ strtoupper($code) }})
-                                                @if($loop->first) <span class="text-danger">*</span> @endif
+                                                Koleksiyon Adı ({{ strtoupper($code) }}) @if($loop->first) <span class="text-danger">*</span> @endif
                                             </label>
                                             <input type="text"
                                                    class="form-control @error($code.'.collection_name') is-invalid @enderror"
@@ -95,16 +95,12 @@
                                                    placeholder="Örn: {{ $locale['placeholder'] }} Collection"
                                                    value="{{ old($code.'.collection_name', $door->translate($code)?->collection_name) }}"
                                                 {{ $loop->first ? 'required' : '' }}>
-                                            @error($code.'.collection_name')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
                                         </div>
 
                                         <!-- Kapı Adı Alanı -->
                                         <div class="mb-3">
                                             <label for="name_{{ $code }}" class="form-label">
-                                                Kapı Adı ({{ strtoupper($code) }})
-                                                @if($loop->first) <span class="text-danger">*</span> @endif
+                                                Kapı Adı ({{ strtoupper($code) }}) @if($loop->first) <span class="text-danger">*</span> @endif
                                             </label>
                                             <input type="text"
                                                    class="form-control @error($code.'.name') is-invalid @enderror"
@@ -113,24 +109,16 @@
                                                    placeholder="Örn: {{ $locale['placeholder'] }}"
                                                    value="{{ old($code.'.name', $door->translate($code)?->name) }}"
                                                 {{ $loop->first ? 'required' : '' }}>
-                                            @error($code.'.name')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
                                         </div>
 
                                         <!-- Açıklama Alanı -->
                                         <div class="mb-3">
-                                            <label for="description_{{ $code }}" class="form-label">
-                                                Açıklama ({{ strtoupper($code) }})
-                                            </label>
+                                            <label for="description_{{ $code }}" class="form-label">Açıklama ({{ strtoupper($code) }})</label>
                                             <textarea
                                                 class="form-control @error($code.'.description') is-invalid @enderror"
                                                 id="description_{{ $code }}"
                                                 name="{{ $code }}[description]"
                                                 rows="3">{{ old($code.'.description', $door->translate($code)?->description) }}</textarea>
-                                            @error($code.'.description')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
                                         </div>
 
                                     </div>
@@ -143,8 +131,7 @@
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <x-media-picker name="media_id" label="Kapı Görseli Seç" :multiple="false"
-                                                :value="$door->media_id ?? null"/>
+                                <x-media-picker name="media_id" label="Kapı Görseli Seç" :multiple="false" :value="$door->media_id ?? null"/>
                             </div>
 
                             <div class="col-md-6 mb-4">
@@ -153,9 +140,6 @@
                                     <option value="1" {{ old('status', $door->status) == '1' ? 'selected' : '' }}>Aktif</option>
                                     <option value="0" {{ old('status', $door->status) == '0' ? 'selected' : '' }}>Pasif</option>
                                 </select>
-                                @error('status')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
                             </div>
                         </div>
 
@@ -181,24 +165,18 @@
                     <form action="{{ route('admin.door.variant.store', $door->id) }}" method="POST">
                         @csrf
                         <div class="row g-3 align-items-center">
-
                             <div class="col-md-4">
                                 <label class="form-label">Varyant Adı <span class="text-danger">*</span></label>
-                                <input type="text" name="name" class="form-control"
-                                       placeholder="Örn: Beyaz, Ceviz, 80x200" required>
+                                <input type="text" name="name" class="form-control" placeholder="Örn: Beyaz, Ceviz, 80x200" required>
                             </div>
-
                             <div class="col-md-3">
                                 <x-media-picker name="mini_picture_id" label="Küçük Görsel Seç" :multiple="false"/>
                             </div>
-
                             <div class="col-md-3">
                                 <x-media-picker name="picture_id" label="Büyük Görsel Seç" :multiple="false"/>
                             </div>
-
                             <div class="col-md-2 mt-auto">
-                                <button type="submit"
-                                        class="btn btn-success w-100 fw-bold d-flex align-items-center justify-content-center h-100">
+                                <button type="submit" class="btn btn-success w-100 fw-bold d-flex align-items-center justify-content-center h-100">
                                     <i data-lucide="check" class="icon-sm me-1"></i> Ekle
                                 </button>
                             </div>
@@ -225,35 +203,132 @@
                             @forelse($door->variants ?? [] as $variant)
                                 <tr>
                                     <td class="fw-bold">{{ $variant->name }}</td>
-
-                                    <!-- Küçük Görsel Gösterimi -->
                                     <td>
                                         @if($variant->miniPicture)
-                                            <img
-                                                src="{{ $variant->miniPicture->type == 'internal' ? Storage::url($variant->miniPicture->path) : $variant->miniPicture->path }}"
-                                                alt="Mini"
-                                                style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
+                                            <img src="{{ $variant->miniPicture->type == 'internal' ? Storage::url($variant->miniPicture->path) : $variant->miniPicture->path }}" alt="Mini" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
                                         @else
                                             <span class="text-muted small">Yok</span>
                                         @endif
                                     </td>
-
-                                    <!-- Büyük Görsel Gösterimi -->
                                     <td>
                                         @if($variant->picture)
-                                            <img
-                                                src="{{ $variant->picture->type == 'internal' ? Storage::url($variant->picture->path) : $variant->picture->path }}"
-                                                alt="Picture"
-                                                style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
+                                            <img src="{{ $variant->picture->type == 'internal' ? Storage::url($variant->picture->path) : $variant->picture->path }}" alt="Picture" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
                                         @else
                                             <span class="text-muted small">Yok</span>
                                         @endif
                                     </td>
-
                                     <td>
-                                        <form
-                                            action="{{ route('admin.door.variant.destroy', [$door->id, $variant->id]) }}"
-                                            method="POST" class="d-inline-block delete-form">
+                                        <form action="{{ route('admin.door.variant.destroy', [$door->id, $variant->id]) }}" method="POST" class="d-inline-block delete-form">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger btn-icon" title="Sil">
+                                                <i data-lucide="trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4" class="text-center py-4 text-muted">Henüz bu kapıya ait varyant eklenmemiş.</td>
+                                </tr>
+                            @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div> <!-- Varyantlar Sekmesi Bitiş -->
+
+        <!-- ========================================== -->
+        <!-- 3. SEKME: KAPI ÖZELLİKLERİ (Tablo ve Ekleme) -->
+        <!-- ========================================== -->
+        <div class="tab-pane fade" id="specs" role="tabpanel" aria-labelledby="specs-tab">
+
+            <!-- Yeni Özellik Ekleme Formu -->
+            <div class="card mb-4 border-info">
+                <div class="card-header bg-info text-white d-flex align-items-center">
+                    <i data-lucide="list-plus" class="icon-sm me-2"></i> Yeni Özellik Ekle
+                </div>
+                <div class="card-body">
+                    <form action="{{ route('admin.door.spesification.store', $door->id) }}" method="POST">
+                        @csrf
+
+                        <div class="row">
+                            <!-- Çevrilebilir Alanlar İçin Dil Sekmeleri -->
+                            <div class="col-md-10">
+                                <ul class="nav nav-pills mb-3" id="specLangTabs" role="tablist">
+                                    @foreach($locales as $code => $locale)
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link {{ $loop->first ? 'active' : '' }} py-1 px-3"
+                                                    id="spec-lang-{{ $code }}-tab"
+                                                    data-bs-toggle="pill"
+                                                    data-bs-target="#spec-lang-{{ $code }}"
+                                                    type="button" role="tab">
+                                                <i class="flag-icon flag-icon-{{ $locale['icon'] }} me-1"></i> {{ $locale['name'] }}
+                                            </button>
+                                        </li>
+                                    @endforeach
+                                </ul>
+
+                                <div class="tab-content" id="specLangTabsContent">
+                                    @foreach($locales as $code => $locale)
+                                        <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" id="spec-lang-{{ $code }}" role="tabpanel">
+                                            <div class="row g-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Özellik Adı ({{ strtoupper($code) }}) @if($loop->first)<span class="text-danger">*</span>@endif</label>
+                                                    <input type="text" name="{{ $code }}[name]" class="form-control" placeholder="Örn: Malzeme" {{ $loop->first ? 'required' : '' }}>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Değer ({{ strtoupper($code) }}) @if($loop->first)<span class="text-danger">*</span>@endif</label>
+                                                    <input type="text" name="{{ $code }}[value]" class="form-control" placeholder="Örn: Masif Ahşap" {{ $loop->first ? 'required' : '' }}>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <!-- Ortak Alan (Sıra) ve Kaydet Butonu -->
+                            <div class="col-md-2 d-flex flex-column justify-content-end border-start ps-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Sıralama</label>
+                                    <input type="number" name="order" class="form-control" value="0">
+                                </div>
+                                <button type="submit" class="btn btn-info w-100 fw-bold text-white d-flex align-items-center justify-content-center">
+                                    <i data-lucide="plus" class="icon-sm me-1"></i> Ekle
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+            <!-- Mevcut Özellikler Tablosu -->
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title mb-4">Mevcut Özellikler</h6>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                            <tr>
+                                <th>Sıra</th>
+                                <th>Özellik Adı (EN)</th>
+                                <th>Değer (EN)</th>
+                                <th>İşlem</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @forelse($door->spesifications ?? [] as $spec)
+                                <tr>
+                                    <td>
+                                        <span class="badge bg-secondary">{{ $spec->order }}</span>
+                                    </td>
+                                    <td class="fw-bold text-primary">{{ $spec->translate('en')?->name ?? '-' }}</td>
+                                    <td>{{ $spec->translate('en')?->value ?? '-' }}</td>
+                                    <td>
+                                        <form action="{{ route('admin.door.spesification.destroy', [$door->id, $spec->id]) }}" method="POST" class="d-inline-block delete-form">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger btn-icon" title="Sil">
@@ -265,7 +340,7 @@
                             @empty
                                 <tr>
                                     <td colspan="4" class="text-center py-4 text-muted">
-                                        Henüz bu kapıya ait varyant eklenmemiş.
+                                        Henüz bu kapıya ait özellik eklenmemiş.
                                     </td>
                                 </tr>
                             @endforelse
@@ -275,22 +350,23 @@
                 </div>
             </div>
 
-        </div> <!-- Varyantlar Sekmesi Bitiş -->
+        </div>
 
-    </div> <!-- Ana Tab Content Bitiş -->
+    </div>
 @endsection
 
 @push('js')
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Silme işlemi için SweetAlert onayı
+
+            // SweetAlert ile Silme Onayı
             const deleteForms = document.querySelectorAll('.delete-form');
             deleteForms.forEach(form => {
                 form.addEventListener('submit', function (e) {
                     e.preventDefault();
                     Swal.fire({
                         title: 'Emin misiniz?',
-                        text: "Bu varyant silinecektir!",
+                        text: "Bu kayıt kalıcı olarak silinecektir!",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonText: 'Evet, Sil!',
@@ -307,11 +383,17 @@
                 });
             });
 
-            // "Kapıyı Kaydet ve İlerle" işleminden sonra direkt Varyantlar sekmesini açmak için kontrol
-            @if(session('tab') == 'variants')
-            var variantsTab = new bootstrap.Tab(document.querySelector('#variants-tab'));
-            variantsTab.show();
+            // Controller'dan dönen Session'a göre otomatik sekme açma işlemi
+            @if(session('tab'))
+            var tabId = '#{{ session('tab') }}-tab';
+            var triggerEl = document.querySelector(tabId);
+
+            if (triggerEl) {
+                var tabInstance = new bootstrap.Tab(triggerEl);
+                tabInstance.show();
+            }
             @endif
+
         });
     </script>
 @endpush
