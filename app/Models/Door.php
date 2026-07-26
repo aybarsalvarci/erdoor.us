@@ -14,7 +14,8 @@ class Door extends Model
     use HasFactory, Translatable;
 
     protected $fillable = [
-        'media_id'
+        'media_id',
+        'status'
     ];
 
     protected $translatedAttributes = [

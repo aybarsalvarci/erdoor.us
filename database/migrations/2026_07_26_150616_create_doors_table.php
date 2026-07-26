@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('doors', function (Blueprint $table) {
             $table->id();
             $table->foreignId('media_id')->constrained('media', 'id');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

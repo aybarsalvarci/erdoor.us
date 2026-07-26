@@ -1,6 +1,7 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Kapı Düzenle: ' . ($door->translate('tr')?->name ?? 'İsimsiz Kapı'))
+<!-- 'tr' sistemden çıkarıldığı için başlıkta fallback olarak 'en' kullanıyoruz -->
+@section('title', 'Kapı Düzenle: ' . ($door->translate('en')?->name ?? 'İsimsiz Kapı'))
 
 @push('css')
 @endpush
@@ -8,7 +9,8 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
         <div>
-            <h4 class="mb-3 mb-md-0">Kapı Düzenle</h4>
+            <!-- Başlığı da aynı mantıkla güncelledik -->
+            <h4 class="mb-3 mb-md-0">Kapı Düzenle: <span class="text-primary">{{ $door->translate('en')?->name ?? '' }}</span></h4>
         </div>
         <div class="d-flex align-items-center flex-wrap text-nowrap">
             <a href="{{ route('admin.door.index') }}" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
@@ -80,11 +82,30 @@
                                     <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}"
                                          id="lang-{{ $code }}" role="tabpanel">
 
+                                        <!-- Collection Name Alanı -->
                                         <div class="mb-3">
-                                            <label for="name_{{ $code }}" class="form-label">Kapı Adı
-                                                ({{ strtoupper($code) }}) @if($loop->first)
-                                                    <span class="text-danger">*</span>
-                                                @endif</label>
+                                            <label for="collection_name_{{ $code }}" class="form-label">
+                                                Koleksiyon Adı ({{ strtoupper($code) }})
+                                                @if($loop->first) <span class="text-danger">*</span> @endif
+                                            </label>
+                                            <input type="text"
+                                                   class="form-control @error($code.'.collection_name') is-invalid @enderror"
+                                                   id="collection_name_{{ $code }}"
+                                                   name="{{ $code }}[collection_name]"
+                                                   placeholder="Örn: {{ $locale['placeholder'] }} Collection"
+                                                   value="{{ old($code.'.collection_name', $door->translate($code)?->collection_name) }}"
+                                                {{ $loop->first ? 'required' : '' }}>
+                                            @error($code.'.collection_name')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+
+                                        <!-- Kapı Adı Alanı -->
+                                        <div class="mb-3">
+                                            <label for="name_{{ $code }}" class="form-label">
+                                                Kapı Adı ({{ strtoupper($code) }})
+                                                @if($loop->first) <span class="text-danger">*</span> @endif
+                                            </label>
                                             <input type="text"
                                                    class="form-control @error($code.'.name') is-invalid @enderror"
                                                    id="name_{{ $code }}"
@@ -97,9 +118,11 @@
                                             @enderror
                                         </div>
 
+                                        <!-- Açıklama Alanı -->
                                         <div class="mb-3">
-                                            <label for="description_{{ $code }}" class="form-label">Açıklama
-                                                ({{ strtoupper($code) }})</label>
+                                            <label for="description_{{ $code }}" class="form-label">
+                                                Açıklama ({{ strtoupper($code) }})
+                                            </label>
                                             <textarea
                                                 class="form-control @error($code.'.description') is-invalid @enderror"
                                                 id="description_{{ $code }}"
@@ -120,21 +143,15 @@
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <!-- Bileşene (component) varsa mevcut resmi aktarıyoruz -->
                                 <x-media-picker name="media_id" label="Kapı Görseli Seç" :multiple="false"
                                                 :value="$door->media_id ?? null"/>
                             </div>
 
                             <div class="col-md-6 mb-4">
                                 <label for="status" class="form-label">Durum</label>
-                                <select class="form-select @error('status') is-invalid @enderror" id="status"
-                                        name="status">
-                                    <option value="1" {{ old('status', $door->status) == '1' ? 'selected' : '' }}>
-                                        Aktif
-                                    </option>
-                                    <option value="0" {{ old('status', $door->status) == '0' ? 'selected' : '' }}>
-                                        Pasif
-                                    </option>
+                                <select class="form-select @error('status') is-invalid @enderror" id="status" name="status">
+                                    <option value="1" {{ old('status', $door->status) == '1' ? 'selected' : '' }}>Aktif</option>
+                                    <option value="0" {{ old('status', $door->status) == '0' ? 'selected' : '' }}>Pasif</option>
                                 </select>
                                 @error('status')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -150,9 +167,6 @@
             </div>
         </div>
 
-        <!-- ========================================== -->
-        <!-- 2. SEKME: VARYANTLAR (Tablo ve Ekleme)     -->
-        <!-- ========================================== -->
         <!-- ========================================== -->
         <!-- 2. SEKME: VARYANTLAR (Tablo ve Ekleme)     -->
         <!-- ========================================== -->
@@ -250,8 +264,8 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4" class="text-center py-4 text-muted">Henüz bu kapıya ait varyant
-                                        eklenmemiş.
+                                    <td colspan="4" class="text-center py-4 text-muted">
+                                        Henüz bu kapıya ait varyant eklenmemiş.
                                     </td>
                                 </tr>
                             @endforelse
@@ -261,7 +275,7 @@
                 </div>
             </div>
 
-        </div> <!-- Varyantlar Sekmesi Bitiş --> <!-- Varyantlar Sekmesi Bitiş -->
+        </div> <!-- Varyantlar Sekmesi Bitiş -->
 
     </div> <!-- Ana Tab Content Bitiş -->
 @endsection

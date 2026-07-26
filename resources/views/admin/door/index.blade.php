@@ -34,7 +34,7 @@
                             <div class="col-md-4">
                                 <div class="form-floating">
                                     <input type="text" name="search" id="search" class="form-control" placeholder="Arama" value="{{ request('search') }}">
-                                    <label for="search" class="text-secondary">Kapı Adı veya Kodu ara...</label>
+                                    <label for="search" class="text-secondary">Kapı Adı ara...</label>
                                 </div>
                             </div>
 
