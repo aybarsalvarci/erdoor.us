@@ -25,18 +25,23 @@ class Door extends Model
         'description',
     ];
 
-    public function variants() : HasMany
+    public function variants(): HasMany
     {
         return $this->hasMany(DoorVariant::class, 'door_id', 'id');
     }
 
-    public function image() : HasOne
+    public function image(): HasOne
     {
         return $this->hasOne(Media::class,
             'id', 'media_id');
     }
 
-    public function spesifications() : HasMany
+    public function spesificationImage(): HasOne
+    {
+        return $this->hasOne(Media::class, 'id', 'spec_image_id');
+    }
+
+    public function spesifications(): HasMany
     {
         return $this->hasMany(DoorSpesification::class, 'door_id', 'id');
     }
