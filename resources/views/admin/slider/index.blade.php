@@ -123,7 +123,7 @@
                                         <a href="{{route('admin.slider.edit', $slider->id)}}" class="btn btn-sm btn-info btn-icon" title="Düzenle">
                                             <i data-lucide="edit-2"></i>
                                         </a>
-                                        <form action="#" method="POST" class="d-inline-block">
+                                        <form action="{{route('admin.slider.destroy', $slider->id)}}" method="POST" class="d-inline-block">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger btn-icon" title="Sil"
