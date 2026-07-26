@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Slider\CreateSliderRequest;
 use App\Models\Slider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class SliderController extends Controller
 {
@@ -36,9 +38,17 @@ class SliderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateSliderRequest $request)
     {
-        //
+        try {
+            Slider::create($request->validated());
+            return redirect()->route('admin.slider.index')->with('success', 'Slider created successfully.');
+        }
+        catch (\Exception $exception)
+        {
+            Log::error('Slider create error: ' . $exception->getMessage(), ['exception' => $exception]);
+            return redirect()->route('admin.slider.index')->with('error', 'An error occurred while creating slider.');
+        }
     }
 
     /**

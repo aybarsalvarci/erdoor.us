@@ -29,17 +29,12 @@
                         @csrf
 
                         <div class="row">
-                            <!-- Başlık Alanı -->
+                            <!-- Görsel Alanı (media_id) -->
                             <div class="col-md-6 mb-3">
-                                <label for="title" class="form-label">Başlık</label>
-                                <input type="text"
-                                       class="form-control @error('title') is-invalid @enderror"
-                                       id="title"
-                                       name="title"
-                                       placeholder="Slider başlığını giriniz"
-                                       value="{{ old('title') }}">
-                                @error('title')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <x-media-picker name="media_id" label="Slider Görseli Seç" :multiple="false"/>
+                                <div class="form-text text-secondary">Tercih edilen boyut: 1920x800px. Sadece JPG, PNG veya WEBP.</div>
+                                @error('media_id')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -59,14 +54,16 @@
                         </div>
 
                         <div class="row">
-                            <!-- Görsel Alanı -->
+                            <!-- Sıra (Order) Alanı -->
                             <div class="col-md-6 mb-3">
-                                <label for="image" class="form-label">Slider Görseli</label>
-                                <x-media-picker name="image_id" label="Slider Görseli Seç" :multiple="false"/>
-                                <div class="form-text text-secondary">Tercih edilen boyut: 1920x800px. Sadece JPG, PNG
-                                    veya WEBP.
-                                </div>
-                                @error('image')
+                                <label for="order" class="form-label">Sıralama (Order)</label>
+                                <input type="number"
+                                       class="form-control @error('order') is-invalid @enderror"
+                                       id="order"
+                                       name="order"
+                                       placeholder="Örn: 1"
+                                       value="{{ old('order', 0) }}">
+                                @error('order')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -103,5 +100,4 @@
 @endsection
 
 @push('js')
-
 @endpush

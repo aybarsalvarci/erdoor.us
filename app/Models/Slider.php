@@ -12,6 +12,13 @@ class Slider extends Model
     /** @use HasFactory<\Database\Factories\SliderFactory> */
     use HasFactory, SoftDeletes;
 
+    protected $fillable = [
+        'media_id',
+        'url',
+        'order',
+        'status'
+    ];
+
     public function image() : HasOne
     {
         return $this->hasOne(Media::class ,'id', 'media_id');
