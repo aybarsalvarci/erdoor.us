@@ -120,7 +120,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="#" class="btn btn-sm btn-info btn-icon" title="Düzenle">
+                                        <a href="{{route('admin.slider.edit', $slider->id)}}" class="btn btn-sm btn-info btn-icon" title="Düzenle">
                                             <i data-lucide="edit-2"></i>
                                         </a>
                                         <form action="#" method="POST" class="d-inline-block">
