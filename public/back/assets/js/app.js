@@ -51,7 +51,7 @@
 
 
 
-  // Applying perfect-scrollbar 
+  // Applying perfect-scrollbar
   if (document.querySelector('.sidebar .sidebar-body')) {
     const sidebarBodyScroll = new PerfectScrollbar('.sidebar-body');
   }
@@ -60,8 +60,8 @@
 
   // Sidebar toggle to sidebar-folded
   const sidebarTogglers = document.querySelectorAll('.sidebar-toggler');
-  // there are two sidebar togglers. 
-  // 1: on sidebar - for min-width 992px (laptop, desktop) 
+  // there are two sidebar togglers.
+  // 1: on sidebar - for min-width 992px (laptop, desktop)
   // 2: on navbar - for max-width 991px (mobile phone, tablet)
   if (sidebarTogglers.length) {
 
@@ -85,82 +85,6 @@
       document.querySelector('.sidebar .sidebar-toggler').classList.remove('active');
     }, true);
 
-  }
-
-
-
-  //  sidebar-folded on min-width:992px and max-width: 1199px (in lg only not in xl)
-  // Warning!!! this results apex chart width issue
-  // 
-  // const desktopMedium = window.matchMedia('(min-width:992px) and (max-width: 1199px)');
-  // function iconSidebar() {
-  //   if (desktopMedium.matches) {
-  //     body.classList.add('sidebar-folded');
-  //   } else {
-  //     body.classList.remove('sidebar-folded');
-  //   }
-  // }
-  // window.addEventListener('resize', iconSidebar)
-  // iconSidebar();
-
-
-
-  // Add "active" class to nav-link based on url dynamically
-  function addActiveClass(element) {
-    
-    // Get parents of the 'el' with a selector (class, id, etc..)
-    function getParents(el, selector) {
-      const parents = [];
-      while ((el = el.parentNode) && el !== document) {
-        if (!selector || el.matches(selector)) parents.push(el);
-      }
-      return parents;
-    }
-
-    if (current === "") {
-      // For root url
-      if (element.getAttribute('href').indexOf("index.html") !== -1) {    // Checking href of 'element' matching with 'index.html'
-        const elParents = getParents(element, '.nav-item');               // Getting parents of the 'element' with a class '.nav-item'
-        elParents[elParents.length - 1].classList.add('active');          // Adding class 'active' to the outer(direct) '.nav-item'
-        if (getParents(element, '.sub-menu').length) {                    // Checking if it's a submenu 'element'
-          element.closest('.collapse').classList.add('show');             // Adding class 'show' to the closest '.collapse' to expand submenu
-          element.classList.add('active');                                // Adding class 'active' to the submenu '.nav-link'
-        }
-      }
-    } else {
-      // For other url
-      if (element.getAttribute('href').indexOf(current) !== -1) {   // Checking href of 'element' matching with current url
-        const elParents = getParents(element, '.nav-item');         // Getting parents of the 'element' with a class '.nav-item'
-        elParents[elParents.length - 1].classList.add('active');    // Adding class 'active' to the outer(direct) '.nav-item'
-        if (getParents(element, '.sub-menu').length) {              // Checking if it's a submenu 'element' [in vertical menu sidebar - demo1]
-          element.closest('.collapse').classList.add('show');       // Adding class 'show' to the closest '.collapse' to expand submenu
-          element.classList.add('active');                          // Adding class 'active' to the submenu '.nav-link'
-        }
-        if (getParents(element, '.submenu-item')) {                 // Checking if it's a submenu-item 'element' [in horizontal menu bottom-navbar - demo2] 
-          element.classList.add('active');                          // Adding class 'active' to the submenu-item '.nav-link'
-          if (element.closest('.nav-item.active .submenu')) {       // Checking element has a submenu
-            element.closest('.nav-item.active').classList.add('show-submenu');  // adding class 'show-submenu' to the parent .nav-item (only for mobile/tablet)
-          }
-        }
-      }
-    }
-  }
-
-  // current url [Eg: dashboard.html]
-  const current = location.pathname.split("/").slice(-1)[0].replace(/^\/|\/$/g, '');
-
-  if (sidebar) {
-    const sidebarNavLinks = document.querySelectorAll('.sidebar .nav li a');
-    sidebarNavLinks.forEach( navLink => {
-      addActiveClass(navLink);
-    });
-  }
-
-  if (horizontalMenu) {
-    const navbarNavLinks = document.querySelectorAll('.horizontal-menu .nav li a');
-    navbarNavLinks.forEach( navLink => {
-      addActiveClass(navLink);
-    });
   }
 
 
@@ -214,7 +138,7 @@
       }, true);
     }
   }
-  
+
 
 
 
@@ -234,7 +158,7 @@
       });
     }
   }
-    
+
 
 
 
@@ -254,7 +178,7 @@
 
 
   // Prevent body scrolling while sidebar scroll
-  // 
+  //
   // if (sidebarBody) {
   //   sidebarBody.addEventListener('mouseover', function () {
   //     body.classList.add('overflow-hidden');

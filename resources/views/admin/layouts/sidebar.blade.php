@@ -26,21 +26,24 @@
             <!-- İÇERİK YÖNETİMİ -->
             <li class="nav-item nav-category">İçerik Yönetimi</li>
 
-            <li class="nav-item">
-                <a href="{{ route('admin.slider.index') }}" class="nav-link {{ request()->routeIs('admin.slider.*') ? 'active' : '' }}">
+            <!-- Slider Yönetimi -->
+            <li class="nav-item {{ request()->is('admin/slider*') ? 'active' : '' }}">
+                <a href="{{ route('admin.slider.index') }}"
+                   class="nav-link {{ request()->is('admin/slider*') ? 'active' : '' }}">
                     <i class="link-icon" data-lucide="image"></i>
                     <span class="link-title">Slider Yönetimi</span>
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a href="{{ route('admin.door.index') }}" class="nav-link {{ request()->routeIs('admin.door.*') ? 'active' : '' }}">
+            <!-- Kapı Yönetimi -->
+            <li class="nav-item {{ request()->is('admin/door*') ? 'active' : '' }}">
+                <a href="{{ route('admin.door.index') }}"
+                   class="nav-link {{ request()->is('admin/door*') ? 'active' : '' }}">
                     <i class="link-icon" data-lucide="door-open"></i>
                     <span class="link-title">Kapı Yönetimi</span>
                 </a>
             </li>
 
-            <!-- İleride ekleyebileceğiniz diğer modüller için hazırlık -->
             <!-- SİSTEM -->
             <li class="nav-item nav-category">Sistem</li>
 
