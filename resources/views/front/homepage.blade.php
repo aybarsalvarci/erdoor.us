@@ -8,31 +8,12 @@
 @section('content')
     <header id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
         <div class="carousel-inner">
-            <div class="carousel-item active" data-bs-interval="5000">
-                <img src="{{ asset('front/assets/carousel/slider.png') }}" class="hero-carousel-img d-block w-100"
-                     alt="Modern Luxury">
-            </div>
-            <div class="carousel-item" data-bs-interval="5000">
-                <img src="{{ asset('front/assets/carousel/slider1.png') }}" class="hero-carousel-img d-block w-100"
-                     alt="Fire Resistant">
-            </div>
-            <div class="carousel-item" data-bs-interval="5000">
-                <img src="{{ asset('front/assets/carousel/tall-door.png') }}" class="hero-carousel-img d-block w-100"
-                     alt="Fire Resistant">
-            </div>
-            <div class="carousel-item" data-bs-interval="5000">
-                <img src="{{ asset('front/assets/carousel/1.jpg') }}" class="hero-carousel-img d-block w-100"
-                     alt="Fire Resistant">
-            </div>
-            <div class="carousel-item" data-bs-interval="5000">
-                <img src="{{ asset('front/assets/carousel/wider-locations.png') }}"
-                     class="hero-carousel-img d-block w-100"
-                     alt="Fire Resistant">
-            </div>
-            <div class="carousel-item" data-bs-interval="5000">
-                <img src="{{ asset('front/assets/carousel/carousel-image-fire-rated.png') }}"
-                     class="hero-carousel-img d-block w-100" alt="Fire Resistant">
-            </div>
+            @foreach($sliders as $slider)
+                <div class="carousel-item active" data-bs-interval="5000">
+                    <img src="{{ $slider->image->path }}" class="hero-carousel-img d-block w-100"
+                         alt="{{{$slider->image->alt_text}}}">
+                </div>
+            @endforeach
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon"></span>

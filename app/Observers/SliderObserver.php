@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Slider;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,7 +14,7 @@ class SliderObserver
      */
     public function created(Slider $slider): void
     {
-        //
+        Cache::forget('sliders');
     }
 
     /**
@@ -21,7 +22,8 @@ class SliderObserver
      */
     public function updated(Slider $slider): void
     {
-        //
+        Cache::forget('sliders');
+
     }
 
     /**
@@ -29,7 +31,8 @@ class SliderObserver
      */
     public function deleted(Slider $slider): void
     {
-        //
+        Cache::forget('sliders');
+
     }
 
     /**
