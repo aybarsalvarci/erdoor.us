@@ -14,7 +14,8 @@ class SliderObserver
      */
     public function created(Slider $slider): void
     {
-        Cache::forget('sliders');
+        Log::debug("Created event tetiklenid.");
+        Cache::forget('homepage_sliders_data');
     }
 
     /**
@@ -22,7 +23,8 @@ class SliderObserver
      */
     public function updated(Slider $slider): void
     {
-        Cache::forget('sliders');
+        Log::debug("Updated event tetiklenid.");
+        Cache::forget('homepage_sliders_data');
 
     }
 
@@ -31,7 +33,8 @@ class SliderObserver
      */
     public function deleted(Slider $slider): void
     {
-        Cache::forget('sliders');
+        Log::debug("Deleted event tetiklenid.");
+        Cache::forget('homepage_sliders_data');
 
     }
 

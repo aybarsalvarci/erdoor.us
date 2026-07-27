@@ -6,6 +6,7 @@
 @endpush
 
 @section('content')
+
     <header id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
         <div class="carousel-inner">
             @foreach($sliders as $slider)
