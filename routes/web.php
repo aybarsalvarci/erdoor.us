@@ -4,12 +4,11 @@ use App\Http\Controllers\Admin\DoorController;
 use App\Http\Controllers\Admin\DoorSpesificationController;
 use App\Http\Controllers\Admin\DoorVariantController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Front\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\MediaController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // ================= ADMIN ROUTES =================
 Route::prefix('admin/')->name('admin.')->group(function () {
