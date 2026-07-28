@@ -14,12 +14,14 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $sliders = Cache::remember('homepage_sliders_data', 3600, function () {
+        $locale = app()->getLocale();
+
+        $sliders = Cache::remember("homepage_sliders_data_{$locale}", 3600, function () {
             $slider = Slider::with('image')->where('status', 1)->orderBy('order', 'ASC')->get();
             return $slider->map(fn($item) => SliderDto::fromModel($item))->all();
         });
 
-        $doors = Cache::remember('homepage_doors_data', 3600, function () {
+        $doors = Cache::remember("homepage_doors_data_{$locale}", 3600, function () {
             $door = Door::with('image')->where('status', 1)->get();
             return $door->map(fn($item) => DoorDto::fromModel($item))->all();
         });

@@ -302,6 +302,7 @@
         <a href="catalog.html" class="btn btn-accent btn-lg mt-4 px-5 rounded-0">Explore The Catalog</a>
     </div>
 
+
     <section id="products" class="container-fluid p-0 product-section">
 
         @foreach($doors as $door)

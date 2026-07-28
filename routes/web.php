@@ -8,7 +8,15 @@ use App\Http\Controllers\Front\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\MediaController;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::group([
+    'prefix' => LaravelLocalization::setLocale(),
+    'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+], function() {
+
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+
+});
 
 // ================= ADMIN ROUTES =================
 Route::prefix('admin/')->name('admin.')->group(function () {
