@@ -27,13 +27,13 @@ class UpdateDoorRequest extends FormRequest
 
             'en' => 'required|array',
             'en.name' => 'required|string|max:255',
-            'en.description' => 'nullable|string|max:255',
+            'en.description' => 'nullable|string',
             'en.collection_name' => 'required|string|max:255',
             'en.slug' => 'required|string|max:255',
 
             'es' => 'required|array',
             'es.name' => 'required|string|max:255',
-            'es.description' => 'nullable|string|max:255',
+            'es.description' => 'nullable|string',
             'es.collection_name' => 'required|string|max:255',
             'es.slug' => 'required|string|max:255',
 
@@ -44,10 +44,16 @@ class UpdateDoorRequest extends FormRequest
 
     public function prepareForValidation()
     {
+        $en = $this->input('en', []);
+        $en['slug'] = isset($en['name']) ? str()->slug($en['name']) : null;
+
+        $es = $this->input('es', []);
+        $es['slug'] = isset($es['name']) ? str()->slug($es['name']) : null;
+
         $this->merge([
             "status" => $this->status == 1,
-            "en.slug" => str()->slug($this->input('en.name')),
-            "es.slug" => str()->slug($this->input('es.name')),
+            "en" => $en,
+            "es" => $es,
         ]);
     }
 

@@ -301,146 +301,25 @@
         <h1 class="display-4 fw-bold font-felix">Our Interior Doors</h1>
         <a href="catalog.html" class="btn btn-accent btn-lg mt-4 px-5 rounded-0">Explore The Catalog</a>
     </div>
+
     <section id="products" class="container-fluid p-0 product-section">
 
-        <div class="row g-0 product-row align-items-center">
-            <div class="col-md-6">
-                <img src="{{ asset('front/assets/products/soho-mainpage.png') }}" class="product-img object-right"
-                     alt="SOHO">
-            </div>
-            <div class="col-md-6 product-text-box">
-                <h2 class="display-5 fw-bold">SOHO</h2>
-                <h4 class="text-muted mb-3 fst-italic">“The Pure Expression of Modern Luxury”</h4>
-                <p class="lead text-muted">With the flawless surface and elegant simplicity, SOHO transforms living
-                    spaces
-                    into a sophisticated and elite atmosphere. Its timeless minimalism seamlessly integrates with any
-                    interior design.</p>
-                <div class="mt-4">
-                    <a href="soho-door.html" class="btn btn-accent btn-lg px-5 rounded-0">Learn More</a>
+        @foreach($doors as $door)
+            <div class="row g-0 product-row align-items-center">
+                <div class="col-md-6 {{$loop->iteration % 2 == 0 ? 'order-md-2' : ''}}">
+                    <img src="{{ $door->media->path }}" class="product-img object-right"
+                         alt="SOHO">
+                </div>
+                <div class="col-md-6 product-text-box">
+                    <h2 class="display-5 fw-bold">{{$door->name}}</h2>
+                    <h4 class="text-muted mb-3 fst-italic">“{{$door->collectionName}}”</h4>
+                    <p class="lead text-muted">{{ str()->limit(strip_tags($door->description), 300) }}</p>
+                    <div class="mt-4">
+                        <a href="soho-door.html" class="btn btn-accent btn-lg px-5 rounded-0">Learn More</a>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="row g-0 product-row align-items-center">
-            <div class="col-md-6 order-md-2">
-                <img src="{{ asset('front/assets/products/vera-homepage.png') }}" class="product-img object-right"
-                     alt="VERA">
-            </div>
-            <div class="col-md-6 order-md-1 product-text-box">
-                <h2 class="display-5 fw-bold">VERA</h2>
-                <h4 class="text-muted mb-3 fst-italic">“Where Prestige Meets Design”</h4>
-                <p class="lead text-muted">It presents a harmonious blend of modern and classic aesthetics. Flawless
-                    craftmanship and meticulous attention to detail impart a distinguished presence to any space. Its
-                    elegant design adds a prestigious character to interiors.</p>
-                <div class="mt-4">
-                    <a href="vera-door.html" class="btn btn-accent btn-lg px-5 rounded-0">Learn More</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="row g-0 product-row align-items-center">
-            <div class="col-md-6">
-                <img src="{{ asset('front/assets/products/vista-resized.png') }}" class="product-img" alt="VISTA">
-            </div>
-            <div class="col-md-6 product-text-box">
-                <h2 class="display-5 fw-bold">VISTA</h2>
-                <h4 class="text-muted mb-3 fst-italic">“The Signature of Modern Aesthetics”</h4>
-                <p class="lead text-muted">Featuring a clean surface complemented by a sleek aluminum line, VISTA brings
-                    contemporary and refined aesthetics to interiors. Its elegant line offers a simple yet striking
-                    presence
-                    that seamlessly complements any décor style.</p>
-                <div class="mt-4">
-                    <a href="vista-door.html" class="btn btn-accent btn-lg px-5 rounded-0">Learn More</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="row g-0 product-row align-items-center">
-            <div class="col-md-6 order-md-2">
-                <img src="{{ asset('front/assets/products/zen.jpg') }}" class="product-img object-right" alt="ZEN">
-            </div>
-            <div class="col-md-6 order-md-1 product-text-box">
-                <h2 class="display-5 fw-bold">ZEN</h2>
-                <h4 class="text-muted mb-3 fst-italic">“Design That Brings Harmony”</h4>
-                <p class="lead text-muted">The design gives the door a distinctive character, while balanced lines and
-                    coherent planes create a smooth rhythm within the space. Thoughtfully crafted details make the door
-                    a
-                    feature that enhances both visual appeal and spatial experience.</p>
-                <div class="mt-4">
-                    <a href="zen-door.html" class="btn btn-accent btn-lg px-5 rounded-0">Learn More</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="row g-0 product-row align-items-center">
-            <div class="col-md-6">
-                <img src="{{ asset('front/assets/products/vouge-homepage.png') }}" class="product-img" alt="VOUGE">
-            </div>
-            <div class="col-md-6 product-text-box">
-                <h2 class="display-5 fw-bold">VOUGE</h2>
-                <h4 class="text-muted mb-3 fst-italic">“Opening The Perspective”</h4>
-                <p class="lead text-muted">Defined lines and balanced proportions enhance the perception of space. More
-                    than
-                    a passage, the door becomes a focal point that shapes the room’s identity. It carries a quiet yet
-                    commanding presence.</p>
-                <div class="mt-4">
-                    <a href="vouge-door.html" class="btn btn-accent btn-lg px-5 rounded-0">Learn More</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="row g-0 product-row align-items-center">
-            <div class="col-md-6 order-md-2">
-                <img src="{{ asset('front/assets/products/luna.jpg') }}" class="product-img" alt="LUNA">
-            </div>
-            <div class="col-md-6 order-md-1 product-text-box">
-                <h2 class="display-5 fw-bold">LUNA</h2>
-                <h4 class="text-muted mb-3 fst-italic">“The Quiet Line of Luxury”</h4>
-                <p class="lead text-muted">Its refined movement system gently orchestrates the rhythm of the space.
-                    Opening
-                    with a sense of expansion and closing with impeccable visual continuity, Luna becomes a silent
-                    architectural signature rather than a mere door.</p>
-                <div class="mt-4">
-                    <a href="luna-door.html" class="btn btn-accent btn-lg px-5 rounded-0">Learn More</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="row g-0 product-row align-items-center">
-            <div class="col-md-6">
-                <img src="{{ asset('front/assets/products/signatura.jpg') }}" class="product-img" alt="SIGNATURE">
-            </div>
-            <div class="col-md-6 product-text-box">
-                <h2 class="display-5 fw-bold">SIGNATURE</h2>
-                <h4 class="text-muted mb-3 fst-italic">“Where Safety Finds Its Style”</h4>
-                <p class="lead text-muted">SIGNATURE merges advanced protection with refined aesthetic. Its
-                    fire-resistant
-                    design instills a sense of security, while its elegant form adds a quiet touch of prestige to any
-                    interior. Bringing safety and style seamlessly into the living space.</p>
-                <div class="mt-4">
-                    <a href="signatura-door.html" class="btn btn-accent btn-lg px-5 rounded-0">Learn More</a>
-                </div>
-            </div>
-        </div>
-        {{-- // order md 2 sağda görsel olan ürün satırı--}}
-        <div class="row g-0 product-row align-items-center">
-            <div class="col-md-6 order-md-2">
-                <img src="{{ asset('front/assets/products/baseboard.jpg') }}" class="product-img" alt="BASEBOARD">
-            </div>
-            <div class="col-md-6 order-md-1 product-text-box">
-                <h2 class="display-5 fw-bold">BASEBOARD</h2>
-                <h4 class="text-muted mb-3 fst-italic">“The Signature of Your Space”</h4>
-                <p class="lead text-muted">Its hidden compartment conceals cables, eliminating clutter and maintaining
-                    the
-                    space’s visual harmony. Flowing lines and subtle details enhance the sense of openness, while
-                    practical
-                    design ensures effortless usability.</p>
-                <div class="mt-4">
-                    <a href="baseboard.html" class="btn btn-accent btn-lg px-5 rounded-0">Learn More</a>
-                </div>
-            </div>
-        </div>
-
+        @endforeach
 
     </section>
 @endsection

@@ -74,7 +74,6 @@ class DoorController extends Controller
     public function update(UpdateDoorRequest $request, string $id)
     {
         $door = Door::findOrFail($id);
-
         try {
             $door->update($request->validated());
             return redirect()->back()->with('success', 'Door successfully updated.');

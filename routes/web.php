@@ -21,8 +21,8 @@ Route::prefix('admin/')->name('admin.')->group(function () {
         Route::get('/fetch-media', [MediaController::class, 'fetchMedia'])->name('fetch');
     });
 
-    Route::resource('slider', SliderController::class);
     Route::resource('door', DoorController::class);
+    Route::resource('slider', SliderController::class);
     Route::resource('door.variant', DoorVariantController::class)->only(['store', 'destroy']);
     Route::resource('door.spesification', DoorSpesificationController::class)->only(['store', 'destroy']);
 });

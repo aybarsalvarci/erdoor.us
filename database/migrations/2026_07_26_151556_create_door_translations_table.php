@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('collection_name');
             $table->string('name');
             $table->string('slug');
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
 
             $table->unique(['door_id', 'locale']);
             $table->timestamps();

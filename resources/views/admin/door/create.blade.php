@@ -31,7 +31,24 @@
                         ];
                     @endphp
 
-                        <!-- Kapı Ekleme Formu -->
+                        <!-- TÜM HATALARI GÖSTEREN GENEL UYARI ALANI BAŞLANGIÇ -->
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+                            <div class="d-flex align-items-center mb-2">
+                                <i data-lucide="alert-circle" class="icon-md me-2"></i>
+                                <h6 class="mb-0">Lütfen aşağıdaki hataları düzeltiniz:</h6>
+                            </div>
+                            <ul class="mb-0 ps-4">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    <!-- TÜM HATALARI GÖSTEREN GENEL UYARI ALANI BİTİŞ -->
+
+                    <!-- Kapı Ekleme Formu -->
                     <form action="{{ route('admin.door.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
