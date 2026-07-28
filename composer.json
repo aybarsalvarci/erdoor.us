@@ -13,6 +13,7 @@
         "astrotomic/laravel-translatable": "^11.17",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9",
+        "mcamara/laravel-localization": "^2.4",
         "opcodesio/log-viewer": "^3.0"
     },
     "require-dev": {
