@@ -35,13 +35,24 @@
 
             <div class="nav-actions">
                 <div class="lang-switch">
-                    <a href="#" class="lang-btn active" data-lang="en">
-                        <img src="{{ asset('front/assets/flags/usa.png') }}" alt="EN" class="flag-icon"/>
-                    </a>
-                    <span class="divider"></span>
-                    <a href="#" class="lang-btn" data-lang="es">
-                        <img src="{{ asset('front/assets/flags/spain.jpg') }}" alt="ESP" class="flag-icon"/>
-                    </a>
+                    @foreach(\Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                        <a rel="alternate" hreflang="{{ $localeCode }}"
+                           href="{{ \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"
+                           class="lang-btn {{ app()->getLocale() == $localeCode ? 'active' : '' }}"
+                           data-lang="{{ $localeCode }}">
+
+                            @if($localeCode == 'en')
+                                <img src="{{ asset('front/assets/flags/usa.png') }}" alt="EN" class="flag-icon"/>
+                            @elseif($localeCode == 'es')
+                                <img src="{{ asset('front/assets/flags/spain.jpg') }}" alt="ESP" class="flag-icon"/>
+                            @endif
+
+                        </a>
+
+                        @if(!$loop->last)
+                            <span class="divider"></span>
+                        @endif
+                    @endforeach
                 </div>
 
                 <button class="mobile-toggle" aria-label="Toggle menu">
