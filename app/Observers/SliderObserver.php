@@ -14,8 +14,10 @@ class SliderObserver
      */
     public function created(Slider $slider): void
     {
-        Log::debug("Created event tetiklenid.");
-        Cache::forget('homepage_sliders_data');
+        $locales = array_keys(config('laravellocalization.supportedLocales'));
+        foreach ($locales as $locale) {
+            Cache::forget("homepage_sliders_data_{$locale}");
+        }
     }
 
     /**
@@ -23,9 +25,10 @@ class SliderObserver
      */
     public function updated(Slider $slider): void
     {
-        Log::debug("Updated event tetiklenid.");
-        Cache::forget('homepage_sliders_data');
-
+        $locales = array_keys(config('laravellocalization.supportedLocales'));
+        foreach ($locales as $locale) {
+            Cache::forget("homepage_sliders_data_{$locale}");
+        }
     }
 
     /**
@@ -33,9 +36,10 @@ class SliderObserver
      */
     public function deleted(Slider $slider): void
     {
-        Log::debug("Deleted event tetiklenid.");
-        Cache::forget('homepage_sliders_data');
-
+        $locales = array_keys(config('laravellocalization.supportedLocales'));
+        foreach ($locales as $locale) {
+            Cache::forget("homepage_sliders_data_{$locale}");
+        }
     }
 
     /**
@@ -43,6 +47,10 @@ class SliderObserver
      */
     public function restored(Slider $slider): void
     {
+        $locales = array_keys(config('laravellocalization.supportedLocales'));
+        foreach ($locales as $locale) {
+            Cache::forget("homepage_sliders_data_{$locale}");
+        }
     }
 
     /**
@@ -50,6 +58,9 @@ class SliderObserver
      */
     public function forceDeleted(Slider $slider): void
     {
-        //
+        $locales = array_keys(config('laravellocalization.supportedLocales'));
+        foreach ($locales as $locale) {
+            Cache::forget("homepage_sliders_data_{$locale}");
+        }
     }
 }
