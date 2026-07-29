@@ -28,4 +28,17 @@ class HomeController extends Controller
 
         return view('front.homepage', compact('sliders', 'doors'));
     }
+
+    public function doorSingle(string $slug)
+    {
+        $door = Door::with('image', 'spesificationImage', 'variants.miniPicture', 'variants.picture', 'spesifications')->whereTranslation('slug', $slug)->firstOrFail();
+        $relatedDoors = Door::with('image')
+            ->where('status', 1)
+            ->where('id', '!=', $door->id)
+            ->has('variants', '>', 0)
+            ->limit(3)
+            ->get();
+
+        return view('front.door-single', compact('door', 'relatedDoors'));
+    }
 }

@@ -27,6 +27,9 @@ class Door extends Model
         'name',
         'slug',
         'description',
+        'sertification_title',
+        'sertification_description',
+        'sertification_badge'
     ];
 
     public function variants(): HasMany
@@ -48,5 +51,10 @@ class Door extends Model
     public function spesifications(): HasMany
     {
         return $this->hasMany(DoorSpesification::class, 'door_id', 'id');
+    }
+
+    public function sertificates() : HasMany
+    {
+        return $this->hasMany(DoorSertificate::class, 'door_id', 'id');
     }
 }

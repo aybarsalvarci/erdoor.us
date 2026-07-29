@@ -22,6 +22,10 @@ return new class extends Migration
             $table->string('slug');
             $table->longText('description')->nullable();
 
+            $table->string('sertification_badge')->nullable();
+            $table->string('sertification_title')->nullable();
+            $table->string('sertification_description')->nullable();
+
             $table->unique(['door_id', 'locale']);
             $table->timestamps();
         });

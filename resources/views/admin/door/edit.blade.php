@@ -43,7 +43,7 @@
         ];
     @endphp
 
-        <!-- ANA SEKMELER (Genel Bilgiler / Varyantlar / Özellikler) -->
+        <!-- ANA SEKMELER (Genel Bilgiler / Varyantlar / Özellikler / Sertifikalar) -->
     <ul class="nav nav-tabs nav-tabs-line mb-4" id="mainTabs" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active fw-bold" id="general-tab" data-bs-toggle="tab" data-bs-target="#general"
@@ -65,6 +65,15 @@
                 <span class="badge bg-info ms-1">{{ $door->spesifications->count() ?? 0 }}</span>
             </button>
         </li>
+        <!-- YENİ EKLENEN SERTİFİKA SEKMESİ BAŞLANGIÇ -->
+        <li class="nav-item" role="presentation">
+            <button class="nav-link fw-bold" id="certs-tab" data-bs-toggle="tab" data-bs-target="#certs"
+                    type="button" role="tab" aria-controls="certs" aria-selected="false">
+                <i data-lucide="shield-check" class="icon-sm me-2"></i> Sertifikalar
+                <span class="badge bg-success ms-1">{{ $door->sertificates->count() ?? 0 }}</span>
+            </button>
+        </li>
+        <!-- YENİ EKLENEN SERTİFİKA SEKMESİ BİTİŞ -->
     </ul>
 
     <div class="tab-content" id="mainTabsContent">
@@ -158,7 +167,7 @@
                                 @enderror
                             </div>
 
-                            <!-- 2. Sütun: Özellikler Görseli (Yeni Eklenen Alan) -->
+                            <!-- 2. Sütun: Özellikler Görseli -->
                             <div class="col-md-4 mb-3">
                                 <x-media-picker name="spec_image_id" label="Özellikler Görseli Seç" :multiple="false" :value="$door->spec_image_id ?? null"/>
                                 <div class="form-text text-secondary">Özellikler alanında gösterilecek tekil görsel.</div>
@@ -192,7 +201,7 @@
         <!-- 2. SEKME: VARYANTLAR (Tablo ve Ekleme)     -->
         <!-- ========================================== -->
         <div class="tab-pane fade" id="variants" role="tabpanel" aria-labelledby="variants-tab">
-
+            <!-- (Varyant kodlarınız aynı şekilde kalıyor...) -->
             <!-- Yeni Varyant Ekleme Formu -->
             <div class="card mb-4 border-primary">
                 <div class="card-header bg-primary text-white d-flex align-items-center">
@@ -274,15 +283,12 @@
                     </div>
                 </div>
             </div>
-
-        </div> <!-- Varyantlar Sekmesi Bitiş -->
+        </div>
 
         <!-- ========================================== -->
         <!-- 3. SEKME: KAPI ÖZELLİKLERİ (Tablo ve Ekleme) -->
         <!-- ========================================== -->
         <div class="tab-pane fade" id="specs" role="tabpanel" aria-labelledby="specs-tab">
-
-            <!-- Yeni Özellik Ekleme Formu -->
             <div class="card mb-4 border-info">
                 <div class="card-header bg-info text-white d-flex align-items-center">
                     <i data-lucide="list-plus" class="icon-sm me-2"></i> Yeni Özellik Ekle
@@ -290,9 +296,7 @@
                 <div class="card-body">
                     <form action="{{ route('admin.door.spesification.store', $door->id) }}" method="POST">
                         @csrf
-
                         <div class="row">
-                            <!-- Çevrilebilir Alanlar İçin Dil Sekmeleri -->
                             <div class="col-md-10">
                                 <ul class="nav nav-pills mb-3" id="specLangTabs" role="tablist">
                                     @foreach($locales as $code => $locale)
@@ -325,8 +329,6 @@
                                     @endforeach
                                 </div>
                             </div>
-
-                            <!-- Ortak Alan (Sıra) ve Kaydet Butonu -->
                             <div class="col-md-2 d-flex flex-column justify-content-end border-start ps-3">
                                 <div class="mb-3">
                                     <label class="form-label">Sıralama</label>
@@ -337,12 +339,10 @@
                                 </button>
                             </div>
                         </div>
-
                     </form>
                 </div>
             </div>
 
-            <!-- Mevcut Özellikler Tablosu -->
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title mb-4">Mevcut Özellikler</h6>
@@ -386,8 +386,139 @@
                     </div>
                 </div>
             </div>
-
         </div>
+
+        <!-- ========================================== -->
+        <!-- 4. SEKME: SERTİFİKALAR                     -->
+        <!-- ========================================== -->
+        <div class="tab-pane fade" id="certs" role="tabpanel" aria-labelledby="certs-tab">
+
+            <div class="card mb-4 border-success">
+                <div class="card-header bg-success text-white d-flex align-items-center">
+                    <i data-lucide="edit-3" class="icon-sm me-2"></i> Sertifika Alanı Yazılarını Düzenle
+                </div>
+                <div class="card-body">
+                    <form action="{{ route('admin.door.sertification_texts.update', $door->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+
+                        <ul class="nav nav-pills mb-3" id="certLangTabs" role="tablist">
+                            @foreach($locales as $code => $locale)
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link {{ $loop->first ? 'active' : '' }} py-1 px-3"
+                                            id="cert-lang-{{ $code }}-tab"
+                                            data-bs-toggle="pill"
+                                            data-bs-target="#cert-lang-{{ $code }}"
+                                            type="button" role="tab">
+                                        <i class="flag-icon flag-icon-{{ $locale['icon'] }} me-1"></i> {{ $locale['name'] }}
+                                    </button>
+                                </li>
+                            @endforeach
+                        </ul>
+
+                        <div class="tab-content border rounded p-3 mb-3 bg-light" id="certLangTabsContent">
+                            @foreach($locales as $code => $locale)
+                                <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" id="cert-lang-{{ $code }}" role="tabpanel">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Sertifika Badge ({{ strtoupper($code) }})</label>
+                                            <input type="text" name="{{ $code }}[sertification_badge]" class="form-control" placeholder="Örn: Fire-Resistant Door" value="{{ old($code.'.sertification_badge', $door->translate($code)?->sertification_badge) }}">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Sertifika Başlığı ({{ strtoupper($code) }})</label>
+                                            <input type="text" name="{{ $code }}[sertification_title]" class="form-control" placeholder="Örn: Performance & Standards" value="{{ old($code.'.sertification_title', $door->translate($code)?->sertification_title) }}">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="form-label">Sertifika Açıklaması ({{ strtoupper($code) }})</label>
+                                            <textarea name="{{ $code }}[sertification_description]" class="form-control" rows="2" placeholder="Sertifikalar hakkında kısa bilgi...">{{ old($code.'.sertification_description', $door->translate($code)?->sertification_description) }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <button type="submit" class="btn btn-success fw-bold">
+                            <i data-lucide="save" class="icon-sm me-1"></i> Yazıları Kaydet
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 4.B Yeni Sertifika Ekleme Formu (door_sertificates tablosu) -->
+            <div class="card mb-4 border-success">
+                <div class="card-header bg-success text-white d-flex align-items-center bg-opacity-75">
+                    <i data-lucide="plus-square" class="icon-sm me-2"></i> Yeni Sertifika Logosu Ekle
+                </div>
+                <div class="card-body">
+                    <form action="{{ route('admin.door.sertificate.store', $door->id) }}" method="POST">
+                        @csrf
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-6">
+                                <x-media-picker name="image_id" label="Sertifika Görseli (Logo)" :multiple="false"/>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Sıralama</label>
+                                <input type="number" name="order" class="form-control" value="0" required>
+                            </div>
+                            <div class="col-md-3 mt-auto">
+                                <button type="submit" class="btn btn-success w-100 fw-bold d-flex align-items-center justify-content-center h-100">
+                                    <i data-lucide="plus" class="icon-sm me-1"></i> Sertifikayı Ekle
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 4.C Mevcut Sertifikalar Tablosu -->
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title mb-4">Ekli Sertifikalar</h6>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                            <tr>
+                                <th>Sıra</th>
+                                <th>Sertifika Görseli</th>
+                                <th>İşlem</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @forelse($door->sertificates ?? [] as $cert)
+                                <tr>
+                                    <td>
+                                        <span class="badge bg-secondary">{{ $cert->order }}</span>
+                                    </td>
+                                    <td>
+                                        @if($cert->image)
+                                            <img src="{{ $cert->image->type == 'internal' ? Storage::url($cert->image->path) : $cert->image->path }}" alt="Sertifika" style="height: 50px; width: auto; object-fit: contain;">
+                                        @else
+                                            <span class="text-muted small">Yok</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <form action="{{ route('admin.door.sertificate.destroy', [$cert->id]) }}" method="POST" class="d-inline-block delete-form">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger btn-icon" title="Sil">
+                                                <i data-lucide="trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="3" class="text-center py-4 text-muted">
+                                        Henüz bu kapıya ait sertifika logosu eklenmemiş.
+                                    </td>
+                                </tr>
+                            @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div> <!-- Sertifikalar Sekmesi Bitiş -->
 
     </div>
 @endsection
@@ -419,7 +550,6 @@
                 });
             });
 
-            // Controller'dan dönen Session'a göre otomatik sekme açma işlemi
             @if(session('tab'))
             var tabId = '#{{ session('tab') }}-tab';
             var triggerEl = document.querySelector(tabId);

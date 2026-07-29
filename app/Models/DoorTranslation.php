@@ -14,6 +14,9 @@ class DoorTranslation extends Model
         'name',
         'slug',
         'description',
-        'collection_name'
+        'collection_name',
+        'sertification_title',
+        'sertification_description',
+        'sertification_badge'
     ];
 }

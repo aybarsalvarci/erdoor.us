@@ -316,7 +316,7 @@
                     <h4 class="text-muted mb-3 fst-italic">“{{$door->collectionName}}”</h4>
                     <p class="lead text-muted">{{ str()->limit(strip_tags($door->description), 300) }}</p>
                     <div class="mt-4">
-                        <a href="soho-door.html" class="btn btn-accent btn-lg px-5 rounded-0">Learn More</a>
+                        <a href="{{route('door-single', $door->slug)}}" class="btn btn-accent btn-lg px-5 rounded-0">Learn More</a>
                     </div>
                 </div>
             </div>

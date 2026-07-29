@@ -1,13 +1,14 @@
 <?php
 
 use App\Http\Controllers\Admin\DoorController;
+use App\Http\Controllers\Admin\DoorSertificationController;
 use App\Http\Controllers\Admin\DoorSpesificationController;
 use App\Http\Controllers\Admin\DoorVariantController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Front\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\MediaController;
-
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
@@ -15,7 +16,7 @@ Route::group([
 ], function() {
 
     Route::get('/', [HomeController::class, 'index'])->name('home');
-
+    Route::get(LaravelLocalization::transRoute('routes.door-single'), [HomeController::class, 'doorSingle'])->name('door-single');
 });
 
 // ================= ADMIN ROUTES =================
@@ -33,4 +34,9 @@ Route::prefix('admin/')->name('admin.')->group(function () {
     Route::resource('slider', SliderController::class);
     Route::resource('door.variant', DoorVariantController::class)->only(['store', 'destroy']);
     Route::resource('door.spesification', DoorSpesificationController::class)->only(['store', 'destroy']);
+
+    // Door certifications
+    Route::put('/door-certification/text-update/{id}', [DoorSertificationController::class, 'updateText'])->name('door.sertification_texts.update');
+    Route::post('/door-certification/store-sertificate/{id}', [DoorSertificationController::class, 'storeSertificate'])->name('door.sertificate.store');
+    Route::delete('/door-certification/delete/{id}', [DoorSertificationController::class, 'destroy'])->name('door.sertificate.destroy');
 });
