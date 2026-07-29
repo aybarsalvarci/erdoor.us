@@ -23,7 +23,7 @@
                 <p class="mt-5 text-base leading-relaxed text-gray-600 sm:text-lg lg:text-xl lg:leading-loose">{{$door->description}}</p>
 
                 <div class="mt-9">
-                    <h2 class="text-sm font-semibold uppercase tracking-[0.22em] text-gray-500">Select Finish</h2>
+                    <h2 class="text-sm font-semibold uppercase tracking-[0.22em] text-gray-500">{{__('door-single.variants-title')}}</h2>
                     <div class="mt-4 grid grid-cols-3 gap-3 sm:flex sm:flex-wrap sm:gap-4">
                         <!-- Straight White -->
                         @foreach($door->variants as $variant)
@@ -42,7 +42,7 @@
                 <div class="mt-10">
                     <a href="#"
                        class="inline-flex w-full items-center justify-center rounded-md bg-gray-950 px-8 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-[#c0392b] sm:w-auto">
-                        Request a Quote
+                        {{__('door-single.requeset-a-quote')}}
                     </a>
                 </div>
             </div>
@@ -79,9 +79,8 @@
         <section class="mx-auto max-w-7xl border-t border-gray-200 px-4 py-12 sm:px-6 md:py-16 lg:px-8">
             <div class="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.8fr)] lg:gap-16 xl:gap-24">
                 <div class="w-full">
-                    <p class="mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-gray-500">Technical
-                        Details</p>
-                    <h2 class="font-felix text-3xl text-gray-950 sm:text-4xl">Specifications</h2>
+                    <p class="mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-gray-500">{{__('door-single.technical-details')}}</p>
+                    <h2 class="font-felix text-3xl text-gray-950 sm:text-4xl">{{__('door-single.spesifications')}}</h2>
 
                     <div class="mt-7 w-full overflow-hidden rounded-lg text-left">
                         @foreach($door->spesifications as $spec)
@@ -110,8 +109,8 @@
             <div class="rounded-lg bg-gray-50 px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
                 <div class="mb-8 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
                     <div>
-                        <p class="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-gray-500">Explore More</p>
-                        <h2 class="font-felix text-3xl text-gray-950 sm:text-4xl">Related Products</h2>
+                        <p class="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-gray-500">{{__('door-single.explore-more')}}</p>
+                        <h2 class="font-felix text-3xl text-gray-950 sm:text-4xl">{{__('door-single.related-products')}}</h2>
                     </div>
                 </div>
 
@@ -138,7 +137,7 @@
     <!-- Lightbox ve Tooltip Bileşenleri -->
     <div id="imageLightbox" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 p-4">
         <button type="button" id="lightboxClose"
-                class="absolute right-5 top-5 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-3xl leading-none text-white transition hover:bg-white/20"
+                class="absolute right-5 top-5 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-3xl leading-none textsele-white transition hover:bg-white/20"
                 aria-label="Close image preview">&times;
         </button>
         <img id="lightboxImage" src="" alt="Expanded product detail"
