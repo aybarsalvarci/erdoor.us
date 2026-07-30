@@ -3,8 +3,6 @@
 @section('title', 'SIGNATURA Premium - Erdoor')
 
 @section('content')
-    <div id="header-placeholder"></div>
-
     <main id="doorPageRoot" class="bg-white text-gray-950">
         <!-- Ana Ürün Bölümü -->
         <section

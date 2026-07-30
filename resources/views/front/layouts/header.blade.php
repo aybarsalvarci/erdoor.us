@@ -14,13 +14,13 @@
             <nav class="main-nav">
                 <ul class="nav-links">
                     <li>
-                        <a href="index.html#products" class="nav-link" data-key="menu_products">PRODUCTS</a>
+                        <a href="{{route('home')}}#products" class="nav-link" data-key="menu_products">PRODUCTS</a>
                     </li>
                     <li>
                         <a href="why-wpc-door.html" class="nav-link">WHY WPC DOOR</a>
                     </li>
                     <li>
-                        <a href="resources.html" class="nav-link" data-key="menu_resource">RESOURCE</a>
+                        <a href="{{route('resources')}}" class="nav-link" data-key="menu_resource">RESOURCE</a>
                     </li>
                     <li>
                         <a href="about-us.html" class="nav-link" data-key="menu_about">ABOUT US</a>

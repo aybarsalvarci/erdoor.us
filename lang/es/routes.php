@@ -1,5 +1,9 @@
 <?php
 
 return [
-    "door-single" => "puerta/{slug}"
+    "door-single" => "puerta/{slug}",
+    "resources" => [
+        "main" => "recursos",
+        "single" => "recursos/{slug}",
+    ]
 ];

@@ -6,6 +6,7 @@ use App\Dtos\DoorDto;
 use App\Dtos\SliderDto;
 use App\Http\Controllers\Controller;
 use App\Models\Door;
+use App\Models\ResourcePage;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -40,5 +41,54 @@ class HomeController extends Controller
             ->get();
 
         return view('front.door-single', compact('door', 'relatedDoors'));
+    }
+
+    public function resources()
+    {
+        $locale = app()->getLocale();
+        $pages = Cache::remember("resources_pages_{$locale}", 3600, function () {
+            return ResourcePage::with('image')->get();
+        });
+
+        return view('front.resources', compact('pages'));
+    }
+
+    public function resourcesSingle(string $slug)
+    {
+        $page = ResourcePage::whereTranslation('slug', $slug, app()->getLocale())
+            ->with('image')->firstOrFail();
+
+        switch ($page->translate('en')->slug) {
+            case "installation":
+                return view('front.resources.installation', compact('page'));
+                break;
+
+            case "fire-resistance-test":
+                return view('front.resources.fire-resistence-test', compact('page'));
+                break;
+
+            case "warranty":
+                return view('front.resources.warranty', compact('page'));
+                break;
+
+            case "technical-and-certificates":
+                $documents = [
+
+                ];
+                return view('front.resources.technical-and-certificates', compact('page', 'documents'));
+                break;
+
+            case "gallery":
+                return view('front.resources.gallery', compact('page'));
+                break;
+
+            case "digital-catalog":
+                return view('front.resources.digital-catalog', compact('page'));
+                break;
+
+            default:
+                abort(404);
+                break;
+        }
     }
 }
