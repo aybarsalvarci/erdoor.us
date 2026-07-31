@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             ResourcePagesSeeder::class,
             HomePageSeeder::class,
             WhyWpcPageSeeder::class,
+            AboutPageSeeder::class,
         ]);
     }
 }

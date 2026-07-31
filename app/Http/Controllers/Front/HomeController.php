@@ -67,6 +67,16 @@ class HomeController extends Controller
         return view('front.why-wpc-doors', compact('page'));
     }
 
+    public function about()
+    {
+        $locale = app()->getLocale();
+        $page = Cache::remember("about_us_page_{$locale}", 3600, function () {
+            return Page::findOrFail(3);
+        });
+
+        return view('front.about', compact('page'));
+    }
+
     public function resourcesSingle(string $slug)
     {
         $page = ResourcePage::whereTranslation('slug', $slug, app()->getLocale())

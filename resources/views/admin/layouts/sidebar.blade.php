@@ -65,6 +65,15 @@
                 </a>
             </li>
 
+            <!-- About Us Yönetimi -->
+            <li class="nav-item {{ request()->routeIs('admin.pages.about-us') ? 'active' : '' }}">
+                <a href="{{ route('admin.pages.about-us') }}"
+                   class="nav-link {{ request()->routeIs('admin.pages.about-us') ? 'active' : '' }}">
+                    <i class="link-icon" data-lucide="door-open"></i>
+                    <span class="link-title">About Us</span>
+                </a>
+            </li>
+
             <!-- SİSTEM -->
             <li class="nav-item nav-category">Sistem</li>
 
