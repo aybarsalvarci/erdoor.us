@@ -23,10 +23,10 @@
                         <a href="{{route('resources')}}" class="nav-link" data-key="menu_resource">RESOURCE</a>
                     </li>
                     <li>
-                        <a href="about-us.html" class="nav-link" data-key="menu_about">ABOUT US</a>
+                        <a href="{{route('about')}}" class="nav-link" data-key="menu_about">ABOUT US</a>
                     </li>
                     <li>
-                        <a href="contact.html" class="nav-link" data-key="menu_contact">CONTACT</a>
+                        <a href="{{route('contact')}}" class="nav-link" data-key="menu_contact">CONTACT</a>
                     </li>
                     <li>
                     </li>

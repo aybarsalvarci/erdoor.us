@@ -24,6 +24,7 @@ Route::group([
     Route::get(LaravelLocalization::transRoute('routes.resources.single'), [HomeController::class, 'resourcesSingle'])->name('resources.single');
     Route::get(LaravelLocalization::transRoute('routes.why-wpc-doors'), [HomeController::class, 'whyWpcDoors'])->name('why-wpc-doors');
     Route::get(LaravelLocalization::transRoute('routes.about'), [HomeController::class, 'about'])->name('about');
+    Route::get(LaravelLocalization::transRoute('routes.contact'), [HomeController::class, 'contact'])->name('contact');
 });
 
 // ================= ADMIN ROUTES =================
