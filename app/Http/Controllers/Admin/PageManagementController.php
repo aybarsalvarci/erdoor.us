@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Pages\UpdateAboutUsRequest;
+use App\Http\Requests\Pages\UpdateContactUsRequest;
 use App\Http\Requests\Pages\UpdateHomePageRequest;
 use App\Http\Requests\Pages\UpdateWhyWpcRequest;
 use App\Models\Page;
@@ -102,6 +103,31 @@ class PageManagementController extends Controller
         $page->touch();
 
         return redirect()->back()->with('success', 'About Us sayfası içerikleri başarıyla güncellendi.');
+    }
+
+    public function manageContactUs()
+    {
+        $page = Page::findOrFail(4);
+        return view('admin.pages.manage-contact-page', compact('page'));
+    }
+
+    public function updateContactUs(UpdateContactUsRequest $request)
+    {
+        $page = Page::findOrFail(4);
+
+        $translations = $request->validated('translations');
+
+        foreach ($translations as $locale => &$data) {
+            if (isset($data['content']['form_section']['role_options'])) {
+                $data['content']['form_section']['role_options'] = array_values($data['content']['form_section']['role_options']);
+            }
+        }
+
+        unset($data);
+        $page->update($translations);
+        $page->touch();
+
+        return redirect()->back()->with('success', 'Contact Us sayfası içerikleri başarıyla güncellendi.');
     }
 
 }

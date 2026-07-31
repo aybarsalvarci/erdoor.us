@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             HomePageSeeder::class,
             WhyWpcPageSeeder::class,
             AboutPageSeeder::class,
+            ContactPageSeeder::class,
         ]);
     }
 }

@@ -32,6 +32,12 @@ class PageObserver
                 Cache::forget("about_us_page{$locale}");
             }
         }
+        if ($page->id == 4) {
+            $locales = array_keys(config('laravellocalization.supportedLocales'));
+            foreach ($locales as $locale) {
+                Cache::forget("contact_page_{$locale}");
+            }
+        }
     }
 
 }

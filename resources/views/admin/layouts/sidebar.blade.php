@@ -74,6 +74,15 @@
                 </a>
             </li>
 
+            <!-- Contact Us Yönetimi -->
+            <li class="nav-item {{ request()->routeIs('admin.pages.contact-us') ? 'active' : '' }}">
+                <a href="{{ route('admin.pages.contact-us') }}"
+                   class="nav-link {{ request()->routeIs('admin.pages.contact-us') ? 'active' : '' }}">
+                    <i class="link-icon" data-lucide="door-open"></i>
+                    <span class="link-title">Contact Us</span>
+                </a>
+            </li>
+
             <!-- SİSTEM -->
             <li class="nav-item nav-category">Sistem</li>
 

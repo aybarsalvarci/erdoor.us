@@ -25,6 +25,7 @@ Route::group([
     Route::get(LaravelLocalization::transRoute('routes.why-wpc-doors'), [HomeController::class, 'whyWpcDoors'])->name('why-wpc-doors');
     Route::get(LaravelLocalization::transRoute('routes.about'), [HomeController::class, 'about'])->name('about');
     Route::get(LaravelLocalization::transRoute('routes.contact'), [HomeController::class, 'contact'])->name('contact');
+
 });
 
 // ================= ADMIN ROUTES =================
@@ -62,6 +63,10 @@ Route::prefix('admin/')->name('admin.')->group(function () {
     // 3 - Manage About Page
     Route::get('/manage-about-us', [PageManagementController::class, 'manageAboutUs'])->name('pages.about-us');
     Route::put('/manage-about-us', [PageManagementController::class, 'updateAboutUs'])->name('pages.about.update');
+
+    // 4 - Manage Contact Page
+    Route::get('/manage-contact-us', [PageManagementController::class, 'manageContactUs'])->name('pages.contact-us');
+    Route::put('/manage-contact-us', [PageManagementController::class, 'updateContactUs'])->name('pages.contact.update');
 
     //  ======= RESOURCE ROUTES =======
 
