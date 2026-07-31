@@ -6,6 +6,7 @@ use App\Dtos\DoorDto;
 use App\Dtos\SliderDto;
 use App\Http\Controllers\Controller;
 use App\Models\Door;
+use App\Models\Page;
 use App\Models\ResourcePage;
 use App\Models\Slider;
 use Illuminate\Http\Request;
@@ -17,6 +18,10 @@ class HomeController extends Controller
     {
         $locale = app()->getLocale();
 
+        $page = Cache::remember("homepage_data_{$locale}", 3600, function () {
+            return Page::withTranslation()->findOrFail(1);
+        });
+
         $sliders = Cache::remember("homepage_sliders_data_{$locale}", 3600, function () {
             $slider = Slider::with('image')->where('status', 1)->orderBy('order', 'ASC')->get();
             return $slider->map(fn($item) => SliderDto::fromModel($item))->all();
@@ -27,7 +32,7 @@ class HomeController extends Controller
             return $door->map(fn($item) => DoorDto::fromModel($item))->all();
         });
 
-        return view('front.homepage', compact('sliders', 'doors'));
+        return view('front.homepage', compact('sliders', 'doors', 'page'));
     }
 
     public function doorSingle(string $slug)

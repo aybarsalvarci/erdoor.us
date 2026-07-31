@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DoorController;
 use App\Http\Controllers\Admin\DoorSertificationController;
 use App\Http\Controllers\Admin\DoorSpesificationController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\Front\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\MediaController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use App\Http\Controllers\Admin\PageManagementController;
 
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
@@ -25,7 +27,9 @@ Route::group([
 // ================= ADMIN ROUTES =================
 Route::prefix('admin/')->name('admin.')->group(function () {
 
-    // Media Route
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+//     Media Route
     Route::prefix('/media')->name('media.')->group(function () {
         Route::post('/update-alt', [MediaController::class, 'updateAlt'])->name('update-alt');
         Route::post('/store-url', [MediaController::class, 'storeUrl'])->name('store.url');
@@ -43,6 +47,10 @@ Route::prefix('admin/')->name('admin.')->group(function () {
     Route::post('/door-certification/store-sertificate/{id}', [DoorSertificationController::class, 'storeSertificate'])->name('door.sertificate.store');
     Route::delete('/door-certification/delete/{id}', [DoorSertificationController::class, 'destroy'])->name('door.sertificate.destroy');
 
+    //  ======= PAGE MANAGEMENT ROUTES =======
+    // 1 - Manage HomePage
+    Route::get('/manage-homepage', [PageManagementController::class, 'manageHomePage'])->name('manage-homepage');
+    Route::put('/manage-homepage', [PageManagementController::class, 'updateHomePage'])->name('pages.home.update');
     //  ======= RESOURCE ROUTES =======
 
     // 1 - Gallery Routes

@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             MediaSeeder::class,
             SliderSeeder::class,
             ResourcePagesSeeder::class,
+            HomePageSeeder::class,
         ]);
     }
 }

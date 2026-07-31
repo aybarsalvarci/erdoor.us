@@ -16,7 +16,6 @@
             <li class="nav-item nav-category">Ana Menü</li>
 
             <li class="nav-item">
-                <!-- Dashboard rotanızı buraya ekleyebilirsiniz (örn: route('admin.dashboard') ) -->
                 <a href="/admin" class="nav-link {{ request()->is('admin') ? 'active' : '' }}">
                     <i class="link-icon" data-lucide="layout-dashboard"></i>
                     <span class="link-title">Dashboard</span>
@@ -41,6 +40,19 @@
                    class="nav-link {{ request()->is('admin/door*') ? 'active' : '' }}">
                     <i class="link-icon" data-lucide="door-open"></i>
                     <span class="link-title">Kapı Yönetimi</span>
+                </a>
+            </li>
+
+            <!-- Sayfalar -->
+
+            <li class="nav-item nav-category">Sayfalar</li>
+
+            <!-- Anasayfa Yönetimi -->
+            <li class="nav-item {{ request()->routeIs('admin.manage-homepage') ? 'active' : '' }}">
+                <a href="{{ route('admin.manage-homepage') }}"
+                   class="nav-link {{ request()->routeIs('admin.manage-homepage') ? 'active' : '' }}">
+                    <i class="link-icon" data-lucide="door-open"></i>
+                    <span class="link-title">Anasayfa Yönetimi</span>
                 </a>
             </li>
 
