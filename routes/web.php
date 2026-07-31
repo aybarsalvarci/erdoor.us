@@ -86,6 +86,10 @@ Route::prefix('admin/')->name('admin.')->group(function () {
         Route::get('/warranty-page', [ResourceController::class, 'warrantyPage'])->name('warranty-page');
         Route::put('/warranty-page', [ResourceController::class, 'updateWarrantyPage'])->name('warranty.update');
 
+        //  3 - Technical Certificates Page Routes
+        Route::get('/technical-certificates', [ResourceController::class, 'technicalCertificatesPage'])->name('technicalCertificatesPage');
+        Route::put('/technical-certificates', [ResourceController::class, 'updateTechnicalCertificatesPage'])->name('technical_certificates.update');
+
         // 2 - Gallery Routes
         Route::get('/gallery-management', [GalleryController::class, 'index'])->name('gallery.index');
     });

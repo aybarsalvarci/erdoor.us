@@ -214,19 +214,69 @@ class ResourcePagesSeeder extends Seeder
             ],
             // 4. Technical & Certificates
             [
-                'image_id' => 4,
-                'icon' => 'fas fa-file-contract',
+                'image_id' => 4, // İlgili kapak görselinin ID'si
+                'icon' => 'fas fa-file-contract', // Doküman / Sertifika ikonu
                 'en' => [
                     'title' => 'Technical & Certificates',
                     'slug' => 'technical-and-certificates',
-                    'description' => 'Access organized product literature, technical information, performance reports, and supporting certificates.',
-                    'link_text' => 'VIEW DOCUMENTS'
+                    'description' => 'Certificates, technical specifications, and test reports—organized in one accessible document grid.',
+                    'link_text' => 'BROWSE LIBRARY',
+                    'page_content' => [
+                        'hero' => [
+                            'back_link' => 'Resources',
+                            'eyebrow' => 'Document library',
+                            'title' => 'Technical &<br>Certificates',
+                            'description' => 'Certificates, technical specifications, and test reports—organized in one accessible document grid.'
+                        ],
+                        'library' => [
+                            'eyebrow' => 'Available documents',
+                            'title' => 'Browse the library',
+                            'filter_all' => 'All',
+                            'filter_cert' => 'Certificates',
+                            'filter_tech' => 'Technical',
+                            'search_placeholder' => 'Search documents',
+                            'empty_text' => 'No documents match your search.',
+                            'view_link' => 'Open document'
+                        ],
+                        'help' => [
+                            'eyebrow' => 'Project support',
+                            'title' => 'Need a specific report?',
+                            'description' => 'Ask our team for the documentation required for your market, product configuration, or project.',
+                            'button_text' => 'Request a document',
+                            'button_link' => '#' // İletişim sayfasına veya bir forma yönlendirilebilir
+                        ]
+                    ]
                 ],
                 'es' => [
                     'title' => 'Técnicos y Certificados',
                     'slug' => 'tecnicos-y-certificados',
-                    'description' => 'Acceda a literatura de productos organizada, información técnica, informes de rendimiento y certificados de respaldo.',
-                    'link_text' => 'VER DOCUMENTOS'
+                    'description' => 'Certificados, especificaciones técnicas e informes de pruebas, organizados en una cuadrícula de documentos accesible.',
+                    'link_text' => 'EXPLORAR BIBLIOTECA',
+                    'page_content' => [
+                        'hero' => [
+                            'back_link' => 'Recursos',
+                            'eyebrow' => 'Biblioteca de documentos',
+                            'title' => 'Técnicos y<br>Certificados',
+                            'description' => 'Certificados, especificaciones técnicas e informes de pruebas, organizados en una cuadrícula de documentos accesible.'
+                        ],
+                        'library' => [
+                            'eyebrow' => 'Documentos disponibles',
+                            'title' => 'Explorar la biblioteca',
+                            'filter_all' => 'Todos',
+                            'filter_cert' => 'Certificados',
+                            'filter_tech' => 'Técnicos',
+                            'search_placeholder' => 'Buscar documentos',
+                            'empty_text' => 'Ningún documento coincide con su búsqueda.',
+                            'view_link' => 'Abrir documento'
+                        ],
+                        'help' => [
+                            'eyebrow' => 'Soporte de proyectos',
+                            'title' => '¿Necesita un informe específico?',
+                            'description' => 'Solicite a nuestro equipo la documentación requerida para su mercado, configuración de producto o proyecto.',
+                            'button_text' => 'Solicitar un documento',
+                            'button_link' => '#'
+                        ]
+                    ]
                 ],
             ],
             // 5. Gallery

@@ -110,6 +110,12 @@
                         </li>
                     </ul>
 
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="{{route('admin.resources.technicalCertificatesPage')}}" class="nav-link">Technical Certificates</a>
+                        </li>
+                    </ul>
+
                 </div>
             </li>
             <!-- SİSTEM -->
