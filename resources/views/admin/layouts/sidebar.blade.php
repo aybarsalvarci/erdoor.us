@@ -43,6 +43,14 @@
                 </a>
             </li>
 
+            <li class="nav-item {{ request()->routeIs('admin.resources.certificates.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.resources.certificates.index') }}"
+                   class="nav-link {{ request()->routeIs('admin.resources.certificates.*') ? 'active' : '' }}">
+                    <i class="link-icon" data-lucide="image"></i>
+                    <span class="link-title">Sertifika Yönetimi</span>
+                </a>
+            </li>
+
             <!-- Sayfalar -->
 
             <li class="nav-item nav-category">Sayfa Yönetimi</li>

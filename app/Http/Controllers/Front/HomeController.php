@@ -6,6 +6,7 @@ use App\Dtos\DoorDto;
 use App\Dtos\SliderDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ContactMessage\SendContactMessageRequest;
+use App\Models\Certificate;
 use App\Models\ContactMessage;
 use App\Models\Door;
 use App\Models\Page;
@@ -101,7 +102,7 @@ class HomeController extends Controller
             return redirect()->back()->withError("An error occured while sending message");
         }
     }
-    public function resourcesSingle(string $slug)
+    public function resourcesSingle(string $slug, Request $request)
     {
         $page = ResourcePage::whereTranslation('slug', $slug, app()->getLocale())
             ->with('image')->firstOrFail();
@@ -122,7 +123,25 @@ class HomeController extends Controller
                 break;
 
             case "technical-and-certificates":
-                $documents = [];
+                $query = Certificate::where('status', 1);
+
+                // Kategori filtresi (certificate veya technical)
+                if ($request->filled('category')) {
+                    $query->where('category', $request->category);
+                }
+
+                // Arama filtresi (title, description veya type içinde arama)
+                if ($request->filled('search')) {
+                    $search = $request->search;
+                    $query->where(function($q) use ($search) {
+                        $q->where('title', 'LIKE', "%{$search}%")
+                            ->orWhere('description', 'LIKE', "%{$search}%")
+                            ->orWhere('type', 'LIKE', "%{$search}%");
+                    });
+                }
+
+                $documents = $query->orderBy('order', 'ASC')->paginate(10)->withQueryString();
+
                 return view('front.resources.technical-and-certificates', compact('page', 'documents'));
                 break;
 

@@ -41,19 +41,19 @@
 
                     {{-- Kategori Filtreleri --}}
                     <div class="document-filters">
-                        <a href="{{ request()->fullUrlWithQuery(['category' => null]) }}"
+                        <a href="{{ request()->fullUrlWithQuery(['category' => null, 'page' => null]) }}"
                            class="{{ !request('category') ? 'is-active' : '' }}"
                            style="text-decoration: none;">
                             {{ $content['library']['filter_all'] ?? 'All' }}
                         </a>
 
-                        <a href="{{ request()->fullUrlWithQuery(['category' => 'certificate']) }}"
+                        <a href="{{ request()->fullUrlWithQuery(['category' => 'certificate', 'page' => null]) }}"
                            class="{{ request('category') == 'certificate' ? 'is-active' : '' }}"
                            style="text-decoration: none;">
                             {{ $content['library']['filter_cert'] ?? 'Certificates' }}
                         </a>
 
-                        <a href="{{ request()->fullUrlWithQuery(['category' => 'technical']) }}"
+                        <a href="{{ request()->fullUrlWithQuery(['category' => 'technical', 'page' => null]) }}"
                            class="{{ request('category') == 'technical' ? 'is-active' : '' }}"
                            style="text-decoration: none;">
                             {{ $content['library']['filter_tech'] ?? 'Technical' }}
@@ -105,6 +105,13 @@
                         <p class="document-empty">{{ $content['library']['empty_text'] ?? 'No documents match your search.' }}</p>
                     @endforelse
                 </div>
+
+                {{-- Sayfalama Linkleri (Eğer sayfalama varsa altta görünmesi için) --}}
+                @if($documents->hasPages())
+                    <div class="mt-5 d-flex justify-content-center">
+                        {{ $documents->withQueryString()->links() }}
+                    </div>
+                @endif
             </div>
         </section>
 

@@ -90,6 +90,7 @@ Route::prefix('admin/')->name('admin.')->group(function () {
         Route::get('/technical-certificates', [ResourceController::class, 'technicalCertificatesPage'])->name('technicalCertificatesPage');
         Route::put('/technical-certificates', [ResourceController::class, 'updateTechnicalCertificatesPage'])->name('technical_certificates.update');
 
+        Route::resource('certificates', \App\Http\Controllers\Admin\CertificateController::class);
         // 2 - Gallery Routes
         Route::get('/gallery-management', [GalleryController::class, 'index'])->name('gallery.index');
     });
