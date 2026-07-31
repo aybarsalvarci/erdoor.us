@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DoorSertificationController;
 use App\Http\Controllers\Admin\DoorSpesificationController;
 use App\Http\Controllers\Admin\DoorVariantController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\ResourceController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Front\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -73,7 +74,11 @@ Route::prefix('admin/')->name('admin.')->group(function () {
     //  ======= RESOURCE ROUTES =======
 
     // 1 - Gallery Routes
-    Route::get('/gallery-management', [GalleryController::class, 'index'])->name('gallery.index');
+    Route::prefix('/resources')->name('resources.')->group(function () {
+        Route::get('/installation-page', [ResourceController::class, 'installationPage'])->name('installation-page');
+        Route::put('/installation-page', [ResourceController::class, 'updateInstallationPage'])->name('installation.update');
+        Route::get('/gallery-management', [GalleryController::class, 'index'])->name('gallery.index');
+    });
 
 
 });

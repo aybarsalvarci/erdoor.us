@@ -10,6 +10,11 @@ class ResourcePageTranslation extends Model
         'title',
         'slug',
         'description',
-        'link_text'
+        'link_text',
+        'page_content'
+    ];
+
+    protected $casts = [
+        'page_content' => 'array',
     ];
 }

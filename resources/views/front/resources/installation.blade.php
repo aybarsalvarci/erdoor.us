@@ -1,64 +1,80 @@
 @extends('front.layouts.master')
 
-@section('title', 'SIGNATURA Premium - Erdoor')
+@section('title', $page->title . ' - Erdoor')
 
 @push('css')
     <link rel="stylesheet" href="{{asset('front/css/media-resource.css')}}">
+    <style>
+        /* YouTube iframe'inin mevcut tasarım kutusuna tam oturması için */
+        .video-frame iframe {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border: none;
+            border-radius: inherit;
+        }
+    </style>
 @endpush
+
+@php
+    $content = $page->page_content ?? [];
+@endphp
+
 @section('content')
     <main>
         <section class="media-resource-hero">
             <div class="container">
-                <a href="{{route('resources')}}" class="media-back-link"><i class="fa-solid fa-arrow-left"
-                                                                    aria-hidden="true"></i> Resources</a>
-                <p class="media-eyebrow">Installation guide</p>
-                <h1>Install with confidence.</h1>
-                <p>Watch the complete Erdoor door installation process for guidance on preparation, alignment, hardware,
-                    and final adjustments.</p>
+                <a href="{{route('resources')}}" class="media-back-link">
+                    <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                    {{ $content['hero']['back_link'] ?? 'Resources' }}
+                </a>
+                <p class="media-eyebrow">{{ $content['hero']['eyebrow'] ?? '' }}</p>
+                <h1>{!! nl2br(e($content['hero']['title'] ?? $page->title)) !!}</h1>
+                <p>{{ $content['hero']['description'] ?? $page->description }}</p>
             </div>
         </section>
 
         <section class="media-resource-content">
             <div class="container media-resource-grid">
+
+                <!-- VİDEO ALANI -->
                 <div class="video-panel" data-video-panel>
-                    <p class="media-video-label">Installation film</p>
+                    <p class="media-video-label">{{ $content['video']['label'] ?? '' }}</p>
                     <div class="video-frame">
-                        <video controls playsinline preload="metadata" poster="assets/gallery/4.jpg"
-                               data-resource-video>
-                            <source src="assets/videos/instillation.mp4" type="video/mp4">
-                            Your browser does not support HTML video.
-                        </video>
-                        <div class="video-status" data-video-status>
-                            <i class="fa-solid fa-film" aria-hidden="true"></i>
-                            <strong>Installation video unavailable</strong>
-                            <span>Please try again or contact Erdoor support.</span>
-                        </div>
+                        @if(!empty($content['video']['iframe']))
+                            <!-- Admin panelden gelen YouTube Iframe kodu raw (işlenmemiş) olarak basılıyor -->
+                            {!! $content['video']['iframe'] !!}
+                        @else
+                            <!-- Eğer iframe eklenmemişse hata ekranı gösteriliyor -->
+                            <div class="video-status" data-video-status style="display: flex;">
+                                <i class="fa-solid fa-film" aria-hidden="true"></i>
+                                <strong>{{ $content['video']['error_title'] ?? 'Video unavailable' }}</strong>
+                                <span>{{ $content['video']['error_desc'] ?? 'Please try again later.' }}</span>
+                            </div>
+                        @endif
                     </div>
                 </div>
 
+                <!-- NOTLAR VE ADIMLAR ALANI -->
                 <aside class="media-notes">
-                    <p class="media-eyebrow">Before you begin</p>
-                    <h2>Prepare for a precise fit</h2>
+                    <p class="media-eyebrow">{{ $content['notes']['eyebrow'] ?? '' }}</p>
+                    <h2>{{ $content['notes']['title'] ?? '' }}</h2>
                     <ol>
-                        <li><span>01</span>
-                            <div><strong>Inspect the opening</strong>
-                                <p>Confirm the opening is clean, level, plumb, and sized for the selected door
-                                    system.</p></div>
-                        </li>
-                        <li><span>02</span>
-                            <div><strong>Review components</strong>
-                                <p>Verify the frame, leaf, hardware, fasteners, and accessories before installation.</p>
-                            </div>
-                        </li>
-                        <li><span>03</span>
-                            <div><strong>Make final adjustments</strong>
-                                <p>Check clearances, alignment, latch operation, and smooth movement before
-                                    completion.</p></div>
-                        </li>
+                        @if(!empty($content['notes']['steps']))
+                            @foreach($content['notes']['steps'] as $step)
+                                <li>
+                                    <!-- str_pad ile numaraları 1 yerine 01, 02 formatına çeviriyoruz -->
+                                    <span>{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                                    <div>
+                                        <strong>{{ $step['title'] ?? '' }}</strong>
+                                        <p>{{ $step['description'] ?? '' }}</p>
+                                    </div>
+                                </li>
+                            @endforeach
+                        @endif
                     </ol>
-                    <p class="media-disclaimer">Always follow project requirements, local building codes, and the
-                        instructions supplied with your Erdoor system.</p>
+                    <p class="media-disclaimer">{{ $content['notes']['disclaimer'] ?? '' }}</p>
                 </aside>
+
             </div>
         </section>
     </main>

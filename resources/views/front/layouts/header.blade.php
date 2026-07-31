@@ -38,35 +38,67 @@
                     @foreach(\Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
 
                         @php
-                            $currentRoute = request()->route();
-                            $routeName = $currentRoute ? $currentRoute->getName() : null; // Örn: 'resources.single'
-                            $routeParams = $currentRoute ? $currentRoute->parameters() : [];
                             $url = '';
+                            $targetSlug = null;
 
-                            // 1. Hedef dilin dinamik slug kelimesini alıyoruz (Örn: installation / instalacion)
-                            if (isset($page) && count($routeParams) > 0) {
-                                $paramKey = array_key_first($routeParams);
-                                $routeParams[$paramKey] = $page->translate($localeCode)?->slug ?? $page->slug;
-                            }
-                            elseif (isset($door) && count($routeParams) > 0) {
-                                $paramKey = array_key_first($routeParams);
-                                $routeParams[$paramKey] = $door->translate($localeCode)?->slug ?? $door->slug;
+                            // 1. Model'den (Eğer sayfada varsa) HEDEF DİLİN slug'ını nokta atışı çekiyoruz
+                            if (isset($page) && method_exists($page, 'translations')) {
+                                $trans = $page->translations->where('locale', $localeCode)->first();
+                                $targetSlug = $trans ? $trans->slug : ($page->slug ?? null);
+                            } elseif (isset($door) && method_exists($door, 'translations')) {
+                                $trans = $door->translations->where('locale', $localeCode)->first();
+                                $targetSlug = $trans ? $trans->slug : ($door->slug ?? null);
                             }
 
-                            // 2. URL'yi doğru fonksiyonla oluşturuyoruz
-                            // Eğer sayfanın name() değeri varsa ve routes.php dil dosyasında karşılığı varsa:
+                            // 2. Mevcut Rotayı al
+                            $currentRoute = request()->route();
+                            $routeName = $currentRoute ? $currentRoute->getName() : null;
+
+                            // 3. Rota dil dosyasında (routes.php) çevrilmiş mi?
                             if ($routeName && \Illuminate\Support\Facades\Lang::has('routes.' . $routeName, $localeCode)) {
 
-                                // Hem klasör adını (resources/recursos) hem slug'ı çevirir
-                                $url = \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getURLFromRouteNameTranslated(
-                                    $localeCode,
-                                    'routes.' . $routeName,
-                                    $routeParams
-                                );
+                                // Rota yapısını alıyoruz. Örn: "recursos/{slug}"
+                                $routePath = trans('routes.' . $routeName, [], $localeCode);
+
+                                // Güvenlik: Dizi gelirse ilk elemanı al
+                                if (is_array($routePath)) {
+                                    $routePath = reset($routePath);
+                                }
+                                $routePath = (string) $routePath;
+
+                                // Rotadaki {slug}, {door} vb. parametreleri bulup hedef slug ile değiştiriyoruz
+                                if ($targetSlug) {
+                                    // Süslü parantez içindeki her şeyi (Örn: {slug}) bul ve hedef slug ile ez
+                                    $routePath = preg_replace('/\{[^\}]+\}/', (string)$targetSlug, $routePath);
+                                } else {
+                                    // Model olmayan ama parametreli bir sayfadaysak ilk parametreyi string'e çevirip ekle
+                                    $routeParams = $currentRoute->parameters();
+                                    if (count($routeParams) > 0) {
+                                        $firstParam = reset($routeParams);
+                                        $paramVal = is_object($firstParam) && isset($firstParam->slug)
+                                            ? $firstParam->slug
+                                            : (is_array($firstParam) ? reset($firstParam) : $firstParam);
+
+                                        $routePath = preg_replace('/\{[^\}]+\}/', (string)$paramVal, $routePath);
+                                    }
+                                }
+
+                                // Kendi URL'imizi sıfırdan, en temiz şekilde birleştiriyoruz
+                                $url = url($localeCode . '/' . ltrim($routePath, '/'));
 
                             } else {
-                                // Rota çevirisi olmayan normal bir sayfaysa (fallback)
-                                $url = \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getLocalizedURL($localeCode, null, $routeParams, true);
+                                // 4. Standart Sayfalar (Anasayfa, İletişim, Hakkımızda vb. - Parametresiz rotalar)
+                                $cleanParams = [];
+                                if ($currentRoute) {
+                                    foreach ($currentRoute->parameters() as $key => $val) {
+                                        $cleanParams[$key] = is_object($val) && isset($val->slug)
+                                            ? (string)$val->slug
+                                            : (is_array($val) ? reset($val) : (string)$val);
+                                    }
+                                }
+
+                                // Orijinal paketin varsayılan URL oluşturucusunu sadece güvenli temizlenmiş dizilerle kullan
+                                $url = \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getLocalizedURL($localeCode, null, $cleanParams, true);
                             }
                         @endphp
 

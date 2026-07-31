@@ -23,13 +23,81 @@ class ResourcePagesSeeder extends Seeder
                     'title' => 'Installation',
                     'slug' => 'installation',
                     'description' => 'See the recommended process for preparing, fitting, aligning, and completing an Erdoor interior door installation.',
-                    'link_text' => 'WATCH INSTALLATION'
+                    'link_text' => 'WATCH INSTALLATION',
+                    'page_content' => [
+                        'hero' => [
+                            'back_link' => 'Resources',
+                            'eyebrow' => 'Installation guide',
+                            'title' => 'Install with confidence.',
+                            'description' => 'Watch the complete Erdoor door installation process for guidance on preparation, alignment, hardware, and final adjustments.'
+                        ],
+                        'video' => [
+                            'label' => 'Installation film',
+                            'error_title' => 'Installation video unavailable',
+                            'error_desc' => 'Please try again or contact Erdoor support.',
+                            'url' => 'assets/videos/instillation.mp4',
+                            'poster' => 'assets/gallery/4.jpg'
+                        ],
+                        'notes' => [
+                            'eyebrow' => 'Before you begin',
+                            'title' => 'Prepare for a precise fit',
+                            'disclaimer' => 'Always follow project requirements, local building codes, and the instructions supplied with your Erdoor system.',
+                            'steps' => [
+                                [
+                                    'title' => 'Inspect the opening',
+                                    'description' => 'Confirm the opening is clean, level, plumb, and sized for the selected door system.'
+                                ],
+                                [
+                                    'title' => 'Review components',
+                                    'description' => 'Verify the frame, leaf, hardware, fasteners, and accessories before installation.'
+                                ],
+                                [
+                                    'title' => 'Make final adjustments',
+                                    'description' => 'Check clearances, alignment, latch operation, and smooth movement before completion.'
+                                ]
+                            ]
+                        ]
+                    ]
                 ],
                 'es' => [
                     'title' => 'Instalación',
                     'slug' => 'instalacion',
                     'description' => 'Vea el proceso recomendado para preparar, ajustar, alinear y completar la instalación de una puerta de interior Erdoor.',
-                    'link_text' => 'VER INSTALACIÓN'
+                    'link_text' => 'VER INSTALACIÓN',
+                    'page_content' => [
+                        'hero' => [
+                            'back_link' => 'Recursos',
+                            'eyebrow' => 'Guía de instalación',
+                            'title' => 'Instale con confianza.',
+                            'description' => 'Vea el proceso completo de instalación de puertas Erdoor para obtener orientación sobre preparación, alineación, herrajes y ajustes finales.'
+                        ],
+                        'video' => [
+                            'label' => 'Video de instalación',
+                            'error_title' => 'Video de instalación no disponible',
+                            'error_desc' => 'Por favor, inténtelo de nuevo o póngase en contacto con el soporte de Erdoor.',
+                            'url' => 'assets/videos/instillation.mp4',
+                            'poster' => 'assets/gallery/4.jpg'
+                        ],
+                        'notes' => [
+                            'eyebrow' => 'Antes de empezar',
+                            'title' => 'Prepárese para un ajuste preciso',
+                            'disclaimer' => 'Siga siempre los requisitos del proyecto, los códigos de construcción locales y las instrucciones suministradas con su sistema Erdoor.',
+                            'steps' => [
+                                [
+                                    'title' => 'Inspeccione la abertura',
+                                    'description' => 'Confirme que la abertura esté limpia, nivelada, aplomada y tenga el tamaño adecuado para el sistema de puerta seleccionado.'
+                                ],
+                                [
+                                    'title' => 'Revise los componentes',
+                                    'description' => 'Verifique el marco, la hoja, los herrajes, los sujetadores y los accesorios antes de la instalación.'
+                                ],
+                                [
+                                    'title' => 'Realice los ajustes finales',
+                                    'description' => 'Compruebe los espacios libres, la alineación, el funcionamiento del pestillo y el movimiento suave antes de finalizar.'
+                                ]
+                            ]
+                        ]
+                    ]
                 ],
             ],
             // 2. Fire Resistance Test

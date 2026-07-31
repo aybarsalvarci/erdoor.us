@@ -83,6 +83,22 @@
                 </a>
             </li>
 
+            <!-- Resource Pages -->
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#uiComponents" role="button" aria-expanded="false"
+                   aria-controls="uiComponents">
+                    <i class="link-icon" data-lucide="feather"></i>
+                    <span class="link-title">Resource Pages</span>
+                    <i class="link-arrow" data-lucide="chevron-down"></i>
+                </a>
+                <div class="collapse" data-bs-parent="#sidebarNav" id="uiComponents">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="{{route('admin.resources.installation-page')}}" class="nav-link">Installation Page</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
             <!-- SİSTEM -->
             <li class="nav-item nav-category">İletişim</li>
 
