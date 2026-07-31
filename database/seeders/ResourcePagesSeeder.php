@@ -183,21 +183,33 @@ class ResourcePagesSeeder extends Seeder
                     ]
                 ],
             ],
-            // 3. Warranty
+            // 3. Warranty & Return Policy (PDF Flipbook)
             [
                 'image_id' => 3,
                 'icon' => 'fas fa-shield-alt',
                 'en' => [
-                    'title' => 'Warranty',
-                    'slug' => 'warranty',
-                    'description' => 'Understand warranty coverage, eligibility, exclusions, claims, and return conditions in our interactive document.',
-                    'link_text' => 'READ WARRANTY'
+                    'title' => 'Warranty & Return Policy',
+                    'slug' => 'warranty-and-return-policy',
+                    'description' => 'Read the Erdoor Warranty and Return Policy in an interactive digital flipbook.',
+                    'link_text' => 'READ POLICY',
+                    'page_content' => [
+                        'back_link' => 'Back to Resources',
+                        'header_title' => 'WARRANTY & RETURN POLICY',
+                        'loading_text' => 'Loading Policy...',
+                        'pdf_url' => '',
+                    ]
                 ],
                 'es' => [
-                    'title' => 'Garantía',
-                    'slug' => 'garantia',
-                    'description' => 'Comprenda la cobertura de la garantía, elegibilidad, exclusiones, reclamaciones y condiciones de devolución en nuestro documento interactivo.',
-                    'link_text' => 'LEER GARANTÍA'
+                    'title' => 'Garantía y Política de Devolución',
+                    'slug' => 'garantia-y-politica-de-devolucion',
+                    'description' => 'Lea la Garantía y Política de Devolución de Erdoor en un flipbook digital interactivo.',
+                    'link_text' => 'LEER POLÍTICA',
+                    'page_content' => [
+                        'back_link' => 'Volver a Recursos',
+                        'header_title' => 'GARANTÍA Y POLÍTICA DE DEVOLUCIÓN',
+                        'loading_text' => 'Cargando Política...',
+                        'pdf_url' => '',
+                    ]
                 ],
             ],
             // 4. Technical & Certificates

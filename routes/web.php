@@ -82,6 +82,10 @@ Route::prefix('admin/')->name('admin.')->group(function () {
         Route::get('/fire-resistence-test-page', [ResourceController::class, 'fireResistenceTest'])->name('fire-resistence-test-page');
         Route::put('/fire-resistence-test-page', [ResourceController::class, 'updateFireResistenceTest'])->name('fire_resistance.update');
 
+        //  3 - Warranty Page Routes
+        Route::get('/warranty-page', [ResourceController::class, 'warrantyPage'])->name('warranty-page');
+        Route::put('/warranty-page', [ResourceController::class, 'updateWarrantyPage'])->name('warranty.update');
+
         // 2 - Gallery Routes
         Route::get('/gallery-management', [GalleryController::class, 'index'])->name('gallery.index');
     });

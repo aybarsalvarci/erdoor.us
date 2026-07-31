@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Pages\UpdateWarranyPageRequest;
 use App\Http\Requests\Resources\UpdateFireResistancePageRequest;
 use App\Http\Requests\Resources\UpdateInstallationPageRequest;
 use App\Models\ResourcePage;
@@ -84,5 +85,42 @@ class ResourceController extends Controller
         }
 
         return redirect()->back()->with('success', 'Installation sayfası başarıyla güncellendi.');
+    }
+
+    public function warrantyPage()
+    {
+        $page = ResourcePage::whereTranslation('slug', 'warranty-and-return-policy')->first();
+        return view('admin.resources.warranty', compact('page'));
+    }
+
+    public function updateWarrantyPage(UpdateWarranyPageRequest $request)
+    {
+        $page = ResourcePage::whereTranslation('slug', 'warranty-and-return-policy')->first();
+
+        $pageData = [
+            'icon' => $request->icon,
+            'image_id' => $request->image_id,
+        ];
+
+        foreach (['en', 'es'] as $locale) {
+            if ($request->has("translations.$locale")) {
+                $data = $request->input("translations.$locale");
+
+                if ($request->hasFile("translations.$locale.pdf_file")) {
+                    $file = $request->file("translations.$locale.pdf_file");
+
+                    $fileName = 'warranty-' . $locale . '-' . time() . '.' . $file->getClientOriginalExtension();
+
+                    $file->move(public_path('uploads/pdfs'), $fileName);
+
+                    $data['page_content']['pdf_url'] = 'uploads/pdfs/' . $fileName;
+                }
+                $pageData[$locale] = $data;
+            }
+        }
+
+        $page->update($pageData);
+
+        return redirect()->back()->with('success', 'Warranty & Return Policy sayfası başarıyla güncellendi.');
     }
 }

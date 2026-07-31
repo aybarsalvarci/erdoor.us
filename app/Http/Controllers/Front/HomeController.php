@@ -117,7 +117,7 @@ class HomeController extends Controller
                 return view('front.resources.fire-resistence-test', compact('page'));
                 break;
 
-            case "warranty":
+            case "warranty-and-return-policy":
                 return view('front.resources.warranty', compact('page'));
                 break;
 
