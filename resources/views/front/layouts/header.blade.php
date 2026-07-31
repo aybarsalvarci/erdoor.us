@@ -17,7 +17,7 @@
                         <a href="{{route('home')}}#products" class="nav-link" data-key="menu_products">PRODUCTS</a>
                     </li>
                     <li>
-                        <a href="why-wpc-door.html" class="nav-link">WHY WPC DOOR</a>
+                        <a href="{{route('why-wpc-doors')}}" class="nav-link">WHY WPC DOOR</a>
                     </li>
                     <li>
                         <a href="{{route('resources')}}" class="nav-link" data-key="menu_resource">RESOURCE</a>

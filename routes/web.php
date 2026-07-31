@@ -22,6 +22,7 @@ Route::group([
     Route::get(LaravelLocalization::transRoute('routes.door-single'), [HomeController::class, 'doorSingle'])->name('door-single');
     Route::get(LaravelLocalization::transRoute('routes.resources.main'), [HomeController::class, 'resources'])->name('resources');
     Route::get(LaravelLocalization::transRoute('routes.resources.single'), [HomeController::class, 'resourcesSingle'])->name('resources.single');
+    Route::get(LaravelLocalization::transRoute('routes.why-wpc-doors'), [HomeController::class, 'whyWpcDoors'])->name('why-wpc-doors');
 });
 
 // ================= ADMIN ROUTES =================
@@ -51,6 +52,11 @@ Route::prefix('admin/')->name('admin.')->group(function () {
     // 1 - Manage HomePage
     Route::get('/manage-homepage', [PageManagementController::class, 'manageHomePage'])->name('manage-homepage');
     Route::put('/manage-homepage', [PageManagementController::class, 'updateHomePage'])->name('pages.home.update');
+
+    // 2 - Manage Why WPC Door Page
+    Route::get('/manage-why-wpc-door', [PageManagementController::class, 'manageWhyWPC'])->name('pages.why-wpc-door');
+    Route::put('/manage-why-wpc-door', [PageManagementController::class, 'updateWhyWPC'])->name('pages.why_wpc.update');
+
     //  ======= RESOURCE ROUTES =======
 
     // 1 - Gallery Routes

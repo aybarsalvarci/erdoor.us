@@ -45,14 +45,23 @@
 
             <!-- Sayfalar -->
 
-            <li class="nav-item nav-category">Sayfalar</li>
+            <li class="nav-item nav-category">Sayfa Yönetimi</li>
 
             <!-- Anasayfa Yönetimi -->
             <li class="nav-item {{ request()->routeIs('admin.manage-homepage') ? 'active' : '' }}">
                 <a href="{{ route('admin.manage-homepage') }}"
                    class="nav-link {{ request()->routeIs('admin.manage-homepage') ? 'active' : '' }}">
                     <i class="link-icon" data-lucide="door-open"></i>
-                    <span class="link-title">Anasayfa Yönetimi</span>
+                    <span class="link-title">Anasayfa</span>
+                </a>
+            </li>
+
+            <!-- Why WPC Door Yönetimi -->
+            <li class="nav-item {{ request()->routeIs('admin.pages.why-wpc-door') ? 'active' : '' }}">
+                <a href="{{ route('admin.pages.why-wpc-door') }}"
+                   class="nav-link {{ request()->routeIs('admin.pages.why-wpc-door') ? 'active' : '' }}">
+                    <i class="link-icon" data-lucide="door-open"></i>
+                    <span class="link-title">Why WPC Door</span>
                 </a>
             </li>
 
