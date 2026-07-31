@@ -108,13 +108,79 @@ class ResourcePagesSeeder extends Seeder
                     'title' => 'Fire Resistance Test',
                     'slug' => 'fire-resistance-test',
                     'description' => 'Observe how a complete Erdoor door assembly performs during controlled fire-resistance testing.',
-                    'link_text' => 'WATCH THE TEST'
+                    'link_text' => 'WATCH THE TEST',
+                    'page_content' => [
+                        'hero' => [
+                            'back_link' => 'Resources',
+                            'eyebrow' => 'Performance testing',
+                            'title' => 'Fire resistance in action.',
+                            'description' => 'View controlled test footage demonstrating the performance of an Erdoor door assembly under fire exposure.'
+                        ],
+                        'video' => [
+                            'label' => 'Performance test film',
+                            'error_title' => 'Fire test video unavailable',
+                            'error_desc' => 'Please try again or contact Erdoor support.',
+                            'iframe' => '' // Admin panelinden YouTube Iframe kodu eklenecek
+                        ],
+                        'notes' => [
+                            'eyebrow' => 'Test overview',
+                            'title' => 'Evaluated under controlled conditions',
+                            'disclaimer' => 'Fire performance varies by tested assembly. Consult the applicable certificate or test report before specification.',
+                            'steps' => [
+                                [
+                                    'title' => 'Complete assembly',
+                                    'description' => 'The test evaluates the door leaf, frame, hardware, and installation as a complete system.'
+                                ],
+                                [
+                                    'title' => 'Controlled exposure',
+                                    'description' => 'Performance is observed throughout a defined heating and test sequence.'
+                                ],
+                                [
+                                    'title' => 'Documented results',
+                                    'description' => 'Applicable classifications and supporting reports should be reviewed for each specified configuration.'
+                                ]
+                            ]
+                        ]
+                    ]
                 ],
                 'es' => [
                     'title' => 'Prueba de Resistencia al Fuego',
                     'slug' => 'prueba-de-resistencia-al-fuego',
                     'description' => 'Observe cómo se comporta un ensamblaje completo de puerta Erdoor durante pruebas controladas de resistencia al fuego.',
-                    'link_text' => 'VER LA PRUEBA'
+                    'link_text' => 'VER LA PRUEBA',
+                    'page_content' => [
+                        'hero' => [
+                            'back_link' => 'Recursos',
+                            'eyebrow' => 'Pruebas de rendimiento',
+                            'title' => 'Resistencia al fuego en acción.',
+                            'description' => 'Vea imágenes de pruebas controladas que demuestran el rendimiento de un ensamblaje de puerta Erdoor bajo exposición al fuego.'
+                        ],
+                        'video' => [
+                            'label' => 'Película de prueba de rendimiento',
+                            'error_title' => 'Video de prueba de fuego no disponible',
+                            'error_desc' => 'Por favor, inténtelo de nuevo o póngase en contacto con el soporte de Erdoor.',
+                            'iframe' => '' // Admin panelinden YouTube Iframe kodu eklenecek
+                        ],
+                        'notes' => [
+                            'eyebrow' => 'Resumen de la prueba',
+                            'title' => 'Evaluado bajo condiciones controladas',
+                            'disclaimer' => 'El rendimiento ante el fuego varía según el ensamblaje probado. Consulte el certificado o informe de prueba aplicable antes de la especificación.',
+                            'steps' => [
+                                [
+                                    'title' => 'Ensamblaje completo',
+                                    'description' => 'La prueba evalúa la hoja de la puerta, el marco, los herrajes y la instalación como un sistema completo.'
+                                ],
+                                [
+                                    'title' => 'Exposición controlada',
+                                    'description' => 'El rendimiento se observa a lo largo de una secuencia definida de calentamiento y prueba.'
+                                ],
+                                [
+                                    'title' => 'Resultados documentados',
+                                    'description' => 'Se deben revisar las clasificaciones aplicables y los informes de respaldo para cada configuración especificada.'
+                                ]
+                            ]
+                        ]
+                    ]
                 ],
             ],
             // 3. Warranty

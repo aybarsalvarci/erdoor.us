@@ -97,6 +97,12 @@
                             <a href="{{route('admin.resources.installation-page')}}" class="nav-link">Installation Page</a>
                         </li>
                     </ul>
+
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="{{route('admin.resources.fire-resistence-test-page')}}" class="nav-link">Fire Resistence Page</a>
+                        </li>
+                    </ul>
                 </div>
             </li>
             <!-- SİSTEM -->

@@ -73,10 +73,16 @@ Route::prefix('admin/')->name('admin.')->group(function () {
 
     //  ======= RESOURCE ROUTES =======
 
-    // 1 - Gallery Routes
     Route::prefix('/resources')->name('resources.')->group(function () {
+        //  1 - Installation Page Routes
         Route::get('/installation-page', [ResourceController::class, 'installationPage'])->name('installation-page');
         Route::put('/installation-page', [ResourceController::class, 'updateInstallationPage'])->name('installation.update');
+
+        //  2 - Fire Resistence Test Page Routes
+        Route::get('/fire-resistence-test-page', [ResourceController::class, 'fireResistenceTest'])->name('fire-resistence-test-page');
+        Route::put('/fire-resistence-test-page', [ResourceController::class, 'updateFireResistenceTest'])->name('fire_resistance.update');
+
+        // 2 - Gallery Routes
         Route::get('/gallery-management', [GalleryController::class, 'index'])->name('gallery.index');
     });
 
