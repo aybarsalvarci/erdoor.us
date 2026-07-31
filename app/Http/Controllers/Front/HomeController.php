@@ -106,7 +106,9 @@ class HomeController extends Controller
         $page = ResourcePage::whereTranslation('slug', $slug, app()->getLocale())
             ->with('image')->firstOrFail();
 
-        switch ($page->translate('en')->slug) {
+        $referenceSlug = $page->translate('en')->slug;
+
+        switch ($referenceSlug) {
             case "installation":
                 return view('front.resources.installation', compact('page'));
                 break;
@@ -120,9 +122,7 @@ class HomeController extends Controller
                 break;
 
             case "technical-and-certificates":
-                $documents = [
-
-                ];
+                $documents = [];
                 return view('front.resources.technical-and-certificates', compact('page', 'documents'));
                 break;
 
