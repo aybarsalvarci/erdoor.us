@@ -15,6 +15,7 @@
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ asset('front/css/style.css?v=20260722-6') }}">
+    <link rel="stylesheet" href="{{asset('back/assets/vendors/sweetalert2/sweetalert2.min.css')}}">
     @stack('css')
 </head>
 <body class="home-page">
@@ -44,6 +45,37 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{{ asset('front/js/main.js') }}"></script>
+<script src="{{asset('back/assets/vendors/sweetalert2/sweetalert2.min.js')}}"></script>
+
+@if(session()->has('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: "{{ session('success') }}",
+                confirmButtonColor: '#17202a',
+                confirmButtonText: 'OK'
+            });
+        });
+    </script>
+@endif
+
+@if(session()->has('error'))
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: "{{ session('error') }}",
+                confirmButtonColor: '#c0392b',
+                confirmButtonText: 'OK'
+            });
+        });
+    </script>
+@endif
+
 @stack('js')
 
 </body>

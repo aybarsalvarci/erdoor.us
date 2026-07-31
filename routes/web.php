@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DoorController;
 use App\Http\Controllers\Admin\DoorSertificationController;
@@ -15,8 +16,8 @@ use App\Http\Controllers\Admin\PageManagementController;
 
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
-    'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
-], function() {
+    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
+], function () {
 
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get(LaravelLocalization::transRoute('routes.door-single'), [HomeController::class, 'doorSingle'])->name('door-single');
@@ -25,8 +26,8 @@ Route::group([
     Route::get(LaravelLocalization::transRoute('routes.why-wpc-doors'), [HomeController::class, 'whyWpcDoors'])->name('why-wpc-doors');
     Route::get(LaravelLocalization::transRoute('routes.about'), [HomeController::class, 'about'])->name('about');
     Route::get(LaravelLocalization::transRoute('routes.contact'), [HomeController::class, 'contact'])->name('contact');
-
 });
+Route::post('/send-contact', [HomeController::class, 'sendContact'])->name('send-contact');
 
 // ================= ADMIN ROUTES =================
 Route::prefix('admin/')->name('admin.')->group(function () {
@@ -45,7 +46,7 @@ Route::prefix('admin/')->name('admin.')->group(function () {
     Route::resource('slider', SliderController::class);
     Route::resource('door.variant', DoorVariantController::class)->only(['store', 'destroy']);
     Route::resource('door.spesification', DoorSpesificationController::class)->only(['store', 'destroy']);
-
+    Route::resource('contact-message', ContactMessageController::class)->only(['index', 'show', 'destroy']);
     // Door certifications
     Route::put('/door-certification/text-update/{id}', [DoorSertificationController::class, 'updateText'])->name('door.sertification_texts.update');
     Route::post('/door-certification/store-sertificate/{id}', [DoorSertificationController::class, 'storeSertificate'])->name('door.sertificate.store');
@@ -67,6 +68,7 @@ Route::prefix('admin/')->name('admin.')->group(function () {
     // 4 - Manage Contact Page
     Route::get('/manage-contact-us', [PageManagementController::class, 'manageContactUs'])->name('pages.contact-us');
     Route::put('/manage-contact-us', [PageManagementController::class, 'updateContactUs'])->name('pages.contact.update');
+
 
     //  ======= RESOURCE ROUTES =======
 

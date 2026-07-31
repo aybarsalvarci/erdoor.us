@@ -102,7 +102,6 @@
                         @if(!empty($info['map_query']))
                             {!! $info['map_query'] !!}
                         @else
-                            <!-- Fallback (Eğer panelden iframe girilmezse boş kalmaması için) -->
                             <iframe
                                 title="Erdoor location map fallback"
                                 src="https://www.google.com/maps?q=Doral,+Florida&output=embed"
@@ -119,37 +118,75 @@
                         {{ $form['title'] ?? 'Send a Message' }}
                     </h2>
 
-                    <form id="contactForm" class="mt-8 space-y-7" action="mailto:{{ $info['email_text'] ?? 'erdoor@erdoor.us' }}" method="post" enctype="text/plain">
+                    <!-- Başarı Mesajı -->
+                    @if(session('success'))
+                        <div class="mt-6 rounded-md border border-green-200 bg-green-50 p-4 text-green-800">
+                            {{ session('success') }}
+                        </div>
+                    @endif
 
+                    <form id="contactForm" class="mt-8 space-y-7" action="{{route('send-contact')}}" method="post">
+                        @csrf
+
+                        <!-- Full Name -->
                         <div>
                             <label for="fullName" class="mb-2 block text-sm font-semibold uppercase tracking-wide text-[#17202a]">{{ $form['name_label'] ?? 'Full Name *' }}</label>
-                            <input id="fullName" name="Full Name" type="text" required autocomplete="name" placeholder="{{ $form['name_placeholder'] ?? 'Your Name' }}" class="block w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-base text-[#17202a] outline-none transition placeholder:text-gray-500 focus:border-[#17202a] focus:ring-2 focus:ring-[#17202a]/15">
+                            <input id="fullName" name="full_name" type="text" required autocomplete="name"
+                                   value="{{ old('full_name') }}"
+                                   placeholder="{{ $form['name_placeholder'] ?? 'Your Name' }}"
+                                   class="block w-full rounded-md border bg-white px-4 py-3 text-base text-[#17202a] outline-none transition placeholder:text-gray-500 focus:ring-2 @error('full_name') border-red-500 focus:border-red-500 focus:ring-red-500/25 @else border-gray-300 focus:border-[#17202a] focus:ring-[#17202a]/15 @enderror">
+                            @error('full_name')
+                            <p class="mt-2 text-sm font-medium text-red-500">{{ $message }}</p>
+                            @enderror
                         </div>
 
+                        <!-- Email -->
                         <div>
                             <label for="email" class="mb-2 block text-sm font-semibold uppercase tracking-wide text-[#17202a]">{{ $form['email_label'] ?? 'Email Address *' }}</label>
-                            <input id="email" name="Email Address" type="email" required autocomplete="email" placeholder="{{ $form['email_placeholder'] ?? 'your@email.com' }}" class="block w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-base text-[#17202a] outline-none transition placeholder:text-gray-500 focus:border-[#17202a] focus:ring-2 focus:ring-[#17202a]/15">
+                            <input id="email" name="email" type="email" required autocomplete="email"
+                                   value="{{ old('email') }}"
+                                   placeholder="{{ $form['email_placeholder'] ?? 'your@email.com' }}"
+                                   class="block w-full rounded-md border bg-white px-4 py-3 text-base text-[#17202a] outline-none transition placeholder:text-gray-500 focus:ring-2 @error('email') border-red-500 focus:border-red-500 focus:ring-red-500/25 @else border-gray-300 focus:border-[#17202a] focus:ring-[#17202a]/15 @enderror">
+                            @error('email')
+                            <p class="mt-2 text-sm font-medium text-red-500">{{ $message }}</p>
+                            @enderror
                         </div>
 
+                        <!-- Phone -->
                         <div>
                             <label for="phone" class="mb-2 block text-sm font-semibold uppercase tracking-wide text-[#17202a]">{{ $form['phone_label'] ?? 'Phone Number' }}</label>
-                            <input id="phone" name="Phone Number" type="tel" autocomplete="tel" placeholder="{{ $form['phone_placeholder'] ?? '+1 (555) 000-0000' }}" class="block w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-base text-[#17202a] outline-none transition placeholder:text-gray-500 focus:border-[#17202a] focus:ring-2 focus:ring-[#17202a]/15">
+                            <input id="phone" name="phone" type="tel" autocomplete="tel"
+                                   value="{{ old('phone') }}"
+                                   placeholder="{{ $form['phone_placeholder'] ?? '+1 (555) 000-0000' }}"
+                                   class="block w-full rounded-md border bg-white px-4 py-3 text-base text-[#17202a] outline-none transition placeholder:text-gray-500 focus:ring-2 @error('phone_number') border-red-500 focus:border-red-500 focus:ring-red-500/25 @else border-gray-300 focus:border-[#17202a] focus:ring-[#17202a]/15 @enderror">
+                            @error('phone_number')
+                            <p class="mt-2 text-sm font-medium text-red-500">{{ $message }}</p>
+                            @enderror
                         </div>
 
-                        <!-- Dinamik Rol Dropdown -->
+                        <!-- Role -->
                         <div>
                             <label for="role" class="mb-2 block text-sm font-semibold uppercase tracking-wide text-[#17202a]">{{ $form['role_label'] ?? 'I Am A...' }}</label>
-                            <select id="role" name="I Am A" class="block w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-base text-[#17202a] outline-none transition focus:border-[#17202a] focus:ring-2 focus:ring-[#17202a]/15">
+                            <select id="role" name="role" class="block w-full rounded-md border bg-white px-4 py-3 text-base text-[#17202a] outline-none transition focus:ring-2 @error('role') border-red-500 focus:border-red-500 focus:ring-red-500/25 @else border-gray-300 focus:border-[#17202a] focus:ring-[#17202a]/15 @enderror">
                                 <option value="">{{ $form['role_placeholder'] ?? 'Select Your Role' }}</option>
                                 @foreach($roles as $role)
-                                    <option value="{{ $role }}">{{ $role }}</option>
+                                    <option value="{{ $role }}" @selected(old('role') == $role)>{{ $role }}</option>
                                 @endforeach
                             </select>
+                            @error('role')
+                            <p class="mt-2 text-sm font-medium text-red-500">{{ $message }}</p>
+                            @enderror
                         </div>
 
+                        <!-- Message -->
                         <div>
                             <label for="message" class="mb-2 block text-sm font-semibold uppercase tracking-wide text-[#17202a]">{{ $form['message_label'] ?? 'Message *' }}</label>
-                            <textarea id="message" name="Message" rows="6" required placeholder="{{ $form['message_placeholder'] ?? 'How can we help you?' }}" class="block w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-base text-[#17202a] outline-none transition placeholder:text-gray-500 focus:border-[#17202a] focus:ring-2 focus:ring-[#17202a]/15"></textarea>
+                            <textarea id="message" name="message" rows="6" required
+                                      placeholder="{{ $form['message_placeholder'] ?? 'How can we help you?' }}"
+                                      class="block w-full rounded-md border bg-white px-4 py-3 text-base text-[#17202a] outline-none transition placeholder:text-gray-500 focus:ring-2 @error('message') border-red-500 focus:border-red-500 focus:ring-red-500/25 @else border-gray-300 focus:border-[#17202a] focus:ring-[#17202a]/15 @enderror">{{ old('message') }}</textarea>
+                            @error('message')
+                            <p class="mt-2 text-sm font-medium text-red-500">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <button type="submit" class="inline-flex w-full items-center justify-center gap-3 rounded-md bg-[#17202a] px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition hover:bg-[#c0392b] focus:outline-none focus:ring-4 focus:ring-[#c0392b]/25">

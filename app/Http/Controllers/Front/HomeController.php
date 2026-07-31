@@ -5,12 +5,15 @@ namespace App\Http\Controllers\Front;
 use App\Dtos\DoorDto;
 use App\Dtos\SliderDto;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ContactMessage\SendContactMessageRequest;
+use App\Models\ContactMessage;
 use App\Models\Door;
 use App\Models\Page;
 use App\Models\ResourcePage;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -84,6 +87,19 @@ class HomeController extends Controller
             return Page::findOrFail(4);
         });
         return view('front.contact', compact('page'));
+    }
+
+    public function sendContact(SendContactMessageRequest $request)
+    {
+        try {
+            ContactMessage::create($request->validated());
+            return redirect()->back()->withSuccess("Message was sent successfully");
+        }
+        catch (\Exception $exception)
+        {
+            Log::error("An error occured while contact message sending: ". $exception->getMessage(), ['exception' => $exception]);
+            return redirect()->back()->withError("An error occured while sending message");
+        }
     }
     public function resourcesSingle(string $slug)
     {

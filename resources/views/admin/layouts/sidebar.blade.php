@@ -84,6 +84,19 @@
             </li>
 
             <!-- SİSTEM -->
+            <li class="nav-item nav-category">İletişim</li>
+
+            <!-- Contact Messages -->
+            <li class="nav-item {{ request()->routeIs('admin.contact-message.index') ? 'active' : '' }}">
+                <a href="{{ route('admin.contact-message.index') }}"
+                   class="nav-link {{ request()->routeIs('admin.contact-message.index') ? 'active' : '' }}">
+                    <i class="link-icon" data-lucide="door-open"></i>
+                    <span class="link-title">Contact Messages</span>
+                </a>
+            </li>
+
+
+            <!-- SİSTEM -->
             <li class="nav-item nav-category">Sistem</li>
 
             <li class="nav-item">
