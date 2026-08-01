@@ -17,6 +17,9 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\Admin\PageManagementController;
 use App\Http\Controllers\AuthController;
 
+Route::get('/', function (){
+    echo "ttest";
+})->name('home');
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
     'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
