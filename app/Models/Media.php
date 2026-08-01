@@ -22,7 +22,6 @@ class Media extends Model
         if ($this->type === 'external') {
             return $this->path;
         }
-
         return Storage::disk('public')->url($this->path);
     }
 }

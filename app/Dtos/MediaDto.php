@@ -15,6 +15,6 @@ readonly class MediaDto
 
     public static function fromModel(Media $media): self
     {
-        return new self(path: $media->path, alt_text: $media->alt_text);
+        return new self(path: $media->url, alt_text: $media->alt_text);
     }
 }
