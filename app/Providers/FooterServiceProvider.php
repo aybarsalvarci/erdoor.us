@@ -21,11 +21,11 @@ class FooterServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-//        $products = Door::where('status', 1)->orderByTranslation('name')->get();
-//
-//        $resources = ResourcePage::with('translations')->get();
-//
-//        view()->share('products', $products);
-//        view()->share('resources', $resources);
+        $products = Door::where('status', 1)->orderByTranslation('name')->get();
+
+        $resources = ResourcePage::with('translations')->get();
+
+        view()->share('products', $products);
+        view()->share('resources', $resources);
     }
 }

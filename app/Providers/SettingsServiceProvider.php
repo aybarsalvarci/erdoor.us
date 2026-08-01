@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Config;
@@ -23,18 +22,18 @@ class SettingsServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-//        if (Schema::hasTable('settings')) {
-//            $settings = DB::table('settings')->first();
-//
-//            if ($settings) {
-//                Config::set('mail.from.address', $settings->sender_email ?? config('mail.from.address'));
-//                Config::set('mail.from.name', $settings->title ?? config('mail.from.name'));
-//
-//                Config::set('settings.contact_email', $settings->contact_email);
-//                Config::set('settings.notification_email', $settings->notification_email);
-//                Config::set('settings.phone', $settings->phone);
-//                View::share('settings', $settings);
-//            }
-//        }
+        if (Schema::hasTable('settings')) {
+            $settings = DB::table('settings')->first();
+
+            if ($settings) {
+                Config::set('mail.from.address', $settings->sender_email ?? config('mail.from.address'));
+                Config::set('mail.from.name', $settings->title ?? config('mail.from.name'));
+
+                Config::set('settings.contact_email', $settings->contact_email);
+                Config::set('settings.notification_email', $settings->notification_email);
+                Config::set('settings.phone', $settings->phone);
+                view()->share('settings', $settings);
+            }
+        }
     }
 }
