@@ -9,5 +9,5 @@ return [
         "main" => "resources",
         "single" => "resources/{slug}",
     ],
-
+    "login" => "login"
 ];

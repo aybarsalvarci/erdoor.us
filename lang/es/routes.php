@@ -8,5 +8,6 @@ return [
     "resources" => [
         "main" => "recursos",
         "single" => "recursos/{slug}",
-    ]
+    ],
+    "login" => "acceso"
 ];

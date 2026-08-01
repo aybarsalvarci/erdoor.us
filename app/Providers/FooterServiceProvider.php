@@ -21,11 +21,8 @@ class FooterServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Door için çeviriye göre sıralama (Paketin kendi metodudur, doğru çalışır)
         $products = Door::where('status', 1)->orderByTranslation('name')->get();
 
-        // ResourcePage için title alanı çeviri tablosunda olduğu için
-        // select kullanmak yerine 'with('translations')' ile tüm çevirileri yüklüyoruz.
         $resources = ResourcePage::with('translations')->get();
 
         view()->share('products', $products);

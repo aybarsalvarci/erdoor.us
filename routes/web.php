@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\MediaController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\Admin\PageManagementController;
+use App\Http\Controllers\AuthController;
 
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
@@ -28,11 +29,20 @@ Route::group([
     Route::get(LaravelLocalization::transRoute('routes.why-wpc-doors'), [HomeController::class, 'whyWpcDoors'])->name('why-wpc-doors');
     Route::get(LaravelLocalization::transRoute('routes.about'), [HomeController::class, 'about'])->name('about');
     Route::get(LaravelLocalization::transRoute('routes.contact'), [HomeController::class, 'contact'])->name('contact');
+
+    Route::middleware('guest')->group(function(){
+        Route::get(LaravelLocalization::transRoute('routes.login'), [AuthController::class, 'loginView'])->name('login');
+        Route::post(LaravelLocalization::transRoute('routes.login'), [AuthController::class, 'login'])->name('login');
+    });
+
 });
+
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
+
 Route::post('/send-contact', [HomeController::class, 'sendContact'])->name('send-contact');
 
 // ================= ADMIN ROUTES =================
-Route::prefix('admin/')->name('admin.')->group(function () {
+Route::prefix('admin/')->name('admin.')->middleware('auth')->group(function () {
 
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
