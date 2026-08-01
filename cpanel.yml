@@ -1,0 +1,4 @@
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/fixerr/public_html/erdoor.us
+    - /bin/cp -R * $DEPLOYPATH
