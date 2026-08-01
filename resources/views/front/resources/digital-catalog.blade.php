@@ -1,5 +1,12 @@
-<!doctype html>
-<html lang="en">
+@php
+    $translation = $page->translate(app()->getLocale());
+    $content = $translation->page_content ?? [];
+
+    $pdfUrl = !empty($content['pdf_url']) ? asset($content['pdf_url']) : asset('front/assets/catalog/ERDOOR-KATALOG-TR-EN-c_copy.pdf');
+@endphp
+
+    <!doctype html>
+<html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="UTF-8"/>
     <meta
@@ -8,9 +15,9 @@
     />
     <meta
         name="description"
-        content="Read the Erdoor Warranty and Return Policy in an interactive digital flipbook."
+        content="{{ $translation->description ?? 'Explore our complete range of doors and accessories in our latest interactive digital catalog.' }}"
     />
-    <title>Warranty &amp; Return Policy | ERDOOR</title>
+    <title>{{ $translation->title ?? 'Digital Catalog' }} | ERDOOR</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -37,19 +44,19 @@
 <main
     class="fullscreen-viewer"
     data-pdf-viewer
-    data-pdf-src="{{asset('front/assets/catalog/ERDOOR-KATALOG-TR-EN-c_copy.pdf')}}"
+    data-pdf-src="{{ $pdfUrl }}"
     data-render-scale="2"
 >
     <div class="top-bar-controls">
-        <a href="resources.html" class="btn-exit">
+        <a href="{{ route('resources') }}" class="btn-exit">
             <i class="fas fa-arrow-left"></i>
-            <span class="hide-mobile">Back to Resources</span>
+            <span class="hide-mobile">{{ $content['back_link'] ?? 'Back to Resources' }}</span>
         </a>
 
-        <div class="title-area">ERDOOR CATALOG 2026</div>
+        <div class="title-area">{{ $content['header_title'] ?? 'ERDOOR CATALOG' }}</div>
 
         <a
-            href="{{asset('front/assets/catalog/ERDOOR-KATALOG-TR-EN-c_copy.pdf')}}"
+            href="{{ $pdfUrl }}"
             download
             class="btn-download-icon"
         >
@@ -59,7 +66,7 @@
 
     <div id="loadingState">
         <div class="spinner"></div>
-        <p>Loading Catalog...</p>
+        <p>{{ $content['loading_text'] ?? 'Loading Catalog...' }}</p>
     </div>
 
     <div class="book-stage">
@@ -76,7 +83,7 @@
     </button>
 
     <div class="bottom-bar-controls">
-        <div class="page-counter" id="pageCounter">Loading...</div>
+        <div class="page-counter" id="pageCounter">...</div>
 
         <div class="zoom-tools">
             <button id="btnZoomOut"><i class="fas fa-minus"></i></button>
@@ -84,7 +91,6 @@
         </div>
     </div>
 </main>
-
 
 <script src="{{asset('front/js/pdf-flipbook.js')}}"></script>
 </body>

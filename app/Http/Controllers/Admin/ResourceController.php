@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Pages\UpdateTechnicalCertificatesRequest;
 use App\Http\Requests\Pages\UpdateWarranyPageRequest;
+use App\Http\Requests\Resources\UpdateDigitalCatalogPageRequest;
 use App\Http\Requests\Resources\UpdateFireResistancePageRequest;
 use App\Http\Requests\Resources\UpdateGalleryPageRequest;
 use App\Http\Requests\Resources\UpdateInstallationPageRequest;
@@ -180,5 +181,48 @@ class ResourceController extends Controller
         $page->update($pageData);
 
         return redirect()->back()->with('success', 'Galeri sayfası başarıyla güncellendi.');
+    }
+
+    public function catalogPage(){
+        $page = ResourcePage::whereTranslation('slug', 'digital-catalog')->first();
+        return view('admin.resources.digital-catalog', compact('page'));
+    }
+
+    public function updateCatalogPage(UpdateDigitalCatalogPageRequest $request)
+    {
+        try {
+            $page = ResourcePage::whereTranslation('slug', 'digital-catalog', 'en')->firstOrFail();
+
+            $pageData = [
+                'icon' => $request->icon,
+                'image_id' => $request->image_id,
+            ];
+
+            foreach (['en', 'es'] as $locale) {
+                if ($request->has("translations.$locale")) {
+                    $data = $request->input("translations.$locale");
+
+                    if ($request->hasFile("translations.$locale.pdf_file")) {
+                        $file = $request->file("translations.$locale.pdf_file");
+
+                        $fileName = 'catalog-' . $locale . '-' . time() . '.' . $file->getClientOriginalExtension();
+
+                        $file->move(public_path('uploads/pdfs'), $fileName);
+
+                        $data['page_content']['pdf_url'] = 'uploads/pdfs/' . $fileName;
+                    }
+
+                    $pageData[$locale] = $data;
+                }
+            }
+
+            $page->update($pageData);
+
+            return redirect()->back()->with('success', 'Digital Catalog sayfası başarıyla güncellendi.');
+
+        } catch (\Exception $exception) {
+            \Log::error("Digital Catalog sayfası güncellenirken hata oluştu: " . $exception->getMessage());
+            return redirect()->back()->withInput()->with('error', 'Sayfa güncellenirken bir hata oluştu. Lütfen tekrar deneyin.');
+        }
     }
 }

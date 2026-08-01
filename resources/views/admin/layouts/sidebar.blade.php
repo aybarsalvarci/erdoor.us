@@ -138,6 +138,12 @@
                         </li>
                     </ul>
 
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="{{route('admin.resources.catalog-page')}}" class="nav-link">Dijital Katalog</a>
+                        </li>
+                    </ul>
+
                 </div>
             </li>
             <!-- SİSTEM -->

@@ -326,19 +326,31 @@ class ResourcePagesSeeder extends Seeder
             ],
             // 6. Digital Catalog
             [
-                'image_id' => 6,
+                'image_id' => 4,
                 'icon' => 'fas fa-book-open',
                 'en' => [
                     'title' => 'Digital Catalog',
                     'slug' => 'digital-catalog',
-                    'description' => 'Browse the complete Erdoor collection, profiles, finishes, and product details in an interactive flipbook.',
-                    'link_text' => 'VIEW CATALOG'
+                    'description' => 'Explore our complete range of doors and accessories in our latest interactive digital catalog.',
+                    'link_text' => 'VIEW CATALOG',
+                    'page_content' => [
+                        'pdf_url' => 'front/assets/catalog/ERDOOR-KATALOG-TR-EN-c_copy.pdf',
+                        'header_title' => 'ERDOOR CATALOG 2026',
+                        'back_link' => 'Back to Resources',
+                        'loading_text' => 'Loading Catalog...'
+                    ]
                 ],
                 'es' => [
                     'title' => 'Catálogo Digital',
                     'slug' => 'catalogo-digital',
-                    'description' => 'Explore la colección completa de Erdoor, perfiles, acabados y detalles de productos en un flipbook interactivo.',
-                    'link_text' => 'VER CATÁLOGO'
+                    'description' => 'Explore nuestra gama completa de puertas y accesorios en nuestro último catálogo digital interactivo.',
+                    'link_text' => 'VER CATÁLOGO',
+                    'page_content' => [
+                        'pdf_url' => 'front/assets/catalog/ERDOOR-KATALOG-TR-EN-c_copy.pdf',
+                        'header_title' => 'CATÁLOGO ERDOOR 2026',
+                        'back_link' => 'Volver a Recursos',
+                        'loading_text' => 'Cargando Catálogo...'
+                    ]
                 ],
             ],
         ];

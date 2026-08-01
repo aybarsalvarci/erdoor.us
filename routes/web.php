@@ -96,6 +96,11 @@ Route::prefix('admin/')->name('admin.')->group(function () {
         Route::get('/gallery', [ResourceController::class, 'galleryPage'])->name('galleryPage');
         Route::put('/gallery', [ResourceController::class, 'updateGalleryPage'])->name('galleryPage.update');
 
+        //  5 - Digital Catalog Page Routes
+        Route::get('/catalog-page', [ResourceController::class, 'catalogPage'])->name('catalog-page');
+        Route::put('/catalog-page', [ResourceController::class, 'updateCatalogPage'])->name('digital_catalog.update');
+
+
         Route::get('/gallery-management', [GalleryController::class, 'index'])->name('gallery.index');
         Route::post('/gallery/store', [GalleryController::class, 'store'])->name('gallery.store');
         Route::delete('/gallery/destroy/{id}', [GalleryController::class, 'destroy'])->name('gallery.destroy');
