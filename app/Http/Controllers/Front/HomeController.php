@@ -9,6 +9,7 @@ use App\Http\Requests\ContactMessage\SendContactMessageRequest;
 use App\Models\Certificate;
 use App\Models\ContactMessage;
 use App\Models\Door;
+use App\Models\Gallery;
 use App\Models\Page;
 use App\Models\ResourcePage;
 use App\Models\Slider;
@@ -125,12 +126,10 @@ class HomeController extends Controller
             case "technical-and-certificates":
                 $query = Certificate::where('status', 1);
 
-                // Kategori filtresi (certificate veya technical)
                 if ($request->filled('category')) {
                     $query->where('category', $request->category);
                 }
 
-                // Arama filtresi (title, description veya type içinde arama)
                 if ($request->filled('search')) {
                     $search = $request->search;
                     $query->where(function($q) use ($search) {
@@ -146,7 +145,9 @@ class HomeController extends Controller
                 break;
 
             case "gallery":
-                return view('front.resources.gallery', compact('page'));
+
+                $images = Gallery::orderBy('created_at', 'desc')->paginate(12);
+                return view('front.resources.gallery', compact('page', 'images'));
                 break;
 
             case "digital-catalog":

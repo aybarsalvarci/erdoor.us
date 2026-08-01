@@ -51,6 +51,14 @@
                 </a>
             </li>
 
+            <li class="nav-item {{ request()->routeIs('admin.resources.gallery.index') ? 'active' : '' }}">
+                <a href="{{ route('admin.resources.gallery.index') }}"
+                   class="nav-link {{ request()->routeIs('admin.resources.gallery.*') ? 'active' : '' }}">
+                    <i class="link-icon" data-lucide="image"></i>
+                    <span class="link-title">Galeri Yönetimi</span>
+                </a>
+            </li>
+
             <!-- Sayfalar -->
 
             <li class="nav-item nav-category">Sayfa Yönetimi</li>
@@ -121,6 +129,12 @@
                     <ul class="nav sub-menu">
                         <li class="nav-item">
                             <a href="{{route('admin.resources.technicalCertificatesPage')}}" class="nav-link">Technical Certificates</a>
+                        </li>
+                    </ul>
+
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="{{route('admin.resources.galleryPage')}}" class="nav-link">Galeri</a>
                         </li>
                     </ul>
 

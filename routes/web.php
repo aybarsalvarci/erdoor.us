@@ -91,8 +91,14 @@ Route::prefix('admin/')->name('admin.')->group(function () {
         Route::put('/technical-certificates', [ResourceController::class, 'updateTechnicalCertificatesPage'])->name('technical_certificates.update');
 
         Route::resource('certificates', \App\Http\Controllers\Admin\CertificateController::class);
-        // 2 - Gallery Routes
+
+        // 4 - Gallery Routes
+        Route::get('/gallery', [ResourceController::class, 'galleryPage'])->name('galleryPage');
+        Route::put('/gallery', [ResourceController::class, 'updateGalleryPage'])->name('galleryPage.update');
+
         Route::get('/gallery-management', [GalleryController::class, 'index'])->name('gallery.index');
+        Route::post('/gallery/store', [GalleryController::class, 'store'])->name('gallery.store');
+        Route::delete('/gallery/destroy/{id}', [GalleryController::class, 'destroy'])->name('gallery.destroy');
     });
 
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Pages\UpdateTechnicalCertificatesRequest;
 use App\Http\Requests\Pages\UpdateWarranyPageRequest;
 use App\Http\Requests\Resources\UpdateFireResistancePageRequest;
+use App\Http\Requests\Resources\UpdateGalleryPageRequest;
 use App\Http\Requests\Resources\UpdateInstallationPageRequest;
 use App\Models\ResourcePage;
 use Illuminate\Http\Request;
@@ -153,5 +154,31 @@ class ResourceController extends Controller
         return redirect()->back()->with('success', 'Technical & Certificates sayfası başarıyla güncellendi.');
     }
 
+    public function galleryPage()
+    {
+        $page = ResourcePage::whereTranslation('slug', 'gallery')->first();
+        return view('admin.resources.gallery', compact('page'));
+    }
 
+    public function updateGalleryPage(UpdateGalleryPageRequest $request)
+    {
+        $page = ResourcePage::whereTranslation('slug', 'gallery')->firstOrFail();
+
+        $pageData = [
+            'icon' => $request->icon,
+            'image_id' => $request->image_id,
+        ];
+
+        foreach (['en', 'es'] as $locale) {
+            if ($request->has("translations.$locale")) {
+                $data = $request->input("translations.$locale");
+
+                $pageData[$locale] = $data;
+            }
+        }
+
+        $page->update($pageData);
+
+        return redirect()->back()->with('success', 'Galeri sayfası başarıyla güncellendi.');
+    }
 }

@@ -279,21 +279,49 @@ class ResourcePagesSeeder extends Seeder
                     ]
                 ],
             ],
-            // 5. Gallery
+            // 5. Gallery (Exhibitions & Events)
             [
                 'image_id' => 5,
                 'icon' => 'fas fa-images',
                 'en' => [
-                    'title' => 'Gallery',
+                    'title' => 'Exhibitions & Events',
                     'slug' => 'gallery',
-                    'description' => 'Explore Erdoor designs, natural-looking finishes, coordinated details, and ideas for considered interiors.',
-                    'link_text' => 'VISIT GALLERY'
+                    'description' => 'Discover Erdoor at company fairs, explore our latest door exhibitions, and see product showcases from across the Ergünbaş Group.',
+                    'link_text' => 'VIEW GALLERY',
+                    'page_content' => [
+                        'hero' => [
+                            'back_link' => 'Resources',
+                            'eyebrow' => 'Exhibitions & Events',
+                            'title' => 'Where our brands<br>meet the world.',
+                            'description' => 'Discover Erdoor at company fairs, explore our latest door exhibitions, and see product showcases from across the Ergünbaş Group.'
+                        ],
+                        'gallery' => [
+                            'eyebrow' => 'From the exhibition floor',
+                            'title' => 'Fairs, displays & group showcases',
+                            'description' => 'Follow our products, people, and group companies through exhibitions and industry events.',
+                            'load_more' => 'Load more photos'
+                        ]
+                    ]
                 ],
                 'es' => [
-                    'title' => 'Galería',
+                    'title' => 'Exposiciones y Eventos',
                     'slug' => 'galeria',
-                    'description' => 'Explore los diseños de Erdoor, acabados de aspecto natural, detalles coordinados e ideas para interiores considerados.',
-                    'link_text' => 'VISITAR GALERÍA'
+                    'description' => 'Descubra Erdoor en ferias de la empresa, explore nuestras últimas exposiciones de puertas y vea demostraciones de productos de todo el Grupo Ergünbaş.',
+                    'link_text' => 'VER GALERÍA',
+                    'page_content' => [
+                        'hero' => [
+                            'back_link' => 'Recursos',
+                            'eyebrow' => 'Exposiciones y Eventos',
+                            'title' => 'Donde nuestras marcas<br>se encuentran con el mundo.',
+                            'description' => 'Descubra Erdoor en ferias de la empresa, explore nuestras últimas exposiciones de puertas y vea demostraciones de productos de todo el Grupo Ergünbaş.'
+                        ],
+                        'gallery' => [
+                            'eyebrow' => 'Desde la sala de exposiciones',
+                            'title' => 'Ferias, exhibiciones y demostraciones grupales',
+                            'description' => 'Siga nuestros productos, a nuestra gente y a las empresas del grupo a través de exposiciones y eventos de la industria.',
+                            'load_more' => 'Cargar más fotos'
+                        ]
+                    ]
                 ],
             ],
             // 6. Digital Catalog
