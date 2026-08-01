@@ -52,6 +52,7 @@ Route::prefix('admin/')->name('admin.')->middleware('auth')->group(function () {
         Route::post('/store-url', [MediaController::class, 'storeUrl'])->name('store.url');
         Route::post('/store-file', [MediaController::class, 'storeFile'])->name('store.file');
         Route::get('/fetch-media', [MediaController::class, 'fetchMedia'])->name('fetch');
+        Route::delete('/delete', [MediaController::class, 'destroy'])->name('destroy');
     });
 
     Route::resource('door', DoorController::class);

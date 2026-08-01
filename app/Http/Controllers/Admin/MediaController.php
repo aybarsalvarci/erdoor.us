@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MediaPicker\StoreFileRequest;
 use App\Http\Requests\MediaPicker\StoreFromUrlRequest;
 use App\Models\Media;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class MediaController extends Controller
 {
@@ -69,8 +71,8 @@ class MediaController extends Controller
                 $path = $file->storeAs('media', $fileName, 'public');
 
                 Media::create([
-                    'path'     => $path,
-                    'type'     => 'internal',
+                    'path' => $path,
+                    'type' => 'internal',
                     'alt_text' => $request->alt_text ?? null,
                 ]);
             }
@@ -86,6 +88,40 @@ class MediaController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Dosya yüklenirken bir sunucu hatası oluştu.'
+            ], 500);
+        }
+    }
+
+    public function destroy(Request $request)
+    {
+        try {
+            $media = Media::findOrFail($request->id);
+            $media->delete();
+
+            return response()->json([
+                'success' => true,
+            ]);
+
+        } catch (QueryException $e) {
+            if ($e->getCode() == '23000') {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Bu görsel bir içerikte (ürün, varyant vb.) kullanıldığı için silinemez. Silmek için önce kullanıldığı yerden kaldırmalısınız.'
+                ], 400);
+            }
+
+            Log::error("Media DB delete failed: " . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Veritabanı işlemi sırasında bir hata oluştu.'
+            ], 500);
+
+        } catch (\Exception $exception) {
+            Log::error("Media delete failed: " . $exception->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Görsel silinirken sunucu tarafında bir hata oluştu.'
             ], 500);
         }
     }

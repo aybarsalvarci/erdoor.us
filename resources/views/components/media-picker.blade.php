@@ -228,48 +228,63 @@
                     <!-- SAĞ ALAN (DETAYLAR & SEÇİM) -->
                     <div class="p-3 d-flex flex-column justify-content-between shrink-0 bg-transparent" style="width: 300px; flex-shrink: 0;">
 
-                        <!-- Tekli Seçim Detayı -->
-                        <div x-show="!isMultipleActive() && activeItems.length === 1" class="overflow-y-auto pe-1">
-                            <h6 class="text-muted mb-3 font-weight-bold small text-uppercase">Görsel Detayları</h6>
+                        <!-- Tekli Seçim Detayı (DÜZELTİLDİ: x-if KULLANILDI) -->
+                        <template x-if="!isMultipleActive() && activeItems.length === 1">
+                            <div class="overflow-y-auto pe-1">
+                                <h6 class="text-muted mb-3 font-weight-bold small text-uppercase">Görsel Detayları</h6>
 
-                            <div class="border border-secondary rounded p-2 mb-3 d-flex align-items-center justify-content-center" style="background-color: rgba(0,0,0,0.15); height: 160px;">
-                                <img :src="activeItems[0]?.resolved_url" class="img-fluid rounded object-fit-contain w-100 h-100" alt="Önizleme">
+                                <div class="border border-secondary rounded p-2 mb-3 d-flex align-items-center justify-content-center" style="background-color: rgba(0,0,0,0.15); height: 160px;">
+                                    <img :src="activeItems[0]?.resolved_url" class="img-fluid rounded object-fit-contain w-100 h-100" alt="Önizleme">
+                                </div>
+
+                                <p class="text-sm text-body fw-bold text-truncate mb-1" x-text="activeItems[0]?.file_name"></p>
+                                <p class="text-xs text-muted mb-4" x-text="activeItems[0]?.date"></p>
+
+                                <!-- Otomatik Kayıt (Auto-Save) -->
+                                <div class="mb-2">
+                                    <label class="form-label text-xs text-muted d-flex justify-content-between mb-1">
+                                        Alternatif Metin
+                                        <span class="text-success" x-show="altSaved" style="font-size: 10px;">Kaydedildi!</span>
+                                    </label>
+                                    <textarea class="form-control text-body bg-transparent border-secondary" rows="3" style="font-size: 13px;" x-model="activeItems[0].alt_text" @change="updateAltText(activeItems[0])" placeholder="Görseli betimleyin..."></textarea>
+                                    <small class="text-muted d-block mt-1" style="font-size: 11px;">Odağı kaybettiğinde otomatik kaydedilir.</small>
+                                </div>
+
+                                <!-- SİLME BUTONU -->
+                                <div class="mt-4 pt-3 border-top border-secondary">
+                                    <button type="button" @click="deleteMedia(activeItems[0].id)" class="btn btn-sm btn-outline-danger w-100 fw-bold">
+                                        Görseli Kalıcı Olarak Sil
+                                    </button>
+                                </div>
                             </div>
-
-                            <p class="text-sm text-body fw-bold text-truncate mb-1" x-text="activeItems[0]?.file_name"></p>
-                            <p class="text-xs text-muted mb-4" x-text="activeItems[0]?.date"></p>
-
-                            <!-- Otomatik Kayıt (Auto-Save) -->
-                            <div class="mb-2">
-                                <label class="form-label text-xs text-muted d-flex justify-content-between mb-1">
-                                    Alternatif Metin
-                                    <span class="text-success" x-show="altSaved" style="font-size: 10px;">Kaydedildi!</span>
-                                </label>
-                                <textarea class="form-control text-body bg-transparent border-secondary" rows="3" style="font-size: 13px;" x-model="activeItems[0].alt_text" @change="updateAltText(activeItems[0])" placeholder="Görseli betimleyin..."></textarea>
-                                <small class="text-muted d-block mt-1" style="font-size: 11px;">Odağı kaybettiğinde otomatik kaydedilir.</small>
-                            </div>
-                        </div>
+                        </template>
 
                         <!-- Çoklu Seçim Bilgisi -->
-                        <div x-show="isMultipleActive() && activeItems.length > 0" class="text-center mt-5">
-                            <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3 shadow" style="width: 70px; height: 70px;">
-                                <span class="text-white fs-3 fw-bold" x-text="activeItems.length"></span>
+                        <template x-if="isMultipleActive() && activeItems.length > 0">
+                            <div class="text-center mt-5">
+                                <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3 shadow" style="width: 70px; height: 70px;">
+                                    <span class="text-white fs-3 fw-bold" x-text="activeItems.length"></span>
+                                </div>
+                                <h6 class="text-body fw-bold">Görsel Seçildi</h6>
                             </div>
-                            <h6 class="text-body fw-bold">Görsel Seçildi</h6>
-                        </div>
+                        </template>
 
                         <!-- Boş Durum Bilgisi -->
-                        <div x-show="activeItems.length === 0" class="text-muted text-center my-auto">
-                            <i data-feather="image" class="mb-2 opacity-50" style="width: 40px; height: 40px;"></i>
-                            <p class="text-sm">Lütfen listeden görsel seçin veya yeni yükleyin.</p>
-                        </div>
+                        <template x-if="activeItems.length === 0">
+                            <div class="text-muted text-center my-auto">
+                                <i data-feather="image" class="mb-2 opacity-50" style="width: 40px; height: 40px;"></i>
+                                <p class="text-sm">Lütfen listeden görsel seçin veya yeni yükleyin.</p>
+                            </div>
+                        </template>
 
                         <!-- Onay Butonu -->
-                        <div class="mt-3 pt-3 border-top border-secondary">
-                            <button type="button" @click="confirmSelection()" :disabled="activeItems.length === 0" class="btn btn-success w-100 fw-bold py-2">
-                                <span x-text="isMultipleActive() ? 'Seçilenleri Ekle' : 'Seçimi Ekle'"></span>
-                            </button>
-                        </div>
+                        <template x-if="activeItems.length > 0">
+                            <div class="mt-3 pt-3 border-top border-secondary">
+                                <button type="button" @click="confirmSelection()" :disabled="activeItems.length === 0" class="btn btn-success w-100 fw-bold py-2">
+                                    <span x-text="isMultipleActive() ? 'Seçilenleri Ekle' : 'Seçimi Ekle'"></span>
+                                </button>
+                            </div>
+                        </template>
                     </div>
 
                 </div>
@@ -304,7 +319,6 @@
                 altSaved: false,
 
                 init() {
-                    // HTML elementinden JSON verisini güvenle oku
                     const wrapperEl = document.getElementById(wrapperId);
                     let preloadedItems = [];
 
@@ -315,7 +329,6 @@
                         }
                     }
 
-                    // Eğer önceden seçili görsel varsa direkt ekrana bas
                     if (preloadedItems && preloadedItems.length > 0) {
                         this.selectedItems = preloadedItems.map(i => this.formatMedia(i));
                     }
@@ -328,7 +341,6 @@
 
                 formatMedia(media) {
                     const resolved = media.url;
-
                     const name = media.path ? media.path.split('/').pop() : 'Bilinmiyor';
                     const dateObj = new Date(media.created_at);
                     const dateStr = !isNaN(dateObj) ? dateObj.toLocaleDateString('tr-TR', { day: '2-digit', month: 'short', year: 'numeric' }) : '';
@@ -508,6 +520,41 @@
                                 this.altSaved = true;
                                 setTimeout(() => { this.altSaved = false; }, 2000);
                             }
+                        });
+                },
+
+                deleteMedia(id) {
+                    if (!id) return;
+
+                    if (!confirm('Bu görseli kalıcı olarak silmek istediğinize emin misiniz? Bu işlem geri alınamaz!')) {
+                        return;
+                    }
+
+                    fetch('{{route('admin.media.destroy')}}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': "{{csrf_token()}}",
+                            'Accept': 'application/json'
+                        },
+                        // Laravel API DELETE rotasını anlaması için:
+                        body: JSON.stringify({ id: id, _method: 'DELETE' })
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                // DOM'dan silinen öğeyi kaldır
+                                this.items = this.items.filter(item => item.id !== id);
+                                // Aktif seçimi temizle
+                                this.activeItems = [];
+                                // Daha önce eklendiyse, oradan da kaldır
+                                this.selectedItems = this.selectedItems.filter(item => item.id !== id);
+                            } else {
+                                alert('Görsel silinirken bir hata oluştu.');
+                            }
+                        })
+                        .catch(() => {
+                            alert('Sunucu ile iletişim kurulamadı.');
                         });
                 }
 
