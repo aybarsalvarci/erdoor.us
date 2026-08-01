@@ -14,14 +14,28 @@
     $inputValue = is_array($value) ? implode(',', $value) : $value;
     $preloadedMedia = [];
 
-    // Veritabanından önceden seçili görsel(ler)i getir
     if (!empty($inputValue)) {
-        $ids = array_filter(explode(',', $inputValue), 'is_numeric');
-        if (count($ids) > 0 && class_exists(\App\Models\Media::class)) {
-            $preloadedMedia = \App\Models\Media::whereIn('id', $ids)->get()->map(function($m) {
+        $items = array_filter(explode(',', $inputValue));
+
+        $ids = array_filter($items, 'is_numeric');
+        $paths = array_filter($items, function($val) { return !is_numeric($val); });
+
+        if (class_exists(\App\Models\Media::class) && (count($ids) > 0 || count($paths) > 0)) {
+            $query = \App\Models\Media::query();
+
+            if (count($ids) > 0) {
+                $query->orWhereIn('id', $ids);
+            }
+
+            if (count($paths) > 0) {
+                $query->orWhereIn('path', $paths);
+            }
+
+            $preloadedMedia = $query->get()->map(function($m) {
                 return [
                     'id'         => $m->id,
                     'path'       => $m->path,
+                    'url'        => $m->url,
                     'type'       => $m->type,
                     'alt_text'   => $m->alt_text,
                     'created_at' => $m->created_at,
