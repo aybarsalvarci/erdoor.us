@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\DoorSpesificationController;
 use App\Http\Controllers\Admin\DoorVariantController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\ResourceController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Front\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -100,11 +101,13 @@ Route::prefix('admin/')->name('admin.')->group(function () {
         Route::get('/catalog-page', [ResourceController::class, 'catalogPage'])->name('catalog-page');
         Route::put('/catalog-page', [ResourceController::class, 'updateCatalogPage'])->name('digital_catalog.update');
 
-
+        //  5 - Gallery Content Management Routes
         Route::get('/gallery-management', [GalleryController::class, 'index'])->name('gallery.index');
         Route::post('/gallery/store', [GalleryController::class, 'store'])->name('gallery.store');
         Route::delete('/gallery/destroy/{id}', [GalleryController::class, 'destroy'])->name('gallery.destroy');
     });
 
+    Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
+    Route::put('/settings', [SettingsController::class, 'update'])->name('settings.update');
 
 });

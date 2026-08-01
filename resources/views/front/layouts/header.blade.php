@@ -1,9 +1,9 @@
 <header id="main-header">
     <div class="container">
         <div class="nav-wrapper">
-            <a href="index.html" class="logo">
+            <a href="{{route('home')}}" class="logo">
                 <img
-                    src="{{ asset('front/assets/logo/logo_erdoor.png') }}"
+                    src="{{ asset($settings->logo) }}"
                     alt="ERDOOR"
                     class="img-fluid"
                     onerror="this.style.display='none'; document.getElementById('text-logo').style.display='block';"

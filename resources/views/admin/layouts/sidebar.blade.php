@@ -163,7 +163,7 @@
             <li class="nav-item nav-category">Sistem</li>
 
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{route('admin.settings.index')}}" class="nav-link">
                     <i class="link-icon" data-lucide="settings"></i>
                     <span class="link-title">Ayarlar</span>
                 </a>

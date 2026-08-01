@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title')</title>
+    <title>@yield('title') | {{$settings->title}}</title>
+    <meta name="description" content="{{$settings->description}}">
+    <meta name="keywords" content="{{$settings->keywords}}">
+    <link rel="shortcut icon" href="{{ asset($settings->favicon) }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset($settings->favicon) }}" type="image/x-icon">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script>
         window.tailwind = window.tailwind || {};
@@ -25,13 +30,17 @@
 <div class="top-bar">
     <div class="container">
         <div class="top-info">
-            <a href="tel:+13054133603"><i class="fas fa-phone-alt"></i>+1 305 413 36 03</a>
-            <a href="mailto:erdoor@erdoor.us"><i class="fas fa-envelope"></i> erdoor@erdoor.us</a>
+            <a href="tel:{{$settings->phone}}"><i class="fas fa-phone-alt"></i>{{$settings->phone}}</a>
+            <a href="mailto:{{$settings->contact_email}}"><i class="fas fa-envelope"></i> {{$settings->contact_email}}
+            </a>
         </div>
         <div class="top-social">
-            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+
+            <a href="{{$settings->facebook}}" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="{{$settings->twitter}}" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="{{$settings->instagram}}" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="{{$settings->linkedin}}" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="{{$settings->youtube}}" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
         </div>
     </div>
 </div>
@@ -62,7 +71,7 @@
 @endif
 
 @if(session()->has('error'))
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             Swal.fire({

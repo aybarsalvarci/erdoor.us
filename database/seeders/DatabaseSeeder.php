@@ -23,6 +23,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
+            DoorSeeder::class,
+            PageSeeder::class,
+            SettingSeeder::class,
             MediaSeeder::class,
             SliderSeeder::class,
             ResourcePagesSeeder::class,
