@@ -40,8 +40,8 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => public_path('uploads'), // Dosyaları doğrudan public/uploads altına kaydeder
-            'url' => env('APP_URL').'/uploads',
+            'root' => public_path('storage'),
+            'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,
         ],

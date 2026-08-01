@@ -11,14 +11,15 @@ use Illuminate\Support\Facades\Storage;
 #[ObservedBy(MediaObserver::class)]
 class Media extends Model
 {
-    /** @use HasFactory<\Database\Factories\MediaFactory> */
     use HasFactory;
 
     protected $fillable = ['path', 'alt_text', 'type'];
 
+    protected $appends = ['url'];
+
     public function getUrlAttribute()
     {
-        if ($this->type == 'external') {
+        if ($this->type === 'external') {
             return $this->path;
         }
 

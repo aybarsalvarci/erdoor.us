@@ -305,7 +305,6 @@
                     if (preloadedItems && preloadedItems.length > 0) {
                         this.selectedItems = preloadedItems.map(i => this.formatMedia(i));
                     }
-                    // Eski sistem dışarıdan URL verildiyse
                     else if (initialValue && isNaN(initialValue) && (initialValue.startsWith('http') || initialValue.startsWith('/'))) {
                         this.selectedItems = [this.formatMedia({ id: initialValue, path: initialValue, type: 'external' })];
                     }
@@ -314,7 +313,8 @@
                 },
 
                 formatMedia(media) {
-                    const resolved = media.type === 'internal' ? '/storage/' + media.path : media.path;
+                    const resolved = media.url;
+
                     const name = media.path ? media.path.split('/').pop() : 'Bilinmiyor';
                     const dateObj = new Date(media.created_at);
                     const dateStr = !isNaN(dateObj) ? dateObj.toLocaleDateString('tr-TR', { day: '2-digit', month: 'short', year: 'numeric' }) : '';
@@ -322,6 +322,7 @@
                     return {
                         id: media.id,
                         path: media.path,
+                        url: media.url,
                         type: media.type,
                         alt_text: media.alt_text || '',
                         file_name: name,

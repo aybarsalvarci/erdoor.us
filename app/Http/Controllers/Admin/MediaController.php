@@ -14,6 +14,7 @@ class MediaController extends Controller
     public function fetchMedia()
     {
         $medias = Media::latest()->simplePaginate(12);
+
         return response()->json([
             'medias' => $medias,
         ]);
