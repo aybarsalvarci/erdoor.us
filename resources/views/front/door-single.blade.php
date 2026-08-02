@@ -62,7 +62,7 @@
                             @foreach($door->sertificates as $cert)
                                 <div
                                     class="flex min-h-32 items-center justify-center rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:min-h-36">
-                                    <img src="{{ $cert->image->path }}"
+                                    <img src="{{ $cert->image->url }}"
                                          alt="{{$cert->image->alt}}" class="h-20 w-full object-contain sm:h-24"
                                          loading="lazy">
                                 </div>
@@ -93,7 +93,7 @@
 
                 <button type="button"
                         class="detail-lightbox-trigger group mx-auto block w-full max-w-[430px] overflow-hidden rounded-lg bg-gray-50 shadow-xl shadow-gray-200/70 transition hover:-translate-y-1 hover:shadow-2xl lg:mx-0 lg:justify-self-end"
-                        data-lightbox-src="{{$door->spesificationImage->path}}"
+                        data-lightbox-src="{{$door->spesificationImage->url}}"
                         aria-label="Open technical feature diagram">
                     <img src="{{$door->spesificationImage->url}}"
                          alt="{{$door->spesificationImage->alt_text}}"
