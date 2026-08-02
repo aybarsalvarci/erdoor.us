@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Observers\ResourceObserver;
 use Astrotomic\Translatable\Translatable;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Mcamara\LaravelLocalization\Interfaces\LocalizedUrlRoutable;
 
+#[ObservedBy(ResourceObserver::class)]
 class ResourcePage extends Model implements LocalizedUrlRoutable
 {
     use Translatable;
