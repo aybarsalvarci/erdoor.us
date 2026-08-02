@@ -19,7 +19,7 @@
         };
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="{{ asset('front/css/style.css?v=20260722-6') }}">
+    <link rel="stylesheet" href="{{ asset('front/css/style.css') }}">
     <link rel="stylesheet" href="{{asset('back/assets/vendors/sweetalert2/sweetalert2.min.css')}}">
     @stack('css')
 </head>

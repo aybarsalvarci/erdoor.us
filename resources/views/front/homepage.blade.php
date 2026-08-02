@@ -1,10 +1,8 @@
 @extends('front.layouts.master')
 
 @php
-    // Astrotomic sayesinde aktif dilin verisini güvenle alıyoruz
     $content = $page->content ?? [];
 
-    // Alt bölümleri undefined hatası almamak için değişkenlere atıyoruz
     $intro = $content['intro_section'] ?? [];
     $benefitsList = collect($content['benefits_section'] ?? []);
     $comparison = $content['comparison_section'] ?? [];
@@ -18,15 +16,17 @@
 
 @section('content')
 
-    <header id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
-        <div class="carousel-inner">
+    <header id="heroCarousel" class="carousel slide carousel-fade bg-gray-900" data-bs-ride="carousel">
+        <div class="carousel-inner h-[500px] md:h-[700px] w-full">
             @foreach($sliders as $slider)
-                <div class="carousel-item active" data-bs-interval="5000">
-                    <img src="{{ optional($slider->image)->path }}" class="hero-carousel-img d-block w-100"
-                         alt="{{{ optional($slider->image)->alt_text }}}">
+                <div class="carousel-item {{ $loop->first ? 'active' : '' }} h-full" data-bs-interval="5000">
+                    <img src="{{ $slider->image->path }}"
+                         class="block w-full h-full object-cover"
+                         alt="{{ $slider->image->alt_text }}">
                 </div>
             @endforeach
         </div>
+
         <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon"></span>
         </button>
