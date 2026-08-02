@@ -8,12 +8,12 @@ readonly class DoorDto
 {
     public function __construct(
         public int $id,
-        public string $collectionName,
+        public ?string $collectionName,
         public string $name,
         public string $slug,
-        public string $description,
-        public MediaDto $media,
-        public MediaDto $specMedia
+        public ?string $description,
+        public ?MediaDto $media,
+        public ?MediaDto $specMedia
     ){}
 
     public static function fromModel(Door $model): self
