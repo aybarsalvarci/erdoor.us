@@ -29,7 +29,7 @@
                                     class="finish-swatch h-16 w-16 overflow-hidden rounded-md bg-white shadow-sm ring-2 ring-gray-950 ring-offset-2 transition hover:-translate-y-0.5 hover:shadow-md sm:h-20 sm:w-20"
                                     aria-label="{{$variant->name}}"
                                     data-door-image="{{ $variant->picture->url }}"
-                                    data-color-name="{{ $variant->picture->alt_text }}">
+                                    data-color-name="{{ $variant->name }}">
                                 <img src="{{ $variant->miniPicture->url }}"
                                      alt="{{ $variant->miniPicture->alt_text }}" class="h-full w-full object-cover">
                             </button>
