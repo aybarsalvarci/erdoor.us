@@ -18,7 +18,7 @@ use App\Http\Controllers\Admin\PageManagementController;
 use App\Http\Controllers\AuthController;
 
 Route::get('/cache-clear', function () {
-    Artisan::call('optimize:clear');
+    Artisan::call('package:discover');
     $output = Artisan::output();
     echo "<pre>$output</pre>";
 });
