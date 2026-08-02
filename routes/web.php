@@ -17,8 +17,8 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\Admin\PageManagementController;
 use App\Http\Controllers\AuthController;
 
-Route::get('/cache-clear', function () {
-    Artisan::call('package:discover');
+Route::get('/migrate', function () {
+    Artisan::call('migrate');
     $output = Artisan::output();
     echo "<pre>$output</pre>";
 });
