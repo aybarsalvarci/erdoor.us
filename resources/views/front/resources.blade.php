@@ -68,7 +68,7 @@
                     @foreach($pages as $page)
                         <article class="resource-table-card">
                             <a href="{{route('resources.single', $page->slug)}}" class="resource-table-image" aria-label="Open Installation">
-                                <img src="{{$page->image->path}}" alt="Erdoor interior door installation" loading="eager">
+                                <img src="{{$page->image->url}}" alt="Erdoor interior door installation" loading="eager">
                                 <span><i class="{{$page->icon}}" aria-hidden="true"></i></span>
                             </a>
                             <div class="resource-table-content">
