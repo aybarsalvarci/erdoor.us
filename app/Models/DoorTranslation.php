@@ -13,6 +13,7 @@ class DoorTranslation extends Model
     protected $fillable = [
         'name',
         'slug',
+        'short_description',
         'description',
         'collection_name',
         'sertification_title',

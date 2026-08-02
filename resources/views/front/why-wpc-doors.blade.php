@@ -1,7 +1,6 @@
 @extends('front.layouts.master')
 
 @php
-    // JSON içeriğini güvenle değişkenlere alıyoruz
     $content = $page->content ?? [];
 
     $hero = $content['hero_section'] ?? [];

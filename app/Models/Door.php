@@ -26,6 +26,7 @@ class Door extends Model
         'collection_name',
         'name',
         'slug',
+        'short_description',
         'description',
         'sertification_title',
         'sertification_description',

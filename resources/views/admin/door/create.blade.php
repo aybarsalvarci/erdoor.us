@@ -78,7 +78,7 @@
                                          role="tabpanel"
                                          aria-labelledby="lang-{{ $code }}-tab">
 
-                                        <!-- Çevrilebilir Alanlar (Collection Name, Name, Description) -->
+                                        <!-- Çevrilebilir Alanlar -->
                                         <div class="mb-3">
                                             <label for="collection_name_{{ $code }}" class="form-label">Koleksiyon Adı ({{ strtoupper($code) }}) @if($loop->first)<span class="text-danger">*</span>@endif</label>
                                             <input type="text"
@@ -103,6 +103,19 @@
                                                    value="{{ old($code.'.name') }}"
                                                 {{ $loop->first ? 'required' : '' }}>
                                             @error($code.'.name')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="short_description_{{ $code }}" class="form-label">Kısa Açıklama ({{ strtoupper($code) }})</label>
+                                            <textarea
+                                                class="form-control @error($code.'.short_description') is-invalid @enderror"
+                                                id="short_description_{{ $code }}"
+                                                name="{{ $code }}[short_description]"
+                                                rows="3"
+                                                placeholder="Kapı hakkında kısa açıklama...">{{ old($code.'.short_description') }}</textarea>
+                                            @error($code.'.short_description')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>

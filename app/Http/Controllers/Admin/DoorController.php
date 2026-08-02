@@ -89,6 +89,6 @@ class DoorController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        dd("Door delete");
     }
 }

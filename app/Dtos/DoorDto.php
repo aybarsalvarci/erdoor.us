@@ -11,6 +11,7 @@ readonly class DoorDto
         public ?string $collectionName,
         public string $name,
         public string $slug,
+        public ?string $shortDescription,
         public ?string $description,
         public ?MediaDto $media,
         public ?MediaDto $specMedia
@@ -23,6 +24,7 @@ readonly class DoorDto
             collectionName: $model->collection_name,
             name: $model->name,
             slug: $model->slug,
+            shortDescription: $model->short_description,
             description: $model->description,
             media: $model->image ? MediaDto::fromModel($model->image) : null,
             specMedia: $model->spesificationImage ? MediaDto::fromModel($model->spesificationImage) : null

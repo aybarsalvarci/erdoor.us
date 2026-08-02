@@ -8,7 +8,8 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
         <div>
-            <h4 class="mb-3 mb-md-0">Kapı Düzenle: <span class="text-primary">{{ $door->translate('en')?->name ?? '' }}</span></h4>
+            <h4 class="mb-3 mb-md-0">Kapı Düzenle: <span
+                    class="text-primary">{{ $door->translate('en')?->name ?? '' }}</span></h4>
         </div>
         <div class="d-flex align-items-center flex-wrap text-nowrap">
             <a href="{{ route('admin.door.index') }}" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
@@ -43,7 +44,7 @@
         ];
     @endphp
 
-        <!-- ANA SEKMELER (Genel Bilgiler / Varyantlar / Özellikler / Sertifikalar) -->
+        <!-- ANA SEKMELER -->
     <ul class="nav nav-tabs nav-tabs-line mb-4" id="mainTabs" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active fw-bold" id="general-tab" data-bs-toggle="tab" data-bs-target="#general"
@@ -84,7 +85,8 @@
         <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('admin.door.update', $door->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('admin.door.update', $door->id) }}" method="POST"
+                          enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
@@ -107,12 +109,15 @@
 
                             <div class="tab-content border border-top-0 p-3 mb-3">
                                 @foreach($locales as $code => $locale)
-                                    <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" id="lang-{{ $code }}" role="tabpanel">
+                                    <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}"
+                                         id="lang-{{ $code }}" role="tabpanel">
 
                                         <!-- Collection Name Alanı -->
                                         <div class="mb-3">
                                             <label for="collection_name_{{ $code }}" class="form-label">
-                                                Koleksiyon Adı ({{ strtoupper($code) }}) @if($loop->first) <span class="text-danger">*</span> @endif
+                                                Koleksiyon Adı ({{ strtoupper($code) }}) @if($loop->first)
+                                                    <span class="text-danger">*</span>
+                                                @endif
                                             </label>
                                             <input type="text"
                                                    class="form-control @error($code.'.collection_name') is-invalid @enderror"
@@ -126,7 +131,9 @@
                                         <!-- Kapı Adı Alanı -->
                                         <div class="mb-3">
                                             <label for="name_{{ $code }}" class="form-label">
-                                                Kapı Adı ({{ strtoupper($code) }}) @if($loop->first) <span class="text-danger">*</span> @endif
+                                                Kapı Adı ({{ strtoupper($code) }}) @if($loop->first)
+                                                    <span class="text-danger">*</span>
+                                                @endif
                                             </label>
                                             <input type="text"
                                                    class="form-control @error($code.'.name') is-invalid @enderror"
@@ -137,9 +144,20 @@
                                                 {{ $loop->first ? 'required' : '' }}>
                                         </div>
 
+                                        <div class="mb-3">
+                                            <label for="short_description_{{ $code }}" class="form-label">Kısa Açıklama
+                                                ({{ strtoupper($code) }})</label>
+                                            <textarea
+                                                class="form-control @error($code.'.short_description') is-invalid @enderror"
+                                                id="short_description_{{ $code }}"
+                                                name="{{ $code }}[short_description]"
+                                                rows="3">{{ old($code.'.short_description', $door->translate($code)?->short_description) }}</textarea>
+                                        </div>
+
                                         <!-- Açıklama Alanı -->
                                         <div class="mb-3">
-                                            <label for="description_{{ $code }}" class="form-label">Açıklama ({{ strtoupper($code) }})</label>
+                                            <label for="description_{{ $code }}" class="form-label">Açıklama
+                                                ({{ strtoupper($code) }})</label>
                                             <textarea
                                                 class="form-control @error($code.'.description') is-invalid @enderror"
                                                 id="description_{{ $code }}"
@@ -160,7 +178,8 @@
 
                             <!-- 1. Sütun: Ana Kapı Görseli -->
                             <div class="col-md-4 mb-3">
-                                <x-media-picker name="media_id" label="Kapı Görseli Seç" :multiple="false" :value="$door->media_id ?? null"/>
+                                <x-media-picker name="media_id" label="Kapı Görseli Seç" :multiple="false"
+                                                :value="$door->media_id ?? null"/>
                                 <div class="form-text text-secondary">Tercih edilen boyut: 800x800px.</div>
                                 @error('media_id')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -169,8 +188,10 @@
 
                             <!-- 2. Sütun: Özellikler Görseli -->
                             <div class="col-md-4 mb-3">
-                                <x-media-picker name="spec_image_id" label="Özellikler Görseli Seç" :multiple="false" :value="$door->spec_image_id ?? null"/>
-                                <div class="form-text text-secondary">Özellikler alanında gösterilecek tekil görsel.</div>
+                                <x-media-picker name="spec_image_id" label="Özellikler Görseli Seç" :multiple="false"
+                                                :value="$door->spec_image_id ?? null"/>
+                                <div class="form-text text-secondary">Özellikler alanında gösterilecek tekil görsel.
+                                </div>
                                 @error('spec_image_id')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
@@ -179,9 +200,14 @@
                             <!-- 3. Sütun: Durum -->
                             <div class="col-md-4 mb-4">
                                 <label for="status" class="form-label">Durum</label>
-                                <select class="form-select @error('status') is-invalid @enderror" id="status" name="status">
-                                    <option value="1" {{ old('status', $door->status) == '1' ? 'selected' : '' }}>Aktif</option>
-                                    <option value="0" {{ old('status', $door->status) == '0' ? 'selected' : '' }}>Pasif</option>
+                                <select class="form-select @error('status') is-invalid @enderror" id="status"
+                                        name="status">
+                                    <option value="1" {{ old('status', $door->status) == '1' ? 'selected' : '' }}>
+                                        Aktif
+                                    </option>
+                                    <option value="0" {{ old('status', $door->status) == '0' ? 'selected' : '' }}>
+                                        Pasif
+                                    </option>
                                 </select>
                                 @error('status')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -213,7 +239,8 @@
                         <div class="row g-3 align-items-center">
                             <div class="col-md-4">
                                 <label class="form-label">Varyant Adı <span class="text-danger">*</span></label>
-                                <input type="text" name="name" class="form-control" placeholder="Örn: Beyaz, Ceviz, 80x200" required>
+                                <input type="text" name="name" class="form-control"
+                                       placeholder="Örn: Beyaz, Ceviz, 80x200" required>
                             </div>
                             <div class="col-md-3">
                                 <x-media-picker name="mini_picture_id" label="Küçük Görsel Seç" :multiple="false"/>
@@ -222,7 +249,8 @@
                                 <x-media-picker name="picture_id" label="Büyük Görsel Seç" :multiple="false"/>
                             </div>
                             <div class="col-md-2 mt-auto">
-                                <button type="submit" class="btn btn-success w-100 fw-bold d-flex align-items-center justify-content-center h-100">
+                                <button type="submit"
+                                        class="btn btn-success w-100 fw-bold d-flex align-items-center justify-content-center h-100">
                                     <i data-lucide="check" class="icon-sm me-1"></i> Ekle
                                 </button>
                             </div>
@@ -251,20 +279,28 @@
                                     <td class="fw-bold">{{ $variant->name }}</td>
                                     <td>
                                         @if($variant->miniPicture)
-                                            <img src="{{ $variant->miniPicture->type == 'internal' ? Storage::url($variant->miniPicture->path) : $variant->miniPicture->path }}" alt="Mini" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
+                                            <img
+                                                src="{{ $variant->miniPicture->type == 'internal' ? Storage::url($variant->miniPicture->path) : $variant->miniPicture->path }}"
+                                                alt="Mini"
+                                                style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
                                         @else
                                             <span class="text-muted small">Yok</span>
                                         @endif
                                     </td>
                                     <td>
                                         @if($variant->picture)
-                                            <img src="{{ $variant->picture->type == 'internal' ? Storage::url($variant->picture->path) : $variant->picture->path }}" alt="Picture" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
+                                            <img
+                                                src="{{ $variant->picture->type == 'internal' ? Storage::url($variant->picture->path) : $variant->picture->path }}"
+                                                alt="Picture"
+                                                style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
                                         @else
                                             <span class="text-muted small">Yok</span>
                                         @endif
                                     </td>
                                     <td>
-                                        <form action="{{ route('admin.door.variant.destroy', [$door->id, $variant->id]) }}" method="POST" class="d-inline-block delete-form">
+                                        <form
+                                            action="{{ route('admin.door.variant.destroy', [$door->id, $variant->id]) }}"
+                                            method="POST" class="d-inline-block delete-form">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger btn-icon" title="Sil">
@@ -275,7 +311,9 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4" class="text-center py-4 text-muted">Henüz bu kapıya ait varyant eklenmemiş.</td>
+                                    <td colspan="4" class="text-center py-4 text-muted">Henüz bu kapıya ait varyant
+                                        eklenmemiş.
+                                    </td>
                                 </tr>
                             @endforelse
                             </tbody>
@@ -314,15 +352,24 @@
 
                                 <div class="tab-content" id="specLangTabsContent">
                                     @foreach($locales as $code => $locale)
-                                        <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" id="spec-lang-{{ $code }}" role="tabpanel">
+                                        <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}"
+                                             id="spec-lang-{{ $code }}" role="tabpanel">
                                             <div class="row g-3">
                                                 <div class="col-md-6">
-                                                    <label class="form-label">Özellik Adı ({{ strtoupper($code) }}) @if($loop->first)<span class="text-danger">*</span>@endif</label>
-                                                    <input type="text" name="{{ $code }}[name]" class="form-control" placeholder="Örn: Malzeme" {{ $loop->first ? 'required' : '' }}>
+                                                    <label class="form-label">Özellik Adı ({{ strtoupper($code) }}
+                                                        ) @if($loop->first)
+                                                            <span class="text-danger">*</span>
+                                                        @endif</label>
+                                                    <input type="text" name="{{ $code }}[name]" class="form-control"
+                                                           placeholder="Örn: Malzeme" {{ $loop->first ? 'required' : '' }}>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label class="form-label">Değer ({{ strtoupper($code) }}) @if($loop->first)<span class="text-danger">*</span>@endif</label>
-                                                    <input type="text" name="{{ $code }}[value]" class="form-control" placeholder="Örn: Masif Ahşap" {{ $loop->first ? 'required' : '' }}>
+                                                    <label class="form-label">Değer ({{ strtoupper($code) }}
+                                                        ) @if($loop->first)
+                                                            <span class="text-danger">*</span>
+                                                        @endif</label>
+                                                    <input type="text" name="{{ $code }}[value]" class="form-control"
+                                                           placeholder="Örn: Masif Ahşap" {{ $loop->first ? 'required' : '' }}>
                                                 </div>
                                             </div>
                                         </div>
@@ -334,7 +381,8 @@
                                     <label class="form-label">Sıralama</label>
                                     <input type="number" name="order" class="form-control" value="0">
                                 </div>
-                                <button type="submit" class="btn btn-info w-100 fw-bold text-white d-flex align-items-center justify-content-center">
+                                <button type="submit"
+                                        class="btn btn-info w-100 fw-bold text-white d-flex align-items-center justify-content-center">
                                     <i data-lucide="plus" class="icon-sm me-1"></i> Ekle
                                 </button>
                             </div>
@@ -365,7 +413,9 @@
                                     <td class="fw-bold text-primary">{{ $spec->translate('en')?->name ?? '-' }}</td>
                                     <td>{{ $spec->translate('en')?->value ?? '-' }}</td>
                                     <td>
-                                        <form action="{{ route('admin.door.spesification.destroy', [$door->id, $spec->id]) }}" method="POST" class="d-inline-block delete-form">
+                                        <form
+                                            action="{{ route('admin.door.spesification.destroy', [$door->id, $spec->id]) }}"
+                                            method="POST" class="d-inline-block delete-form">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger btn-icon" title="Sil">
@@ -418,19 +468,28 @@
 
                         <div class="tab-content border rounded p-3 mb-3 bg-light" id="certLangTabsContent">
                             @foreach($locales as $code => $locale)
-                                <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" id="cert-lang-{{ $code }}" role="tabpanel">
+                                <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}"
+                                     id="cert-lang-{{ $code }}" role="tabpanel">
                                     <div class="row g-3">
                                         <div class="col-md-6">
                                             <label class="form-label">Sertifika Badge ({{ strtoupper($code) }})</label>
-                                            <input type="text" name="{{ $code }}[sertification_badge]" class="form-control" placeholder="Örn: Fire-Resistant Door" value="{{ old($code.'.sertification_badge', $door->translate($code)?->sertification_badge) }}">
+                                            <input type="text" name="{{ $code }}[sertification_badge]"
+                                                   class="form-control" placeholder="Örn: Fire-Resistant Door"
+                                                   value="{{ old($code.'.sertification_badge', $door->translate($code)?->sertification_badge) }}">
                                         </div>
                                         <div class="col-md-6">
-                                            <label class="form-label">Sertifika Başlığı ({{ strtoupper($code) }})</label>
-                                            <input type="text" name="{{ $code }}[sertification_title]" class="form-control" placeholder="Örn: Performance & Standards" value="{{ old($code.'.sertification_title', $door->translate($code)?->sertification_title) }}">
+                                            <label class="form-label">Sertifika Başlığı ({{ strtoupper($code) }}
+                                                )</label>
+                                            <input type="text" name="{{ $code }}[sertification_title]"
+                                                   class="form-control" placeholder="Örn: Performance & Standards"
+                                                   value="{{ old($code.'.sertification_title', $door->translate($code)?->sertification_title) }}">
                                         </div>
                                         <div class="col-md-12">
-                                            <label class="form-label">Sertifika Açıklaması ({{ strtoupper($code) }})</label>
-                                            <textarea name="{{ $code }}[sertification_description]" class="form-control" rows="2" placeholder="Sertifikalar hakkında kısa bilgi...">{{ old($code.'.sertification_description', $door->translate($code)?->sertification_description) }}</textarea>
+                                            <label class="form-label">Sertifika Açıklaması ({{ strtoupper($code) }}
+                                                )</label>
+                                            <textarea name="{{ $code }}[sertification_description]" class="form-control"
+                                                      rows="2"
+                                                      placeholder="Sertifikalar hakkında kısa bilgi...">{{ old($code.'.sertification_description', $door->translate($code)?->sertification_description) }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -460,7 +519,8 @@
                                 <input type="number" name="order" class="form-control" value="0" required>
                             </div>
                             <div class="col-md-3 mt-auto">
-                                <button type="submit" class="btn btn-success w-100 fw-bold d-flex align-items-center justify-content-center h-100">
+                                <button type="submit"
+                                        class="btn btn-success w-100 fw-bold d-flex align-items-center justify-content-center h-100">
                                     <i data-lucide="plus" class="icon-sm me-1"></i> Sertifikayı Ekle
                                 </button>
                             </div>
@@ -490,13 +550,16 @@
                                     </td>
                                     <td>
                                         @if($cert->image)
-                                            <img src="{{ $cert->image->type == 'internal' ? Storage::url($cert->image->path) : $cert->image->path }}" alt="Sertifika" style="height: 50px; width: auto; object-fit: contain;">
+                                            <img
+                                                src="{{ $cert->image->type == 'internal' ? Storage::url($cert->image->path) : $cert->image->path }}"
+                                                alt="Sertifika" style="height: 50px; width: auto; object-fit: contain;">
                                         @else
                                             <span class="text-muted small">Yok</span>
                                         @endif
                                     </td>
                                     <td>
-                                        <form action="{{ route('admin.door.sertificate.destroy', [$cert->id]) }}" method="POST" class="d-inline-block delete-form">
+                                        <form action="{{ route('admin.door.sertificate.destroy', [$cert->id]) }}"
+                                              method="POST" class="d-inline-block delete-form">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger btn-icon" title="Sil">

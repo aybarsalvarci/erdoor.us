@@ -29,12 +29,14 @@ class CreateDoorRequest extends FormRequest
 
             'en' => 'required|array',
             'en.name' => 'required|string|max:255',
+            'en.short_description' => 'nullable|string|max:255',
             'en.description' => 'nullable|string',
             'en.collection_name' => 'required|string|max:255',
             'en.slug' => 'required|string|max:255',
 
             'es' => 'nullable|array',
             'es.name' => 'nullable|string|max:255',
+            'es.short_description' => 'nullable|string|max:255',
             'es.description' => 'nullable|string',
             'es.collection_name' => 'nullable|string|max:255',
             'es.slug' => 'nullable|string|max:255',

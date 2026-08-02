@@ -17,6 +17,12 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\Admin\PageManagementController;
 use App\Http\Controllers\AuthController;
 
+Route::get('/cache-clear', function () {
+    Artisan::call('optimize:clear');
+    $output = Artisan::output();
+    echo "<pre>$output</pre>";
+});
+
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
     'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']

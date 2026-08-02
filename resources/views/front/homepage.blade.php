@@ -60,7 +60,8 @@
 
     <section class="home-benefits-section bg-white px-3 py-10 sm:px-6 sm:py-12 lg:px-8">
         {{-- Grid yapısını esnek Flex yapısına çevirdik, böylece diziliş sırası bozulmadan yan yana akacaklar --}}
-        <div class="home-benefits-grid mx-auto flex flex-wrap items-start justify-center gap-5 sm:gap-4 lg:gap-3 xl:gap-5 px-0 sm:flex-nowrap max-w-7xl">
+        <div
+            class="home-benefits-grid mx-auto flex flex-wrap items-start justify-center gap-5 sm:gap-4 lg:gap-3 xl:gap-5 px-0 sm:flex-nowrap max-w-7xl">
 
             @foreach($benefitsList as $benefit)
                 @php
@@ -73,7 +74,8 @@
 
                 @if(isset($benefit['is_featured']) && $benefit['is_featured'] == '1')
                     <!-- Öne Çıkan Özellik (Featured) - Büyük Tasarım -->
-                    <div class="flex min-w-0 w-24 scale-105 flex-col items-center justify-center text-center sm:w-24 sm:flex-none lg:w-32 lg:scale-110 xl:w-36 mx-2 sm:mx-0">
+                    <div
+                        class="flex min-w-0 w-24 scale-105 flex-col items-center justify-center text-center sm:w-24 sm:flex-none lg:w-32 lg:scale-110 xl:w-36 mx-2 sm:mx-0">
                         <img src="{{ $iconUrl }}" alt="{{ $benefit['title'] ?? '' }} icon"
                              class="h-16 w-16 object-contain sm:h-20 sm:w-20 lg:h-24 lg:w-24 xl:h-28 xl:w-28">
                         <p class="mt-3 text-[9px] font-bold uppercase leading-tight tracking-normal text-gray-950 sm:mt-5 sm:text-xs sm:tracking-[0.16em] lg:text-sm">
@@ -82,7 +84,8 @@
                     </div>
                 @else
                     <!-- Normal Özellik - Standart Tasarım -->
-                    <div class="flex min-w-0 w-20 flex-col items-center text-center sm:w-24 sm:flex-none lg:w-24 xl:w-28 mx-1 sm:mx-0">
+                    <div
+                        class="flex min-w-0 w-20 flex-col items-center text-center sm:w-24 sm:flex-none lg:w-24 xl:w-28 mx-1 sm:mx-0">
                         <img src="{{ $iconUrl }}" alt="{{ $benefit['title'] ?? '' }} icon"
                              class="h-12 w-12 object-contain sm:h-14 sm:w-14 lg:h-16 lg:w-16">
                         <p class="mt-2 text-[9px] font-semibold uppercase leading-tight tracking-normal text-gray-700 sm:mt-4 sm:text-xs sm:tracking-[0.14em] lg:text-sm lg:tracking-[0.16em]">
@@ -110,7 +113,8 @@
                 : asset('front/assets/gallery/kapi2.png');
         @endphp
 
-        <div class="door-comparison-layout mx-auto grid max-w-7xl grid-cols-2 items-start gap-x-4 gap-y-8 sm:gap-x-8 sm:gap-y-10 lg:grid-cols-[minmax(220px,360px)_minmax(420px,1fr)_minmax(220px,360px)] lg:items-stretch lg:gap-8 xl:gap-12">
+        <div
+            class="door-comparison-layout mx-auto grid max-w-7xl grid-cols-2 items-start gap-x-4 gap-y-8 sm:gap-x-8 sm:gap-y-10 lg:grid-cols-[minmax(220px,360px)_minmax(420px,1fr)_minmax(220px,360px)] lg:items-stretch lg:gap-8 xl:gap-12">
 
             <div class="col-start-1 row-start-1 flex h-full flex-col items-stretch lg:col-start-1 lg:row-start-1">
                 <h3 class="door-comparison-label mb-4 flex min-h-[3rem] flex-col items-center justify-end text-center text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-600 sm:text-xs sm:tracking-[0.24em] lg:mb-5 lg:min-h-[3.75rem] lg:text-sm">
@@ -185,7 +189,7 @@
                 <div class="col-md-6 product-text-box">
                     <h2 class="display-5 fw-bold">{{$door->name}}</h2>
                     <h4 class="text-muted mb-3 fst-italic">“{{$door->collectionName}}”</h4>
-                    <p class="lead text-muted">{{ str()->limit(strip_tags($door->description), 300) }}</p>
+                    <p class="lead text-muted">{{ $door->shortDescription }}</p>
                     <div class="mt-4">
                         <a href="{{route('door-single', $door->slug)}}" class="btn btn-accent btn-lg px-5 rounded-0">Learn
                             More</a>
