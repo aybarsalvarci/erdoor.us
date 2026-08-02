@@ -9,7 +9,7 @@
             class="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 py-10 sm:px-6 md:py-14 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-8 xl:py-20">
             <div class="mx-auto w-full max-w-sm sm:max-w-md lg:max-w-[380px] xl:max-w-md">
                 <div class="aspect-[2/3] w-full overflow-hidden rounded-lg bg-gray-50 shadow-2xl shadow-gray-200/80">
-                    <img id="productImage" src="{{ $door->image->path }}"
+                    <img id="productImage" src="{{ $door->image->url }}"
                          alt="SIGNATURA Premium Straight White finish door"
                          class="h-full w-full object-contain transition-opacity duration-300">
                 </div>
