@@ -43,10 +43,15 @@ class UpdateHomePageRequest extends FormRequest
             // 2. Avantajlar (Benefits Section)
             'translations.*.content.benefits_section' => ['nullable', 'array'],
             'translations.*.content.benefits_section.*.title' => ['nullable', 'string', 'max:255'],
-            'translations.*.content.benefits_section.*.icon' => ['nullable', 'string'], // media picker url döndürüyor
+            'translations.*.content.benefits_section.*.icon' => ['nullable', 'string'],
             'translations.*.content.benefits_section.*.is_featured' => ['nullable', 'in:0,1'],
 
-            // 3. Karşılaştırma Bölümü (Comparison Section)
+            // 3 . CTA Section
+            'translations.*.content.cta_section.title' => ['nullable', 'string', 'max:255'],
+            'translations.*.content.cta_section.button_text' => ['nullable', 'string', 'max:255'],
+            'translations.*.content.cta_section.button_link' => ['nullable', 'string', 'max:255'],
+
+            // 4. Karşılaştırma Bölümü (Comparison Section)
             'translations.*.content.comparison_section' => ['nullable', 'array'],
             'translations.*.content.comparison_section.title' => ['nullable', 'string', 'max:255'],
             'translations.*.content.comparison_section.label_1' => ['nullable', 'string', 'max:255'],
