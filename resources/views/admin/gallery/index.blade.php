@@ -84,8 +84,7 @@
                                     <input type="text"
                                            name="{{ $code }}[title]"
                                            class="form-control"
-                                           placeholder="{{ $locale['placeholder'] }}"
-                                        {{ $loop->first ? 'required' : '' }}>
+                                           placeholder="{{ $locale['placeholder'] }}">
                                 </div>
                             @endforeach
                         </div>

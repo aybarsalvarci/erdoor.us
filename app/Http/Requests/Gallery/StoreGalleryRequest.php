@@ -25,10 +25,10 @@ class StoreGalleryRequest extends FormRequest
             'image_id' => 'required|integer',
 
             'en'       => 'required|array',
-            'en.title' => 'required|string|max:255',
+            'en.title' => 'nullable|string|max:255',
 
             'es'       => 'required|array',
-            'es.title' => 'required|string|max:255',
+            'es.title' => 'nullable|string|max:255',
         ];
     }
 

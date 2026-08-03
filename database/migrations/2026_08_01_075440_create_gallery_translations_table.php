@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
 
             $table->foreignId('gallery_id')->constrained('galleries', 'id')->cascadeOnDelete();
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->string('locale')->index();
 
             $table->unique(['gallery_id', 'locale']);
