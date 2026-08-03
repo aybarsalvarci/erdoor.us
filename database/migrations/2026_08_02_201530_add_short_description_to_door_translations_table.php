@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('door_translations', function (Blueprint $table) {
-            $table->string('short_description')->after('description')->nullable();
+            $table->text('short_description')->after('description')->nullable();
         });
     }
 
