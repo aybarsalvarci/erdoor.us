@@ -58,50 +58,97 @@
         </div>
     </section>
 
-    <section class="home-benefits-section bg-white px-3 py-10 sm:px-6 sm:py-12 lg:px-8">
-        {{-- Grid yapısını esnek Flex yapısına çevirdik, böylece diziliş sırası bozulmadan yan yana akacaklar --}}
-        <div
-            class="home-benefits-grid mx-auto flex flex-wrap items-start justify-center gap-5 sm:gap-4 lg:gap-3 xl:gap-5 px-0 sm:flex-nowrap max-w-7xl">
+    <section class="home-benefits-section bg-white px-4 py-16 md:py-24 lg:px-8 w-full overflow-hidden">
+        @php
+            $benefits = collect($benefitsList);
 
-            @foreach($benefitsList as $benefit)
-                @php
-                    $iconVal = $benefit['icon'] ?? '';
-                    // İkon path ise storage'dan, sadece isimse assets klasöründen alıyoruz
-                    $iconUrl = str_contains($iconVal, '/')
-                        ? (str_contains($iconVal, 'http') ? $iconVal : asset('storage/' . $iconVal))
-                        : asset('front/assets/icons/' . ($iconVal ?: 'default-icon.png'));
-                @endphp
+            // 1. DEĞİŞİKLİK: Sadece tek bir elemanı değil, "is_featured == 1" olan TÜM elemanları alıyoruz.
+            $featuredBenefits = $benefits->where('is_featured', '1')->values();
+            $normalBenefits = $benefits->where('is_featured', '!=', '1')->values();
 
-                @if(isset($benefit['is_featured']) && $benefit['is_featured'] == '1')
-                    <!-- Öne Çıkan Özellik (Featured) - Büyük Tasarım -->
-                    <div
-                        class="flex min-w-0 w-24 scale-105 flex-col items-center justify-center text-center sm:w-24 sm:flex-none lg:w-32 lg:scale-110 xl:w-36 mx-2 sm:mx-0">
-                        <img src="{{ $iconUrl }}" alt="{{ $benefit['title'] ?? '' }} icon"
-                             class="h-16 w-16 object-contain sm:h-20 sm:w-20 lg:h-24 lg:w-24 xl:h-28 xl:w-28">
-                        <p class="mt-3 text-[9px] font-bold uppercase leading-tight tracking-normal text-gray-950 sm:mt-5 sm:text-xs sm:tracking-[0.16em] lg:text-sm">
+            $halfCount = ceil($normalBenefits->count() / 2);
+            $leftBenefits = $normalBenefits->take($halfCount);
+            $rightBenefits = $normalBenefits->skip($halfCount);
+
+            // 2. DEĞİŞİKLİK: Öne çıkan görsel yoksa ortada boşluk kalmaması için grid yapısını dinamikleştiriyoruz.
+            // Öne çıkan varsa 3'lü yapı (Sol-Orta-Sağ), yoksa 2'li yapı (Sol-Sağ)
+            $gridClass = $featuredBenefits->isNotEmpty()
+                ? 'lg:grid-cols-[1fr_auto_1fr]'
+                : 'lg:grid-cols-2';
+        @endphp
+
+        <div class="mx-auto max-w-[90rem] grid grid-cols-1 {{ $gridClass }} items-start lg:items-center gap-12 lg:gap-8">
+
+            <!-- 1. BÖLÜM: SOL GRUP İKONLARI -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-x-2 gap-y-10 justify-items-center w-full">
+                @foreach($leftBenefits as $benefit)
+                    @php
+                        $iconVal = $benefit['icon'] ?? '';
+                        $iconUrl = str_contains($iconVal, '/')
+                            ? (str_contains($iconVal, 'http') ? $iconVal : asset('storage/' . $iconVal))
+                            : asset('front/assets/icons/' . ($iconVal ?: 'default-icon.png'));
+                    @endphp
+                    <div class="group flex flex-col items-center text-center cursor-default">
+                        <div class="h-12 w-12 lg:h-14 lg:w-14 transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-105">
+                            <img src="{{ $iconUrl }}" alt="{{ $benefit['title'] ?? '' }}" class="h-full w-full object-contain object-center opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+                        </div>
+                        <p class="mt-4 text-[10px] sm:text-xs font-semibold uppercase leading-relaxed tracking-[0.1em] lg:tracking-[0.15em] text-gray-500 transition-colors duration-300 group-hover:text-gray-900">
                             {{ $benefit['title'] ?? '' }}
                         </p>
                     </div>
-                @else
-                    <!-- Normal Özellik - Standart Tasarım -->
-                    <div
-                        class="flex min-w-0 w-20 flex-col items-center text-center sm:w-24 sm:flex-none lg:w-24 xl:w-28 mx-1 sm:mx-0">
-                        <img src="{{ $iconUrl }}" alt="{{ $benefit['title'] ?? '' }} icon"
-                             class="h-12 w-12 object-contain sm:h-14 sm:w-14 lg:h-16 lg:w-16">
-                        <p class="mt-2 text-[9px] font-semibold uppercase leading-tight tracking-normal text-gray-700 sm:mt-4 sm:text-xs sm:tracking-[0.14em] lg:text-sm lg:tracking-[0.16em]">
+                @endforeach
+            </div>
+
+            <!-- 2. BÖLÜM: ORTA ÖNE ÇIKAN İKONLAR (Birden fazla olabilir veya hiç olmayabilir) -->
+            @if($featuredBenefits->isNotEmpty())
+                <!-- Flex yapısı sayesinde birden fazla gelirse yan yana düzgünce dizilir -->
+                <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12 px-4 lg:px-8 py-6 lg:py-0">
+                    @foreach($featuredBenefits as $featuredBenefit)
+                        @php
+                            $iconVal = $featuredBenefit['icon'] ?? '';
+                            $iconUrl = str_contains($iconVal, '/')
+                                ? (str_contains($iconVal, 'http') ? $iconVal : asset('storage/' . $iconVal))
+                                : asset('front/assets/icons/' . ($iconVal ?: 'default-icon.png'));
+                        @endphp
+                        <div class="group flex flex-col items-center justify-center text-center">
+                            <div class="h-20 w-20 lg:h-28 lg:w-28 transition-transform duration-700 group-hover:-translate-y-2 group-hover:scale-105">
+                                <img src="{{ $iconUrl }}" alt="{{ $featuredBenefit['title'] ?? '' }}" class="h-full w-full object-contain object-center">
+                            </div>
+                            <p class="mt-5 lg:mt-6 text-xs sm:text-sm lg:text-base font-bold uppercase leading-tight tracking-[0.2em] text-gray-900">
+                                {{ $featuredBenefit['title'] ?? '' }}
+                            </p>
+                            <!-- Alt çizgi -->
+                            <div class="mt-3 w-8 h-[2px] bg-gray-900/30 rounded-full transition-all duration-500 group-hover:w-16 group-hover:bg-gray-900"></div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+
+            <!-- 3. BÖLÜM: SAĞ GRUP İKONLARI -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-x-2 gap-y-10 justify-items-center w-full">
+                @foreach($rightBenefits as $benefit)
+                    @php
+                        $iconVal = $benefit['icon'] ?? '';
+                        $iconUrl = str_contains($iconVal, '/')
+                            ? (str_contains($iconVal, 'http') ? $iconVal : asset('storage/' . $iconVal))
+                            : asset('front/assets/icons/' . ($iconVal ?: 'default-icon.png'));
+                    @endphp
+                    <div class="group flex flex-col items-center text-center cursor-default">
+                        <div class="h-12 w-12 lg:h-14 lg:w-14 transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-105">
+                            <img src="{{ $iconUrl }}" alt="{{ $benefit['title'] ?? '' }}" class="h-full w-full object-contain object-center opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+                        </div>
+                        <p class="mt-4 text-[10px] sm:text-xs font-semibold uppercase leading-relaxed tracking-[0.1em] lg:tracking-[0.15em] text-gray-500 transition-colors duration-300 group-hover:text-gray-900">
                             {{ $benefit['title'] ?? '' }}
                         </p>
                     </div>
-                @endif
-
-            @endforeach
+                @endforeach
+            </div>
 
         </div>
     </section>
 
     <section class="door-comparison-section bg-white px-4 py-14 text-gray-900 sm:px-6 sm:py-16 lg:px-8 xl:py-20">
         @php
-            // Sağ ve Sol Görseller için güvenli URL oluşturma (Boşsa varsayılan resmi gösterir)
             $image1 = $comparison['image_1'] ?? '';
             $image1Url = $image1
                 ? (str_contains($image1, 'http') ? $image1 : asset('storage/' . $image1))
