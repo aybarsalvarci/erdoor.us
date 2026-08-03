@@ -16,24 +16,39 @@
 
 @section('content')
 
-    <header id="heroCarousel" class="carousel slide carousel-fade bg-gray-900" data-bs-ride="carousel">
-        <div class="carousel-inner h-[500px] md:h-[700px] w-full">
-            @foreach($sliders as $slider)
-                <div class="carousel-item {{ $loop->first ? 'active' : '' }} h-full" data-bs-interval="5000">
+    <header id="heroCarousel" class="relative w-full h-[500px] md:h-[700px] bg-gray-900 overflow-hidden group">
+
+        <!-- Slayt Kapsayıcısı -->
+        <div class="relative w-full h-full">
+            @foreach($sliders as $index => $slider)
+                <!-- Slayt Öğesi (Fade Efekti İçin Opacity Kullanılıyor) -->
+                <div class="carousel-slide absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out {{ $loop->first ? 'opacity-100 z-10' : 'opacity-0 z-0' }}">
                     <img src="{{ $slider->image->path }}"
-                         class="block w-full h-full object-cover"
+                         class="block mx-auto w-full h-full object-contain object-center"
                          alt="{{ $slider->image->alt_text }}">
                 </div>
             @endforeach
         </div>
 
-        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
+        <!-- Önceki Butonu (Sol) -->
+        <button id="prevBtn" class="absolute top-1/2 left-2 md:left-4 -translate-y-1/2 z-20 flex items-center justify-center p-2 bg-transparent text-white/70 hover:text-white transition-all duration-300 hover:scale-110 focus:outline-none">
+            <!-- Sol Ok İkonu (SVG) - Kendinden Gölgeli -->
+            <svg class="w-10 h-10 sm:w-12 sm:h-12 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path>
+            </svg>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon"></span>
+
+        <!-- Sonraki Butonu (Sağ) -->
+        <button id="nextBtn" class="absolute top-1/2 right-2 md:right-4 -translate-y-1/2 z-20 flex items-center justify-center p-2 bg-transparent text-white/70 hover:text-white transition-all duration-300 hover:scale-110 focus:outline-none">
+            <!-- Sağ Ok İkonu (SVG) - Kendinden Gölgeli -->
+            <svg class="w-10 h-10 sm:w-12 sm:h-12 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
+            </svg>
         </button>
     </header>
+
+
+
 
     <section class="home-intro-section container mx-auto px-4 pb-8 pt-14 text-center md:pb-16 md:pt-24">
         <div class="row justify-content-center">
@@ -77,7 +92,8 @@
                 : 'lg:grid-cols-2';
         @endphp
 
-        <div class="mx-auto max-w-[90rem] grid grid-cols-1 {{ $gridClass }} items-start lg:items-center gap-12 lg:gap-8">
+        <div
+            class="mx-auto max-w-[90rem] grid grid-cols-1 {{ $gridClass }} items-start lg:items-center gap-12 lg:gap-8">
 
             <!-- 1. BÖLÜM: SOL GRUP İKONLARI -->
             <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-x-2 gap-y-10 justify-items-center w-full">
@@ -89,8 +105,10 @@
                             : asset('front/assets/icons/' . ($iconVal ?: 'default-icon.png'));
                     @endphp
                     <div class="group flex flex-col items-center text-center cursor-default">
-                        <div class="h-12 w-12 lg:h-14 lg:w-14 transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-105">
-                            <img src="{{ $iconUrl }}" alt="{{ $benefit['title'] ?? '' }}" class="h-full w-full object-contain object-center opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+                        <div
+                            class="h-12 w-12 lg:h-14 lg:w-14 transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-105">
+                            <img src="{{ $iconUrl }}" alt="{{ $benefit['title'] ?? '' }}"
+                                 class="h-full w-full object-contain object-center opacity-80 group-hover:opacity-100 transition-opacity duration-300">
                         </div>
                         <p class="mt-4 text-[10px] sm:text-xs font-semibold uppercase leading-relaxed tracking-[0.1em] lg:tracking-[0.15em] text-gray-500 transition-colors duration-300 group-hover:text-gray-900">
                             {{ $benefit['title'] ?? '' }}
@@ -111,14 +129,17 @@
                                 : asset('front/assets/icons/' . ($iconVal ?: 'default-icon.png'));
                         @endphp
                         <div class="group flex flex-col items-center justify-center text-center">
-                            <div class="h-20 w-20 lg:h-28 lg:w-28 transition-transform duration-700 group-hover:-translate-y-2 group-hover:scale-105">
-                                <img src="{{ $iconUrl }}" alt="{{ $featuredBenefit['title'] ?? '' }}" class="h-full w-full object-contain object-center">
+                            <div
+                                class="h-20 w-20 lg:h-28 lg:w-28 transition-transform duration-700 group-hover:-translate-y-2 group-hover:scale-105">
+                                <img src="{{ $iconUrl }}" alt="{{ $featuredBenefit['title'] ?? '' }}"
+                                     class="h-full w-full object-contain object-center">
                             </div>
                             <p class="mt-5 lg:mt-6 text-xs sm:text-sm lg:text-base font-bold uppercase leading-tight tracking-[0.2em] text-gray-900">
                                 {{ $featuredBenefit['title'] ?? '' }}
                             </p>
                             <!-- Alt çizgi -->
-                            <div class="mt-3 w-8 h-[2px] bg-gray-900/30 rounded-full transition-all duration-500 group-hover:w-16 group-hover:bg-gray-900"></div>
+                            <div
+                                class="mt-3 w-8 h-[2px] bg-gray-900/30 rounded-full transition-all duration-500 group-hover:w-16 group-hover:bg-gray-900"></div>
                         </div>
                     @endforeach
                 </div>
@@ -134,8 +155,10 @@
                             : asset('front/assets/icons/' . ($iconVal ?: 'default-icon.png'));
                     @endphp
                     <div class="group flex flex-col items-center text-center cursor-default">
-                        <div class="h-12 w-12 lg:h-14 lg:w-14 transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-105">
-                            <img src="{{ $iconUrl }}" alt="{{ $benefit['title'] ?? '' }}" class="h-full w-full object-contain object-center opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+                        <div
+                            class="h-12 w-12 lg:h-14 lg:w-14 transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-105">
+                            <img src="{{ $iconUrl }}" alt="{{ $benefit['title'] ?? '' }}"
+                                 class="h-full w-full object-contain object-center opacity-80 group-hover:opacity-100 transition-opacity duration-300">
                         </div>
                         <p class="mt-4 text-[10px] sm:text-xs font-semibold uppercase leading-relaxed tracking-[0.1em] lg:tracking-[0.15em] text-gray-500 transition-colors duration-300 group-hover:text-gray-900">
                             {{ $benefit['title'] ?? '' }}
@@ -249,4 +272,5 @@
 @endsection
 
 @push('js')
+    <script src="{{asset('front/js/homepage.js')}}"></script>
 @endpush
