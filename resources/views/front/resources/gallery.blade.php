@@ -4,67 +4,7 @@
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('front/css/gallery.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
-
-    <style>
-        /* GÜÇLENDİRİLMİŞ CSS: Eski gallery.css kurallarını kesin olarak ezer */
-        #galleryGrid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 24px;
-            align-items: start;
-        }
-
-        #galleryGrid .gallery-item {
-            background-color: #ffffff !important;
-            border-radius: 8px !important;
-            overflow: hidden !important;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
-            transition: transform 0.3s ease, box-shadow 0.3s ease !important;
-            display: flex !important;
-            flex-direction: column !important;
-            padding: 0 !important;
-            border: none !important;
-            position: relative !important;
-        }
-
-        #galleryGrid .gallery-item:hover {
-            transform: translateY(-5px) !important;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
-        }
-
-        #galleryGrid .gallery-link {
-            display: flex !important;
-            flex-direction: column !important;
-            width: 100% !important;
-            height: 100% !important;
-            text-decoration: none !important;
-            color: inherit !important;
-        }
-
-        #galleryGrid .gallery-item img {
-            width: 100% !important;
-            height: 250px !important;
-            object-fit: cover !important;
-            display: block !important;
-            margin: 0 !important;
-        }
-
-        #galleryGrid .gallery-item-title {
-            margin: 0 !important;
-            padding: 16px 20px !important;
-            font-size: 1.05rem !important;
-            font-weight: 500 !important;
-            color: #333333 !important;
-            text-align: center !important;
-            background-color: #f8f9fa !important;
-            background-image: none !important;
-            border-top: 1px solid #eeeeee !important;
-            position: static !important;
-            width: 100% !important;
-            box-sizing: border-box !important;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
 @endpush
 
 @php
@@ -103,17 +43,31 @@
                 <div class="gallery-grid" id="galleryGrid">
                     @foreach($images as $image)
                         @if($image->media)
+                            @php
+                                $imgUrl = $image->media->type == 'internal' ? Storage::url($image->media->path) : $image->media->path;
+                                $imgTitle = $image->translate(app()->getLocale())?->title;
+                            @endphp
+
                             <div class="gallery-item">
-                                <a href="{{ $image->media->type == 'internal' ? Storage::url($image->media->path) : $image->media->path }}"
+                                <a href="{{ $imgUrl }}"
                                    data-fancybox="gallery"
-                                   data-caption="{{ $image->translate(app()->getLocale())?->title }}"
+                                   data-caption="{{ $imgTitle }}"
                                    class="gallery-link">
 
-                                    <img src="{{ $image->media->type == 'internal' ? Storage::url($image->media->path) : $image->media->path }}"
-                                         alt="{{ $image->translate(app()->getLocale())?->title }}"
-                                         loading="lazy">
+                                    <!-- EKSİK OLAN KISIM BURASI: Resim ve Yazıyı Saran image-wrapper -->
+                                    <div class="image-wrapper">
+                                        <img src="{{ $imgUrl }}"
+                                             alt="{{ $imgTitle ?? 'Gallery Image' }}"
+                                             loading="lazy">
 
-                                    <h3 class="gallery-item-title">{{ $image->translate(app()->getLocale())?->title }}</h3>
+                                        <!-- SADECE BAŞLIK VARSA GÖSTERİLECEK ALAN (Gradient Overlay) -->
+                                        @if(!empty(trim($imgTitle)))
+                                            <div class="gallery-overlay">
+                                                <h3 class="gallery-item-title">{{ $imgTitle }}</h3>
+                                            </div>
+                                        @endif
+                                    </div>
+
                                 </a>
                             </div>
                         @endif
