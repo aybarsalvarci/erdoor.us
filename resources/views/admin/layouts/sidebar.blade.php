@@ -114,25 +114,38 @@
                     <span class="link-title">Resource Pages</span>
                     <i class="link-arrow" data-lucide="chevron-down"></i>
                 </a>
-                <div class="collapse {{ $isResourceSubActive ? 'show' : '' }}" data-bs-parent="#sidebarNav" id="resourcePages">
+                <div class="collapse {{ $isResourceSubActive ? 'show' : '' }}" data-bs-parent="#sidebarNav"
+                     id="resourcePages">
                     <ul class="nav sub-menu">
                         <li class="nav-item">
-                            <a href="{{ route('admin.resources.installation-page') }}" class="nav-link {{ request()->routeIs('admin.resources.installation-page') ? 'active' : '' }}">Installation Page</a>
+                            <a href="{{ route('admin.resources.installation-page') }}"
+                               class="nav-link {{ request()->routeIs('admin.resources.installation-page') ? 'active' : '' }}">Installation
+                                Page</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.resources.fire-resistence-test-page') }}" class="nav-link {{ request()->routeIs('admin.resources.fire-resistence-test-page') ? 'active' : '' }}">Fire Resistence Page</a>
+                            <a href="{{ route('admin.resources.fire-resistence-test-page') }}"
+                               class="nav-link {{ request()->routeIs('admin.resources.fire-resistence-test-page') ? 'active' : '' }}">Fire
+                                Resistence Page</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.resources.warranty-page') }}" class="nav-link {{ request()->routeIs('admin.resources.warranty-page') ? 'active' : '' }}">Warranty Page</a>
+                            <a href="{{ route('admin.resources.warranty-page') }}"
+                               class="nav-link {{ request()->routeIs('admin.resources.warranty-page') ? 'active' : '' }}">Warranty
+                                Page</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.resources.technicalCertificatesPage') }}" class="nav-link {{ request()->routeIs('admin.resources.technicalCertificatesPage') ? 'active' : '' }}">Technical Certificates</a>
+                            <a href="{{ route('admin.resources.technicalCertificatesPage') }}"
+                               class="nav-link {{ request()->routeIs('admin.resources.technicalCertificatesPage') ? 'active' : '' }}">Technical
+                                Certificates</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.resources.galleryPage') }}" class="nav-link {{ request()->routeIs('admin.resources.galleryPage') ? 'active' : '' }}">Galeri Sayfası</a>
+                            <a href="{{ route('admin.resources.galleryPage') }}"
+                               class="nav-link {{ request()->routeIs('admin.resources.galleryPage') ? 'active' : '' }}">Galeri
+                                Sayfası</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.resources.catalog-page') }}" class="nav-link {{ request()->routeIs('admin.resources.catalog-page') ? 'active' : '' }}">Dijital Katalog</a>
+                            <a href="{{ route('admin.resources.catalog-page') }}"
+                               class="nav-link {{ request()->routeIs('admin.resources.catalog-page') ? 'active' : '' }}">Dijital
+                                Katalog</a>
                         </li>
                     </ul>
                 </div>
@@ -155,6 +168,13 @@
                 <a href="{{ route('admin.settings.index') }}" class="nav-link">
                     <i class="link-icon" data-lucide="settings"></i>
                     <span class="link-title">Genel Ayarlar</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{{ url('log-viewer') }}" class="nav-link" target="_blank">
+                    <i class="link-icon" data-lucide="terminal"></i>
+                    <span class="link-title">Log Viewer</span>
                 </a>
             </li>
 
