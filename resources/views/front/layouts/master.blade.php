@@ -6,6 +6,7 @@
     <title>@yield('title') | {{$settings->title}}</title>
     <meta name="description" content="{{$settings->description}}">
     <meta name="keywords" content="{{$settings->keywords}}">
+    <meta name="X_CSRF_TOKEN" content="{{csrf_token()}}">
     <link rel="shortcut icon" href="{{ asset($settings->favicon) }}" type="image/x-icon">
     <link rel="icon" href="{{ asset($settings->favicon) }}" type="image/x-icon">
 
@@ -53,8 +54,8 @@
 @include('front.layouts.footer')
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{{ asset('front/js/main.js') }}"></script>
 <script src="{{asset('back/assets/vendors/sweetalert2/sweetalert2.min.js')}}"></script>
+<script src="{{ asset('front/js/main.js') }}"></script>
 
 @if(session()->has('success'))
     <script>

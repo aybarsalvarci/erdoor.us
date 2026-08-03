@@ -17,6 +17,11 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\Admin\PageManagementController;
 use App\Http\Controllers\AuthController;
 
+Route::get('/email', function(){
+    $verificationUrl = route('newsletter.verify', str()->uuid());
+    return view('mail.verifyEmailNewsletterSubscriptionMail', compact('verificationUrl'));
+})->name('home');
+
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
     'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
@@ -37,9 +42,13 @@ Route::group([
 
 });
 
+
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 
 Route::post('/send-contact', [HomeController::class, 'sendContact'])->name('send-contact');
+
+Route::post('/newsletter/subscribe', [HomeController::class, 'newsletterSubscribe'])->name('newsletter.subscribe');
+Route::get('/newsleter/verify/{token}', [HomeController::class, 'newsletterVerify'])->name('newsletter.verify');
 
 // ================= ADMIN ROUTES =================
 Route::prefix('admin/')->name('admin.')->middleware('auth')->group(function () {

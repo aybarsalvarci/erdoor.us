@@ -6,9 +6,11 @@ use App\Dtos\DoorDto;
 use App\Dtos\SliderDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ContactMessage\SendContactMessageRequest;
+use App\Http\Requests\Newsletter\SubscribeRequest;
 use App\Models\Certificate;
 use App\Models\ContactMessage;
 use App\Models\Door;
+use App\Models\EmailSubscriber;
 use App\Models\Gallery;
 use App\Models\Page;
 use App\Models\ResourcePage;
@@ -96,13 +98,12 @@ class HomeController extends Controller
         try {
             ContactMessage::create($request->validated());
             return redirect()->back()->withSuccess("Message was sent successfully");
-        }
-        catch (\Exception $exception)
-        {
-            Log::error("An error occured while contact message sending: ". $exception->getMessage(), ['exception' => $exception]);
+        } catch (\Exception $exception) {
+            Log::error("An error occured while contact message sending: " . $exception->getMessage(), ['exception' => $exception]);
             return redirect()->back()->withError("An error occured while sending message");
         }
     }
+
     public function resourcesSingle(string $slug, Request $request)
     {
         $page = ResourcePage::whereTranslation('slug', $slug, app()->getLocale())
@@ -132,7 +133,7 @@ class HomeController extends Controller
 
                 if ($request->filled('search')) {
                     $search = $request->search;
-                    $query->where(function($q) use ($search) {
+                    $query->where(function ($q) use ($search) {
                         $q->where('title', 'LIKE', "%{$search}%")
                             ->orWhere('description', 'LIKE', "%{$search}%")
                             ->orWhere('type', 'LIKE', "%{$search}%");
@@ -158,5 +159,29 @@ class HomeController extends Controller
                 abort(404);
                 break;
         }
+    }
+
+    public function newsletterSubscribe(SubscribeRequest $request)
+    {
+        try {
+            EmailSubscriber::create($request->validated());
+            return response()->json(['status' => 'success']);
+        } catch (\Exception $exception) {
+            Log::error('An error occured while subscribing newsletter: ' . $exception->getMessage(), ['exception' => $exception]);
+
+            return response()->json([
+                'message' => "An error occured."
+            ], 500);
+        }
+    }
+
+    public function newsletterVerify(string $token)
+    {
+        $sub = EmailSubscriber::where('verification_token', $token)->firstOrFail();
+        $sub->status = 1;
+        $sub->verified_at = now();
+        $sub->save();
+
+        return redirect()->route('home')->with('success', __('messages.newsletter-form.newsletter_verified'));
     }
 }

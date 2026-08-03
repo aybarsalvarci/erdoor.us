@@ -3,16 +3,19 @@
         <div class="container">
             <div class="newsletter-wrapper">
                 <div class="newsletter-text">
-                    <h3>Stay Connected</h3>
-                    <p>
-                        Join our mailing list to receive the latest news, product updates,
-                        and special offers directly to your inbox.
-                    </p>
+                    <h3>{{__('footer.newsletter-form.title')}}</h3>
+                    <p>{{__('footer.newsletter-form.description')}}</p>
                 </div>
-                <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
+                <form class="newsletter-form" id="email_subscription_form" action="{{route('newsletter.subscribe')}}"
+                      data-success-title="{{ __('messages.newsletter-form.success_title') }}"
+                      data-success-text="{{ __('messages.newsletter-form.success_text') }}"
+                      data-error-title="{{ __('messages.newsletter-form.error_title') }}"
+                      data-btn-ok="{{ __('messages.newsletter-form.btn_ok') }}"
+                      data-btn-close="{{ __('messages.newsletter-form.btn_close') }}">
+
                     <div class="input-group">
-                        <input type="email" placeholder="Enter your email address" required/>
-                        <button type="submit">Subscribe</button>
+                        <input type="email" name="email" placeholder="{{__('footer.newsletter-form.placeholder')}}" required/>
+                        <button type="submit">{{__('footer.newsletter-form.btn-text')}}</button>
                     </div>
                 </form>
             </div>
@@ -50,7 +53,7 @@
             <div class="footer-col">
                 <h4>PRODUCTS</h4>
                 <ul>
-                    <li><a href="{{route('home')}}#products">Interior Doors</a></li>
+                    <li><a href="{{route('home')}}#products">{{__('footer.interior-doors')}}</a></li>
 
                     @foreach($products as $product)
                         <li><a href="{{route('door-single', $product->slug)}}">{{$product->name}}</a></li>
@@ -82,10 +85,6 @@
         <div class="footer-bottom">
             <p>{{$settings->footer_copyright}}</p>
             <div class="footer-legal">
-{{--                <a href="#">Privacy Policy</a>--}}
-{{--                <span class="sep">&bull;</span>--}}
-{{--                <a href="#">Terms of Use</a>--}}
-{{--                <span class="sep">&bull;</span>--}}
                 <span>{{$settings->footer_address}}</span>
             </div>
         </div>

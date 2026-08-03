@@ -23,7 +23,7 @@ class SettingsController extends Controller
         try {
             $validatedData = $request->validated();
 
-            $uploadPath = public_path('uploads/settings');
+            $uploadPath = public_path('storage/settings');
             if (!file_exists($uploadPath)) {
                 mkdir($uploadPath, 0755, true);
             }
@@ -32,7 +32,7 @@ class SettingsController extends Controller
                 $logoFile = $request->file('logo');
                 $logoName = 'logo-' . time() . '.' . $logoFile->getClientOriginalExtension();
                 $logoFile->move($uploadPath, $logoName);
-                $validatedData['logo'] = 'uploads/settings/' . $logoName;
+                $validatedData['logo'] = 'storage/settings/' . $logoName;
             } else {
                 $validatedData['logo'] = $settings->logo ?? null;
             }
@@ -41,7 +41,7 @@ class SettingsController extends Controller
                 $faviconFile = $request->file('favicon');
                 $faviconName = 'favicon-' . time() . '.' . $faviconFile->getClientOriginalExtension();
                 $faviconFile->move($uploadPath, $faviconName);
-                $validatedData['favicon'] = 'uploads/settings/' . $faviconName;
+                $validatedData['favicon'] = 'storage/settings/' . $faviconName;
             } else {
                 $validatedData['favicon'] = $settings->favicon ?? null;
             }
