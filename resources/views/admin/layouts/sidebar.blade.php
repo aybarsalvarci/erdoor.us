@@ -161,6 +161,13 @@
                 </a>
             </li>
 
+            <li class="nav-item {{ request()->routeIs('admin.email-subscriber.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.email-subscriber.index') }}" class="nav-link">
+                    <i class="link-icon" data-lucide="message-square"></i>
+                    <span class="link-title">E-mail Aboneleri</span>
+                </a>
+            </li>
+
             <!-- SİSTEM & AYARLAR -->
             <li class="nav-item nav-category">Sistem</li>
 

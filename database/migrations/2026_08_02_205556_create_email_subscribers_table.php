@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->boolean('status')->default(true);
             $table->string('verification_token')->nullable();
+            $table->string('delete_code')->nullable();
             $table->timestamp('verified_at')->nullable();
             $table->timestamps();
         });

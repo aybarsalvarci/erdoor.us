@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DoorController;
 use App\Http\Controllers\Admin\DoorSertificationController;
 use App\Http\Controllers\Admin\DoorSpesificationController;
 use App\Http\Controllers\Admin\DoorVariantController;
+use App\Http\Controllers\Admin\EmailSubscriberController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\ResourceController;
 use App\Http\Controllers\Admin\SettingsController;
@@ -16,11 +17,6 @@ use App\Http\Controllers\Admin\MediaController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\Admin\PageManagementController;
 use App\Http\Controllers\AuthController;
-
-Route::get('/email', function(){
-    $verificationUrl = route('newsletter.verify', str()->uuid());
-    return view('mail.verifyEmailNewsletterSubscriptionMail', compact('verificationUrl'));
-})->name('home');
 
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
@@ -64,6 +60,8 @@ Route::prefix('admin/')->name('admin.')->middleware('auth')->group(function () {
         Route::delete('/delete', [MediaController::class, 'destroy'])->name('destroy');
     });
 
+    // Email Subscriber Controller
+    Route::resource('email-subscriber', EmailSubscriberController::class)->only(['index', 'destroy']);
     Route::resource('door', DoorController::class);
     Route::resource('slider', SliderController::class);
     Route::resource('door.variant', DoorVariantController::class)->only(['store', 'destroy']);
