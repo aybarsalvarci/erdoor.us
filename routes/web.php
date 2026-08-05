@@ -19,13 +19,6 @@ use App\Http\Controllers\Admin\PageManagementController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\NewsletterController;
 
-
-Route::get('/migrate', function () {
-    Artisan::call('migrate');
-    $output = Artisan::output();
-    echo "<pre>$output</pre>";
-});
-
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
     'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
