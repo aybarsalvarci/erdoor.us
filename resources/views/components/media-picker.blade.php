@@ -101,7 +101,7 @@
                             <div class="gallery-preview-item">
                                 <img :src="item.resolved_url" alt="Önizleme">
                                 <input type="hidden" :name="isMultiple ? name + '[]' : name"
-                                       :value="returnType === 'url' ? item.path : item.id">
+                                       :value="returnType === 'url' ? item.resolved_url : item.id">
                                 <button type="button" @click="removeItem(index)" class="remove-btn">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                                         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -228,7 +228,7 @@
                     <!-- SAĞ ALAN (DETAYLAR & SEÇİM) -->
                     <div class="p-3 d-flex flex-column justify-content-between shrink-0 bg-transparent" style="width: 300px; flex-shrink: 0;">
 
-                        <!-- Tekli Seçim Detayı (DÜZELTİLDİ: x-if KULLANILDI) -->
+                        <!-- Tekli Seçim Detayı -->
                         <template x-if="!isMultipleActive() && activeItems.length === 1">
                             <div class="overflow-y-auto pe-1">
                                 <h6 class="text-muted mb-3 font-weight-bold small text-uppercase">Görsel Detayları</h6>
@@ -333,7 +333,8 @@
                         this.selectedItems = preloadedItems.map(i => this.formatMedia(i));
                     }
                     else if (initialValue && isNaN(initialValue) && (initialValue.startsWith('http') || initialValue.startsWith('/'))) {
-                        this.selectedItems = [this.formatMedia({ id: initialValue, path: initialValue, type: 'external' })];
+                        // DÜZELTİLDİ: 'url: initialValue' eksikliği giderildi, önizlemelerdeki kırık resim sorunu çözüldü
+                        this.selectedItems = [this.formatMedia({ id: initialValue, path: initialValue, url: initialValue, type: 'external' })];
                     }
 
                     setTimeout(() => { if (window.feather) feather.replace(); }, 100);
