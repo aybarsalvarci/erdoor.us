@@ -18,6 +18,9 @@ class NewsletterObserver
             Log::info("Newsleter created and sending now");
 
             SendNewsletterJob::dispatch($newsletter);
+
+            $newsletter->status = 'sent';
+            $newsletter->save();
         }
     }
 

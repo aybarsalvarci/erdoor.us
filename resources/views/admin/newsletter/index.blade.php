@@ -124,14 +124,16 @@
                                         {{ $newsletter->send_at ? \Carbon\Carbon::parse($newsletter->send_at)->format('d.m.Y H:i') : 'Hemen Gönder' }}
                                     </td>
                                     <td>
-                                        @if($newsletter->status)
+                                        @if($newsletter->status == 'published')
                                             <span class="badge bg-success">Aktif</span>
+                                        @elseif($newsletter->status == 'sent')
+                                            <span class="badge bg-success">Gönderildi</span>
                                         @else
                                             <span class="badge bg-warning">Taslak / Pasif</span>
                                         @endif
                                     </td>
                                     <td>
-                                        @if(!is_null($newsletter->send_at))
+                                        @if(!is_null($newsletter->send_at) and $newsletter->status != 'sent')
                                             <a href="{{route('admin.newsletter.edit', $newsletter->id)}}"
                                                class="btn btn-sm btn-info btn-icon" title="Düzenle">
                                                 <i data-lucide="edit-2"></i>

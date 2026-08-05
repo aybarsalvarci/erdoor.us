@@ -17,7 +17,7 @@ return new class extends Migration
             $table->longtext('body');
             $table->string('button_text');
             $table->string('button_link');
-            $table->enum('status', ['draft', 'published'])->default('published');
+            $table->enum('status', ['draft', 'published', 'sent'])->default('published');
             $table->timestamp('send_at')->nullable();
             $table->timestamps();
         });
