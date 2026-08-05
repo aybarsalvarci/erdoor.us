@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\MediaController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\Admin\PageManagementController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Admin\NewsletterController;
 
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
@@ -62,6 +63,9 @@ Route::prefix('admin/')->name('admin.')->middleware('auth')->group(function () {
 
     // Email Subscriber Controller
     Route::resource('email-subscriber', EmailSubscriberController::class)->only(['index', 'destroy']);
+    // Newsletter  Controller
+    Route::resource('newsletter', NewsletterController::class);
+
     Route::resource('door', DoorController::class);
     Route::resource('slider', SliderController::class);
     Route::resource('door.variant', DoorVariantController::class)->only(['store', 'destroy']);

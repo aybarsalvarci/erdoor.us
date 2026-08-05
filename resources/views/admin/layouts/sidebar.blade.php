@@ -168,6 +168,13 @@
                 </a>
             </li>
 
+            <li class="nav-item {{ request()->routeIs('admin.newsletter.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.newsletter.index') }}" class="nav-link">
+                    <i class="link-icon" data-lucide="message-square"></i>
+                    <span class="link-title">Bültenler</span>
+                </a>
+            </li>
+
             <!-- SİSTEM & AYARLAR -->
             <li class="nav-item nav-category">Sistem</li>
 
