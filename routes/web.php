@@ -23,6 +23,10 @@ Route('/down-app', function () {
     Artisan::call('down', ['----secret' => '20042002']);
 });
 
+Route('/up-app', function () {
+    Artisan::call('up', ['----secret' => '20042002']);
+});
+
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
     'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
